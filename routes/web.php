@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*pass data directly from controller to view
+ *
+ *
+ Route::get('/', 'QueuesController@countQueue');
+ *
+ */
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/prova', function () {
+    return view('prova');
+});
+Route::get('/welcome', 'QueuesController@countQueue');
