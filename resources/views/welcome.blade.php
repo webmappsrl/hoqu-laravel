@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Hoqu
+                    Hoqu - Hook queue
                 </div>
 
                 <div class="links">
