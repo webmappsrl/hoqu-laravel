@@ -19,10 +19,4 @@ use Illuminate\Support\Facades\Route;
  Route::get('/', 'QueuesController@countQueue');
  *
  */
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/prova', function () {
-    return view('prova');
-});
-Route::get('/welcome', 'QueuesController@countQueue');
+Route::get('/', 'QueuesController@countQueue');
