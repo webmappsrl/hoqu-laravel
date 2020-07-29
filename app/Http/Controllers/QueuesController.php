@@ -59,7 +59,7 @@ class QueuesController extends Controller
     /*
     add elementsin Queue
     */
-    public function add_queue(Request $request)
+    public function add(Request $request)
     {
         $queue = Queue::create($request->all());
         return response()->json($queue, 201);

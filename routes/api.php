@@ -20,6 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('queues','QueuesController@index');
 Route::get('queuesIsEmpty','QueuesController@is_empty');
 Route::delete('queuesPullElement','QueuesController@pull_element');
-Route::post('queues','QueuesController@add_queue');
+Route::post('queues','QueuesController@add');
 
 
