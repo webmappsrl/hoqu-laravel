@@ -35,7 +35,7 @@ class QueuesController extends Controller
     public function index()
     {
        // return response()->json(Queue::get(), 200);
-        $cQ= DB::table('queues')->orderByRaw('updated_at - created_at DESC')->get();
+        $cQ= DB::table('queues')->orderBy('updated_at', 'desc')->get();
         return response()->json($cQ, 200);
     }
 
@@ -52,7 +52,7 @@ class QueuesController extends Controller
          l'elemento dalla coda viene eliminato sse è stato inviato al servizio che lo ha richiesto
          e la lavorazione da parte del servizio ha dato buon esito (200)
         */
-        $cQ= DB::table('queues')->orderByRaw('updated_at - created_at DESC')->limit(1)->delete();
+        $cQ= DB::table('queues')->orderBy('updated_at', 'desc')->limit(1)->delete();
         return response()->json($cQ, 204);
     }
 
