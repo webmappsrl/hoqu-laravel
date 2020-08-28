@@ -10,6 +10,7 @@ use App\Queue;
 class HoquApiTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
@@ -20,6 +21,8 @@ class HoquApiTest extends TestCase
         $response = $this->get('/api/queues');
 
         $response->assertStatus(200);
+
+        $response->assertJson([]);
     }
 
     public function testAddApiHoqu()
@@ -44,8 +47,46 @@ class HoquApiTest extends TestCase
         ];
 
 
-        $this->json('POST',route('queues.add'),$data)->assertStatus(201)->assertJson($data);
+       // $response = $this->json('POST',route('queues.add'),$data);
+
+        $response = $this->post('/api/queues',$data);
+
+        $response ->assertStatus(201);
+
+        $response->assertJson($data);
+
+        $response = $this->get('/api/queues');
+
+        $response ->assertStatus(200);
+
+       // $response->assertJson($data);
+
+        $dataDbTest = $response->json();
+        //var_dump($dataDbTest);
+
+        $this->assertSame($dataDbTest[0]['instance'],$data['instance']);
+        $this->assertSame($dataDbTest[0]['task'],$data['task']);
+        $this->assertSame($dataDbTest[0]['parameters'],$data['parameters']);
+        $this->assertSame($dataDbTest[0]['process_status'],'new');
+
+        $this->assertSame(count($dataDbTest),1);
+
         
+        $response = $this->post('/api/queues',$data);
+
+        $response = $this->post('/api/queues',$data);
+
+        $response = $this->post('/api/queues',$data);
+
+        $response = $this->post('/api/queues',$data);
+
+        $response = $this->post('/api/queues',$data);
+
+        $dataDbTest = $response->json();
+
+        $this->assertSame(count($dataDbTest),6);
+
+
 
         /* 
         assertion (post conditions on the final state of the system)
