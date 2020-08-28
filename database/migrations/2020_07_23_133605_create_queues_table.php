@@ -18,8 +18,8 @@ class CreateQueuesTable extends Migration
             $table->text('instance');
             $table->text('task');
             $table->text('parameters');
-            $table->longText('process_status')->default('new');
-            $table->text('process_log');
+            $table->enum('process_status', ['new', 'progress', 'done','error'])->default('new');
+            $table->enum('process_log',['new', 'progress', 'done','error'])->default('new');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'))->nullable();
         });

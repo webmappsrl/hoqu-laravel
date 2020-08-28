@@ -21,5 +21,12 @@ Route::get('queues','QueuesController@index');
 Route::get('queuesIsEmpty','QueuesController@is_empty');
 Route::delete('queuesPullElement','QueuesController@pull_element');
 Route::post('queues','QueuesController@add');
+Route::post('testAddQueues','QueuesController@add');
+
+
+Route::group(['prefix' => 'queues'], function() {
+    Route::post('/queuesTest', 'QueuesController@add')->name('queues.add');
+});
+
 
 
