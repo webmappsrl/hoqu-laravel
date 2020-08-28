@@ -9,6 +9,7 @@ use App\Queue;
 
 class HoquApiTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic feature test example.
      *
@@ -43,7 +44,7 @@ class HoquApiTest extends TestCase
         ];
 
 
-        $this->json('POST',route('queues.add'),$data)->assertStatus(201);
+        $this->json('POST',route('queues.add'),$data)->assertStatus(201)->assertJson($data);
         
 
         /* 
