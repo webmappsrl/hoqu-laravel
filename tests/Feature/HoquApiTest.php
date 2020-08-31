@@ -49,6 +49,8 @@ class HoquApiTest extends TestCase
 
        // $response = $this->json('POST',route('queues.add'),$data);
 
+        // $response = $this->json('POST',route('queues.add'),$data);
+
         $response = $this->post('/api/queues',$data);
 
         $response ->assertStatus(201);
@@ -71,7 +73,7 @@ class HoquApiTest extends TestCase
 
         $this->assertSame(count($dataDbTest),1);
 
-        
+
         $response = $this->post('/api/queues',$data);
 
         $response = $this->post('/api/queues',$data);
@@ -85,9 +87,6 @@ class HoquApiTest extends TestCase
         $dataDbTest = $response->json();
 
         $this->assertSame(count($dataDbTest),6);
-
-
-
         /* 
         assertion (post conditions on the final state of the system)
         */
@@ -108,12 +107,30 @@ class HoquApiTest extends TestCase
         $response = $this->post('/api/queues',$data);
 
         //con pull controllo che l'operazione sia eseguibile ed in caso la recupero il dato inserito con add
-        $requestS1 = [
+        $requestSvr1 = [
             "idServer" => 1,
-            "taskAvailable" => ["mptupdatepoi","poi", "track", "route"],
+            "taskAvailable" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
         ];
 
-        $response = $this->get('/api/queuesPull',$requestS1);
+        $response = $this->get('/api/queuesPull',$data,$requestSvr1);
+
+        //I check/assert that it $response is json format
+        $response->assertStatus(200);
+
+        //check field process_status == processing
+        $dataDbTest = $response->json();
+        $this->assertSame('processing',$dataDbTest[0]['process_status']);
+
+        //check idServer
+        $this->assertSame($data['idServer'],$dataDbTest[0]['idServer']);
+
+        $response->assertJson($data);
+
+        var_dump($response);
+
+       
+
+
 
     }
 }

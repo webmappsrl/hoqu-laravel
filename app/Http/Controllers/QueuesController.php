@@ -42,10 +42,9 @@ class QueuesController extends Controller
        /*
     pull elementsin Queue
     */
-    public function pull(Request $request)
+    public function pull(Request $request,Request $requestSvr1)
     {
         
-
     }
 
 
