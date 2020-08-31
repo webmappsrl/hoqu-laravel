@@ -109,21 +109,27 @@ class HoquApiTest extends TestCase
         //con pull controllo che l'operazione sia eseguibile ed in caso la recupero il dato inserito con add
         $requestSvr1 = [
             "idServer" => 1,
-            "taskAvailable" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
+            "taskAvailable" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
         //OPERATIONS
         $response = $this->get('/api/queuesPull',$data,$requestSvr1);
 
+        //get value elaborate by pull
+        $dataDbTest = $response->json();
+
         //I check/assert that it $response is json format
-        $response->assertJson($data);
+        $dataDbTest->assertJson($response);
 
         //check field process_status == processing
-        $dataDbTest = $response->json();
         $this->assertSame('processing',$dataDbTest[0]['process_status']);
 
         //check idServer
         $this->assertSame($data['idServer'],$dataDbTest[0]['idServer']);
+
+        //check instance
+        $this->assertSame($data['instance'],$dataDbTest[0]['instance']);
+
 
         $response->assertJson($data);
        
