@@ -25,7 +25,7 @@ class QueuesController extends Controller
     public function index()
     {
        // return response()->json(Queue::get(), 200);
-        $cQ= DB::table('queues')->orderBy('updated_at', 'desc')->get();
+        $cQ= DB::table('queues')->orderBy('created_at', 'asc')->get();
         return response()->json($cQ, 200);
     }
 
@@ -38,5 +38,16 @@ class QueuesController extends Controller
         $queue = Queue::create($request->all());
         return response()->json($queue, 201);
     }
+
+       /*
+    pull elementsin Queue
+    */
+    public function pull(Request $request)
+    {
+        
+
+    }
+
+
 
 }

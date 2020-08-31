@@ -15,11 +15,12 @@ class CreateQueuesTable extends Migration
     {
         Schema::create('queues', function (Blueprint $table) {
             $table->id();
+            $table->integer('idServer')->nullable();
             $table->text('instance');
             $table->text('task');
             $table->text('parameters');
-            $table->enum('process_status', ['new', 'progress', 'done','error'])->default('new');
-            $table->enum('process_log',['new', 'progress', 'done','error'])->default('new');
+            $table->enum('process_status', ['new', 'processing', 'done','error'])->default('new');
+            $table->enum('process_log',['new', 'processing', 'done','error'])->default('new');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'))->nullable();
         });

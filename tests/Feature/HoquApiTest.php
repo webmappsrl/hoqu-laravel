@@ -93,4 +93,27 @@ class HoquApiTest extends TestCase
         */
        // $this->assertCount(1,$queue->add());
     } 
+
+    public function testPullApiHoqu(){
+    
+    // prerequisites
+
+        //aggiungo item with add
+        $data = [
+            "instance" => "https:\/\/montepisanotree.org",
+            "task" => "mptupdatepoi",
+            "parameters" => "prova",
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        //con pull controllo che l'operazione sia eseguibile ed in caso la recupero il dato inserito con add
+        $requestS1 = [
+            "idServer" => 1,
+            "taskAvailable" => ["mptupdatepoi","poi", "track", "route"],
+        ];
+
+        $response = $this->get('/api/queuesPull',$requestS1);
+
+    }
 }
