@@ -113,13 +113,11 @@ class HoquApiTest extends TestCase
         ];
 
         //OPERATIONS
-        $response = $this->get('/api/queuesPull',$data,$requestSvr1);
+        $response = $this->put('/api/queuesPull',$requestSvr1);
 
         //get value elaborate by pull
-        $dataDbTest = $response->json();
+        $dataDbTest = $this->get('/api/queues');
 
-        //I check/assert that it $response is json format
-        $dataDbTest->assertJson($response);
 
         //check field process_status == processing
         $this->assertSame('processing',$dataDbTest[0]['process_status']);
@@ -129,9 +127,6 @@ class HoquApiTest extends TestCase
 
         //check instance
         $this->assertSame($data['instance'],$dataDbTest[0]['instance']);
-
-
-        $response->assertJson($data);
        
     }
 }

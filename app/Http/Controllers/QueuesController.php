@@ -42,20 +42,21 @@ class QueuesController extends Controller
        /*
     pull elementsin Queue
     */
-    public function pull(Request $request,Request $requestSvr1)
+    public function pull(Request $requestSvr1)
     {
-        if (in_array($request[1], $requestSvr1[1]))
-        {
-            //order
-            $cQ= DB::table('queues')->where('task', '=', $request[1])->orderBy('created_at', 'asc')->orderByRaw("FIELD(priority, 'new', 'processing', 'done','error')")->limit(1)->get();
+        //get data
+        $requestSvr1 = $requestSvr1->all(); 
 
-            //assignment of values
-            $cQ->idServer = $requestSvr1[0];
-            $cQ->process_status = 'processing';
-            $cQ->save();
-            return response()->json($cQ, 200);
-        }
-        else return response()->json($cQ, 204);
+        //order
+        $cQ= DB::table('queues')->whereIn('task', $requestSvr1['taskAvailable'])->orderByRaw("FIELD(process_status, 'new', 'processing', 'done','error')")->orderBy('created_at', 'asc')->limit(1)->get();
+        //var_dump($cQ);
+
+        //assignment of values
+        $cQ->update(['idServer' => $requestSvr1['idServer']]);
+        $cQ->update(['process_status' => 'processing']);
+
+        return response()->json($cQ, 200);
+
 
     }
 
