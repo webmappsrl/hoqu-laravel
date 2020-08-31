@@ -44,7 +44,18 @@ class QueuesController extends Controller
     */
     public function pull(Request $request,Request $requestSvr1)
     {
-        
+        if (in_array($request[1], $requestSvr1[1]))
+        {
+            $cQ= DB::table('queues')->orderBy('created_at', 'asc')->get();
+            $cQ->orderByRaw("FIELD(priority, 'new', 'processing', 'done','error')");
+            $cQ->limit(1);
+            $cQ->idServer = $requestSvr1[0];
+            $cQ->process_status = 'processing';
+            $cQ->save();
+            return response()->json($cQ, 200);
+        }
+        else return response()->json($cQ, 204);
+
     }
 
 

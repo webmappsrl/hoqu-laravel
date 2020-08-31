@@ -112,10 +112,11 @@ class HoquApiTest extends TestCase
             "taskAvailable" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
         ];
 
+        //OPERATIONS
         $response = $this->get('/api/queuesPull',$data,$requestSvr1);
 
         //I check/assert that it $response is json format
-        $response->assertStatus(200);
+        $response->assertJson($data);
 
         //check field process_status == processing
         $dataDbTest = $response->json();
