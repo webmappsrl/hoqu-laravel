@@ -46,9 +46,10 @@ class QueuesController extends Controller
     {
         if (in_array($request[1], $requestSvr1[1]))
         {
-            $cQ= DB::table('queues')->orderBy('created_at', 'asc')->get();
-            $cQ->orderByRaw("FIELD(priority, 'new', 'processing', 'done','error')");
-            $cQ->limit(1);
+            //order
+            $cQ= DB::table('queues')->where('task', '=', $request[1])->orderBy('created_at', 'asc')->orderByRaw("FIELD(priority, 'new', 'processing', 'done','error')")->limit(1)->get();
+
+            //assignment of values
             $cQ->idServer = $requestSvr1[0];
             $cQ->process_status = 'processing';
             $cQ->save();

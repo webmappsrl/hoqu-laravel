@@ -126,12 +126,6 @@ class HoquApiTest extends TestCase
         $this->assertSame($data['idServer'],$dataDbTest[0]['idServer']);
 
         $response->assertJson($data);
-
-        var_dump($response);
-
        
-
-
-
     }
 }
