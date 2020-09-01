@@ -162,10 +162,66 @@ class HoquApiTest extends TestCase
         //OPERATIONS
         $response = $this->put('/api/queuesPull',$requestSvr1);
         
-        //check response 500
-        $response ->assertStatus(500);
+        //check response 204
+        $response ->assertStatus(204);
+        $response ->assertJson([]);
+    }
 
-     
+    public function testPullApiHoqu2()
+    {
+        //2 TEST TDD
+
+        //add data with api/queues
+        $data = [
+            "instance" => "https:\/\/montepisanotree.org",
+            "task" => "task1",
+            "parameters" => "prova prova",
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        sleep(2);
+
+        $data1 = [
+            "instance" => "https:\/\/montelabronicotree.org",
+            "task" => "task1",
+            "parameters" => "prova",
+        ];
+
+        $response = $this->post('/api/queues',$data1);
+
+        //request that sends the "requesting server"
+        $requestSvr1 = [
+            "idServer" => 9,
+            "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+        ];
+
+        //OPERATIONS
+        $response = $this->put('/api/queuesPull',$requestSvr1);
+        
+        //check response 200
+        //$response ->assertCreated();
+        $response ->assertStatus(200);
+
+        //get value elaborate by pull
+        $dataDbTest = $response;
+
+        //var_dump($dataDbTest);
+
+        //check field process_status == processing
+        $this->assertSame('processing',$dataDbTest['process_status']);
+
+        //check idServer
+        $this->assertSame($requestSvr1['idServer'],$dataDbTest['idServer']);
+
+        //check instance
+        $this->assertSame($data['instance'],$dataDbTest['instance']);
+
+        //check parameters
+        $this->assertSame($data['parameters'],$dataDbTest['parameters']);
+
+        //check parameters
+        $this->assertSame(1,$dataDbTest['id']);
 
 
     }

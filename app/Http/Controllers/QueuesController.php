@@ -52,9 +52,8 @@ class QueuesController extends Controller
 
         $passTask = $queue->count();
         var_dump($passTask);
-        if($passTask==1)
+        if($passTask>0)
         {
-        
             $queue->process_status = 'processing';
             $queue->idServer = $requestSvr1['idServer'];
 
@@ -68,8 +67,7 @@ class QueuesController extends Controller
         }
         else
         {
-            return response()->json($queue, 500);
-
+            return response()->json([], 204);
         } 
 
     }
