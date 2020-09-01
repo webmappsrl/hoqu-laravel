@@ -218,9 +218,15 @@ class HoquApiTest extends TestCase
         
 
     }
-/*
+
+    /**
+     *1. Clear DB, add queue (task1), srv1 chiama pull che restituisce id. srv2 chiama update dell’id di cui sopra. Verificare che status è non autorizzato
+     */
+
     public function test1UpdateApiHoqu()
     {
+        Queue::truncate();
+
         //1 TEST TDD
 
         //add data with api/queues
@@ -238,23 +244,22 @@ class HoquApiTest extends TestCase
             "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
-        //OPERATIONS
+        //OPERATIONS 1
         $response = $this->put('/api/queuesPull',$requestSvr1);
         
-        //check response 200
-        //$response ->assertCreated();
         $response ->assertStatus(200);
 
         //get value elaborate by pull
         $dataDbTest = $response;
 
-        //request that sends the "requesting server"
+        //request that sends the "requesting server 2"
         $requestSvr2 = [
             "idServer" => 25,
             "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi","mptinsertpoi", "mptinserttrack"],
             "idTask" => $dataDbTest['id'],
         ];
 
+        //OPERATIONS 2
         $response = $this->put('/api/queuesUpdate',$requestSvr2);
 
         $dataDbTestUp = $response;
@@ -262,8 +267,101 @@ class HoquApiTest extends TestCase
        // var_dump($dataDbTestUp['error']);
 
         $response ->assertForbidden();
+    }
 
-        $response->assertJson($data);
+    /**
+     * 2. Clear DB, add queue (task1) prendo ID del task. SRV1 chiama update con id del task. Verificare che status è non autorizzato.
+     */
 
-    }*/
+    public function test2UpdateApiHoqu()
+    {
+        Queue::truncate();
+
+        //2 TEST TDD
+
+        //add data with api/queues
+        $data = [
+            "instance" => "https:\/\/montepisanotree.org",
+            "task" => "task1",
+            "parameters" => "prova",
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        //request that sends the "requesting server"
+        $requestSvr1 = [
+            "idServer" => 10,
+            "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "idTask" => $response['id'],
+        ];
+
+        //OPERATIONS 2
+        $response = $this->put('/api/queuesUpdate',$requestSvr1);
+
+        $dataDbTestUp = $response;
+
+       // var_dump($dataDbTestUp['error']);
+
+        $response ->assertForbidden();
+    }
+
+    /**
+     *3. Clear DB, add queue (task1), srv1 chiama pull che restituisce id. Srv1 chiama update con status in “done” e log “log test”. Verificare status UPDATE OK. Verificare da DB che la coda con ID abbia status in “done” e log “log test”
+     */
+
+    public function test3UpdateApiHoqu()
+    {
+        Queue::truncate();
+
+        //1 TEST TDD
+
+        //add data with api/queues
+        $data = [
+            "instance" => "https:\/\/montepisanotree.org",
+            "task" => "task1",
+            "parameters" => "prova",
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        //request that sends the "requesting server"
+        $requestSvr1 = [
+            "idServer" => 10,
+            "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+        ];
+
+        //OPERATIONS 1
+        $response = $this->put('/api/queuesPull',$requestSvr1);
+        
+        $response ->assertStatus(200);
+
+        //get value elaborate by pull
+        $dataDbTest = $response;
+
+        //request that sends the "requesting server 2"
+        $requestSvr1 = [
+            "idServer" => 10,
+            "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "idTask" => $dataDbTest['id'],
+        ];
+
+        //OPERATIONS 2
+        $response = $this->put('/api/queuesUpdate',$requestSvr1);
+
+        //get value elaborated by update
+        $dataDbTestUp = $response;
+
+        $response ->assertStatus(200);
+
+
+        $this->assertSame('done',$dataDbTestUp['process_status']);
+
+        $this->assertSame($requestSvr1['idServer'],$dataDbTestUp['idServer']);
+
+        $this->assertSame($data['instance'],$dataDbTestUp['instance']);
+
+        $this->assertSame($data['parameters'],$dataDbTestUp['parameters']);
+
+    }
+    
 }

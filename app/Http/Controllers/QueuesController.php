@@ -81,14 +81,15 @@ class QueuesController extends Controller
     {
             //get all data
             $requestSvr2 = $requestSvr2->all();
-
+            var_dump($requestSvr2);
             //get id queue
             $wouldLikeUpdate = Queue::find($requestSvr2['idTask'])->where('process_status', 'process')->first();;
-            var_dump($wouldLikeUpdate);
-            //check permission
-            if(!empty($wouldLikeUpdate) && $requestSvr2['idServer']==$wouldLikeUpdate)
+ 
+            if(!empty($wouldLikeUpdate) && $requestSvr2['idServer']==$wouldLikeUpdate->idServer)
             {
-                return response()->json([], 200);
+                $wouldLikeUpdate->process_status = 'done';    
+                $wouldLikeUpdate->save();
+                return response()->json($wouldLikeUpdate, 200);
             }
             else
             {
