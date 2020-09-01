@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+
 use App\Queue;
 use DB;
 use http\Env\Response;
@@ -50,9 +52,7 @@ class QueuesController extends Controller
         //order
         $queue = Queue::whereIn('task', $requestSvr1['taskAvailable'])->orderByRaw("FIELD(process_status, 'new', 'processing', 'done','error')")->orderBy('created_at', 'asc')->first();
 
-        $passTask = $queue->count();
-        var_dump($passTask);
-        if($passTask>0)
+        if(!empty($queue))
         {
             $queue->process_status = 'processing';
             $queue->idServer = $requestSvr1['idServer'];

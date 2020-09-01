@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -11,6 +12,7 @@ class HoquApiTest extends TestCase
 {
     //migrate tables before each test
     use RefreshDatabase;
+    use WithoutMiddleware;
     
 
     /**
@@ -95,7 +97,8 @@ class HoquApiTest extends TestCase
        // $this->assertCount(1,$queue->add());
     } 
 
-    public function test1PullApiHoqu(){
+    public function test1PullApiHoqu()
+    {
     
         //1 TEST TDD
 
@@ -110,7 +113,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "idServer" => 1,
+            "idServer" => 10,
             "taskAvailable" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
@@ -163,11 +166,11 @@ class HoquApiTest extends TestCase
         $response = $this->put('/api/queuesPull',$requestSvr1);
         
         //check response 204
-        $response ->assertStatus(204);
-        $response ->assertJson([]);
+        $response ->assertNoContent($status = 204);
+        //$response ->assertJson([]);
     }
 
-    public function test3PullApiHoqu2()
+    public function test3PullApiHoqu()
     {
         //2 TEST TDD
 
@@ -221,8 +224,14 @@ class HoquApiTest extends TestCase
         $this->assertSame($data['parameters'],$dataDbTest['parameters']);
 
         //check parameters
-        $this->assertSame(1,$dataDbTest['id']);
+        $this->assertSame(1,$dataDbTest["id"]);
+        //$response2 = $this->get('/api/queues');
+        //var_dump($response2);
 
+    }
 
+    public function test1UpdateApiHoqu()
+    {
+        
     }
 }
