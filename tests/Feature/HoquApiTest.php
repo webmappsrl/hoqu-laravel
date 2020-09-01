@@ -1,10 +1,10 @@
 <?php
 
 namespace Tests\Feature;
-
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+
 use Tests\TestCase;
 use App\Queue;
 
@@ -12,7 +12,7 @@ class HoquApiTest extends TestCase
 {
     //migrate tables before each test
     use RefreshDatabase;
-    use WithoutMiddleware;
+    
     
 
     /**
@@ -22,6 +22,8 @@ class HoquApiTest extends TestCase
      */
     public function testHoquIndex()
     {
+        Queue::truncate();
+
         $response = $this->get('/api/queues');
 
         $response->assertStatus(200);
@@ -31,29 +33,13 @@ class HoquApiTest extends TestCase
 
     public function testAddApiHoqu()
     {
-        /* 
-        prerequisites (system state in which we want to conduct the test)
-
-           * we pass to the factory() method a class of which we want to generate a model
-           * create() method generates a model and makes it persistent on the db
-        */
-        //$queue = factory(Queue::class)->create();
-
-
-        /* 
-        operations (which change the state of the system)
-        */
+        Queue::truncate();
 
         $data = [
             "instance" => "https:\/\/montepisanotree.org",
             "task" => "mptupdatepoi",
             "parameters" => "prova",
         ];
-
-
-       // $response = $this->json('POST',route('queues.add'),$data);
-
-        // $response = $this->json('POST',route('queues.add'),$data);
 
         $response = $this->post('/api/queues',$data);
 
@@ -65,10 +51,7 @@ class HoquApiTest extends TestCase
 
         $response ->assertStatus(200);
 
-       // $response->assertJson($data);
-
         $dataDbTest = $response->json();
-        //var_dump($dataDbTest);
 
         $this->assertSame($dataDbTest[0]['instance'],$data['instance']);
         $this->assertSame($dataDbTest[0]['task'],$data['task']);
@@ -91,15 +74,16 @@ class HoquApiTest extends TestCase
         $dataDbTest = $response->json();
 
         $this->assertSame(count($dataDbTest),6);
-        /* 
-        assertion (post conditions on the final state of the system)
-        */
-       // $this->assertCount(1,$queue->add());
+
     } 
 
+    /*
+    1. CLEAR DB Aggiungo con add un item, con pull lo recupero mettendo lo stesso task con cui ho inserito add. Verifico che la risposta sia un json con item con status in processing. Stato di uscita è 200. Verifico che instance sia uguale a quella che ha richiesto add, che parameters sia lo stesso che ha richiesto add
+    */
     public function test1PullApiHoqu()
     {
-    
+        Queue::truncate();
+
         //1 TEST TDD
 
         //add data with api/queues
@@ -120,31 +104,29 @@ class HoquApiTest extends TestCase
         //OPERATIONS
         $response = $this->put('/api/queuesPull',$requestSvr1);
         
-        //check response 200
-        //$response ->assertCreated();
         $response ->assertStatus(200);
 
-        //get value elaborate by pull
+        //get value elaborated by pull
         $dataDbTest = $response;
 
-        //var_dump($dataDbTest);
-
-        //check field process_status == processing
         $this->assertSame('processing',$dataDbTest['process_status']);
 
-        //check idServer
         $this->assertSame($requestSvr1['idServer'],$dataDbTest['idServer']);
 
-        //check instance
         $this->assertSame($data['instance'],$dataDbTest['instance']);
 
-        //check parameters
         $this->assertSame($data['parameters'],$dataDbTest['parameters']);
 
     }
 
+    /**
+     * 2. CLEAR DB Aggiungo con add un item con task “task1”, con pul richiedo task “task2”. Il json di risposta deve essere vuoto (con 204 non necessario questo controllo). Lo status HTTP deve essere 204(204 No Content)
+     */
+
     public function test2PullApiHoqu()
     {
+        Queue::truncate();
+
         //2 TEST TDD
 
         //add data with api/queues
@@ -170,9 +152,15 @@ class HoquApiTest extends TestCase
         //$response ->assertJson([]);
     }
 
+    /**
+     * 3. CLERA DB. Aggiungo 2 item a distanza di 2 secondi (sleep (sec)) con task “task1”. Faccio la chiamata PULL con task “task1”. Verifico che la chiamata PULL prenda il primo e non il secondo.
+     */
+
     public function test3PullApiHoqu()
     {
-        //2 TEST TDD
+        Queue::truncate();
+
+        //3 TEST TDD
 
         //add data with api/queues
         $data = [
@@ -227,11 +215,55 @@ class HoquApiTest extends TestCase
         $this->assertSame(1,$dataDbTest["id"]);
         //$response2 = $this->get('/api/queues');
         //var_dump($response2);
+        
 
     }
-
+/*
     public function test1UpdateApiHoqu()
     {
+        //1 TEST TDD
+
+        //add data with api/queues
+        $data = [
+            "instance" => "https:\/\/montepisanotree.org",
+            "task" => "task1",
+            "parameters" => "prova",
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        //request that sends the "requesting server"
+        $requestSvr1 = [
+            "idServer" => 10,
+            "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+        ];
+
+        //OPERATIONS
+        $response = $this->put('/api/queuesPull',$requestSvr1);
         
-    }
+        //check response 200
+        //$response ->assertCreated();
+        $response ->assertStatus(200);
+
+        //get value elaborate by pull
+        $dataDbTest = $response;
+
+        //request that sends the "requesting server"
+        $requestSvr2 = [
+            "idServer" => 25,
+            "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi","mptinsertpoi", "mptinserttrack"],
+            "idTask" => $dataDbTest['id'],
+        ];
+
+        $response = $this->put('/api/queuesUpdate',$requestSvr2);
+
+        $dataDbTestUp = $response;
+
+       // var_dump($dataDbTestUp['error']);
+
+        $response ->assertForbidden();
+
+        $response->assertJson($data);
+
+    }*/
 }
