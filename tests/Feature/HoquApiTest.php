@@ -95,7 +95,7 @@ class HoquApiTest extends TestCase
        // $this->assertCount(1,$queue->add());
     } 
 
-    public function testPullApiHoqu(){
+    public function test1PullApiHoqu(){
     
         //1 TEST TDD
 
@@ -140,7 +140,7 @@ class HoquApiTest extends TestCase
 
     }
 
-    public function testPullApiHoqu1()
+    public function test2PullApiHoqu()
     {
         //2 TEST TDD
 
@@ -167,7 +167,7 @@ class HoquApiTest extends TestCase
         $response ->assertJson([]);
     }
 
-    public function testPullApiHoqu2()
+    public function test3PullApiHoqu2()
     {
         //2 TEST TDD
 
