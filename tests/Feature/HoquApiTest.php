@@ -9,7 +9,9 @@ use App\Queue;
 
 class HoquApiTest extends TestCase
 {
+    //migrate tables before each test
     use RefreshDatabase;
+    
 
     /**
      * A basic feature test example.
@@ -95,9 +97,9 @@ class HoquApiTest extends TestCase
 
     public function testPullApiHoqu(){
     
-        // prerequisites
+        //1 TEST TDD
 
-        //aggiungo item with add
+        //add data with api/queues
         $data = [
             "instance" => "https:\/\/montepisanotree.org",
             "task" => "mptupdatepoi",
@@ -106,7 +108,7 @@ class HoquApiTest extends TestCase
 
         $response = $this->post('/api/queues',$data);
 
-        //con pull controllo che l'operazione sia eseguibile ed in caso la recupero il dato inserito con add
+        //request that sends the "requesting server"
         $requestSvr1 = [
             "idServer" => 1,
             "taskAvailable" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
@@ -116,12 +118,13 @@ class HoquApiTest extends TestCase
         $response = $this->put('/api/queuesPull',$requestSvr1);
         
         //check response 200
+        //$response ->assertCreated();
         $response ->assertStatus(200);
 
         //get value elaborate by pull
         $dataDbTest = $response;
 
-        // var_dump($dataDbTest);
+        //var_dump($dataDbTest);
 
         //check field process_status == processing
         $this->assertSame('processing',$dataDbTest['process_status']);
@@ -134,6 +137,36 @@ class HoquApiTest extends TestCase
 
         //check parameters
         $this->assertSame($data['parameters'],$dataDbTest['parameters']);
-       
+
+    }
+
+    public function testPullApiHoqu1()
+    {
+        //2 TEST TDD
+
+        //add data with api/queues
+        $data = [
+            "instance" => "https:\/\/montepisanotree.org",
+            "task" => "task1",
+            "parameters" => "prova prova",
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        //request that sends the "requesting server"
+        $requestSvr1 = [
+            "idServer" => 9,
+            "taskAvailable" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+        ];
+
+        //OPERATIONS
+        $response = $this->put('/api/queuesPull',$requestSvr1);
+        
+        //check response 500
+        $response ->assertStatus(500);
+
+     
+
+
     }
 }
