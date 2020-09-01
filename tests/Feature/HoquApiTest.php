@@ -95,7 +95,7 @@ class HoquApiTest extends TestCase
 
     public function testPullApiHoqu(){
     
-    // prerequisites
+        // prerequisites
 
         //aggiungo item with add
         $data = [
@@ -114,19 +114,26 @@ class HoquApiTest extends TestCase
 
         //OPERATIONS
         $response = $this->put('/api/queuesPull',$requestSvr1);
+        
+        //check response 200
+        $response ->assertStatus(200);
 
         //get value elaborate by pull
-        $dataDbTest = $this->get('/api/queues');
+        $dataDbTest = $response;
 
+        // var_dump($dataDbTest);
 
         //check field process_status == processing
-        $this->assertSame('processing',$dataDbTest[0]['process_status']);
+        $this->assertSame('processing',$dataDbTest['process_status']);
 
         //check idServer
-        $this->assertSame($data['idServer'],$dataDbTest[0]['idServer']);
+        $this->assertSame($requestSvr1['idServer'],$dataDbTest['idServer']);
 
         //check instance
-        $this->assertSame($data['instance'],$dataDbTest[0]['instance']);
+        $this->assertSame($data['instance'],$dataDbTest['instance']);
+
+        //check parameters
+        $this->assertSame($data['parameters'],$dataDbTest['parameters']);
        
     }
 }

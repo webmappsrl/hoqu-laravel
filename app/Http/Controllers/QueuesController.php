@@ -48,21 +48,18 @@ class QueuesController extends Controller
         $requestSvr1 = $requestSvr1->all(); 
 
         //order
-        $queue = Queue::whereIn('task', $requestSvr1['taskAvailable'])->orderByRaw("FIELD(process_status, 'new', 'processing', 'done','error')")->orderBy('created_at', 'asc')->first()->get();
-
-        //var_dump($cQ);
-
+        $queue = Queue::whereIn('task', $requestSvr1['taskAvailable'])->orderByRaw("FIELD(process_status, 'new', 'processing', 'done','error')")->orderBy('created_at', 'asc')->first();
+       
         
         $queue->process_status = 'processing';
-        $queue->idServer = $requestSvr1->idServer;
+        $queue->idServer = $requestSvr1['idServer'];
 
         $queue->save();
 
-        var_dump($queue);
+        //var_dump($queue);
 
 
-        return response()->json($cQ, 200);
-
+        return response()->json($queue, 200);
 
     }
 
