@@ -79,26 +79,29 @@ class QueuesController extends Controller
     */
     public function update(Request $requestSvr2)
     {
-            //get all data
-            $requestSvr2 = $requestSvr2->all();
-            var_dump($requestSvr2);
-            //get id queue
-            $wouldLikeUpdate = Queue::find($requestSvr2['idTask'])->where('process_status', 'process')->first();;
- 
-            if(!empty($wouldLikeUpdate) && $requestSvr2['idServer']==$wouldLikeUpdate->idServer)
+        //get all data 
+        $requestSvr2 = $requestSvr2->all();
+        
+        //query
+        $wouldLikeUpdate = Queue::find($requestSvr2['idTask']);
+        if(!empty($wouldLikeUpdate))
+        {
+            $wouldLikeUpdate->orWhere('process_status', 'processing')
+            ->orWhere('process_status', 'error')
+            ->first();
+
+            if($requestSvr2['idServer']==$wouldLikeUpdate->idServer)
             {
                 $wouldLikeUpdate->process_status = 'done';    
                 $wouldLikeUpdate->save();
                 return response()->json($wouldLikeUpdate, 200);
             }
-            else
-            {
-                return response()->json(['error' => 'Not authorized.'],403);
-            }
+            else return response()->json(['error' => 'Not authorized.'],403);
+
+        }
+        else return response()->json(['error' => 'Id not exist.'],403);
+            
     }
- 
-
-
 
 
 }
