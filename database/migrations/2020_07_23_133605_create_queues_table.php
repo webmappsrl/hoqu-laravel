@@ -15,7 +15,7 @@ class CreateQueuesTable extends Migration
     {
         Schema::create('queues', function (Blueprint $table) {
             $table->id();
-            $table->integer('idServer')->nullable();
+            $table->integer('id_server')->nullable();
             $table->text('instance');
             $table->text('task');
             $table->text('parameters');

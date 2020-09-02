@@ -53,7 +53,7 @@ class HoquApiTest extends TestCase
 
         $dataDbTest = $response->json();
 
-     //   $this->assertSame($dataDbTest[0]['instance'],$data['instance']);
+        $this->assertSame($dataDbTest[0]['instance'],$data['instance']);
         $this->assertSame($dataDbTest[0]['task'],$data['task']);
         $this->assertSame($dataDbTest[0]['parameters'],$data['parameters']);
         $this->assertSame($dataDbTest[0]['process_status'],'new');
@@ -97,7 +97,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "idServer" => 10,
+            "id_server" => 10,
             "taskAvailable" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
@@ -111,7 +111,7 @@ class HoquApiTest extends TestCase
 
         $this->assertSame('processing',$dataDbTest['process_status']);
 
-        $this->assertSame($requestSvr1['idServer'],$dataDbTest['idServer']);
+        $this->assertSame($requestSvr1['id_server'],$dataDbTest['id_server']);
 
         $this->assertSame($data['instance'],$dataDbTest['instance']);
 
@@ -140,7 +140,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "idServer" => 9,
+            "id_server" => 9,
             "taskAvailable" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
@@ -183,7 +183,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "idServer" => 9,
+            "id_server" => 9,
             "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
@@ -202,8 +202,8 @@ class HoquApiTest extends TestCase
         //check field process_status == processing
         $this->assertSame('processing',$dataDbTest['process_status']);
 
-        //check idServer
-        $this->assertSame($requestSvr1['idServer'],$dataDbTest['idServer']);
+        //check id_server
+        $this->assertSame($requestSvr1['id_server'],$dataDbTest['id_server']);
 
         //check instance
         $this->assertSame($data['instance'],$dataDbTest['instance']);
@@ -240,7 +240,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "idServer" => 10,
+            "id_server" => 10,
             "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
@@ -254,7 +254,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server 2"
         $requestSvr2 = [
-            "idServer" => 25,
+            "id_server" => 25,
             "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi","mptinsertpoi", "mptinserttrack"],
             "idTask" => $dataDbTest['id'],
         ];
@@ -290,7 +290,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "idServer" => 10,
+            "id_server" => 10,
             "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
             "idTask" => $response['id'],
         ];
@@ -326,7 +326,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "idServer" => 10,
+            "id_server" => 10,
             "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
@@ -340,7 +340,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server 2"
         $requestSvr1 = [
-            "idServer" => 10,
+            "id_server" => 10,
             "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
             "idTask" => $dataDbTest['id'],
         ];
@@ -356,7 +356,7 @@ class HoquApiTest extends TestCase
 
         $this->assertSame('done',$dataDbTestUp['process_status']);
 
-        $this->assertSame($requestSvr1['idServer'],$dataDbTestUp['idServer']);
+        $this->assertSame($requestSvr1['id_server'],$dataDbTestUp['id_server']);
 
         $this->assertSame($data['instance'],$dataDbTestUp['instance']);
 
@@ -387,7 +387,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "idServer" => 10,
+            "id_server" => 10,
             "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
@@ -401,7 +401,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server 2"
         $requestSvr1 = [
-            "idServer" => 10,
+            "id_server" => 10,
             "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
             "idTask" => $dataDbTest['id'],
         ];
@@ -422,7 +422,7 @@ class HoquApiTest extends TestCase
 
         $this->assertSame('done',$dataDbTestUp['process_status']);
 
-        $this->assertSame($requestSvr1['idServer'],$dataDbTestUp['idServer']);
+        $this->assertSame($requestSvr1['id_server'],$dataDbTestUp['id_server']);
 
         $this->assertSame($data['instance'],$dataDbTestUp['instance']);
 
@@ -445,7 +445,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "idServer" => 10,
+            "id_server" => 10,
             "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
@@ -459,7 +459,7 @@ class HoquApiTest extends TestCase
 
         //request that sends the "requesting server 2"
         $requestSvr1 = [
-            "idServer" => 10,
+            "id_server" => 10,
             "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
             "idTask" => 100,
         ];

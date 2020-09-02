@@ -57,7 +57,7 @@ class QueuesController extends Controller
         if(!empty($queue))
         {
             $queue->process_status = 'processing';
-            $queue->idServer = $requestSvr1['idServer'];
+            $queue->id_server = $requestSvr1['id_server'];
 
             $queue->save();
 
@@ -90,7 +90,7 @@ class QueuesController extends Controller
             ->orWhere('process_status', 'error')
             ->first();
 
-            if($requestSvr2['idServer']==$wouldLikeUpdate->idServer)
+            if($requestSvr2['id_server']==$wouldLikeUpdate->id_server)
             {
                 $wouldLikeUpdate->process_status = 'done';    
                 $wouldLikeUpdate->save();
