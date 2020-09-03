@@ -88,6 +88,10 @@
                     Total number of items in queues: <?php echo $queues_count ?>
                 </div>
 
+                <div class="small">
+                    VERSION 3 Sep 2020
+                </div>
+
             </div>
         </div>
     </body>
