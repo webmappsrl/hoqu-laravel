@@ -37,8 +37,52 @@ class QueuesController extends Controller
     */
     public function add(Request $request)
     {
-        $queue = Queue::create($request->all());
-        return response()->json($queue, 201);
+        //get all data
+        $request=$request->all();
+
+        //var_dump($request);
+
+        //check instance
+        if(empty($request['instance']))
+        {
+            return response()->json(["error"=>"field instance is NULL"], 400);
+        }
+
+        //check task
+        if(empty($request['task']))
+        {
+            return response()->json(["error"=>"field task is NULL"], 400);
+        }
+
+        //check parameters
+        if(empty($request['parameters']))
+        {
+            return response()->json(["error"=>"field parameters is NULL"], 400);
+        }
+        //validate value parameters
+        else
+        {
+            $rules = [
+                'a' => 'required',
+                'b' => 'required'
+            ];
+        
+            $validator = Validator::make($request['parameters'], $rules);
+            if ($validator->passes()) {
+
+                $queue = Queue::create($request);
+                return response()->json($queue, 201);
+
+            }
+            else
+            {
+                $error = dd($validator->errors()->all());
+                return response()->json(["error"=>$error], 400);
+                
+            }
+
+        }
+        
     }
 
        /*
@@ -47,12 +91,13 @@ class QueuesController extends Controller
     public function pull(Request $requestSvr1)
     {
         //get all data
-        $requestSvr1 = $requestSvr1->all(); 
-
+        $requestSvr1 = $requestSvr1->all();
+        
         //order
         $queue = Queue::whereIn('task', $requestSvr1['taskAvailable'])->orderByRaw("FIELD(process_status, 'new', 'processing', 'done','error')")->orderBy('created_at', 'asc')->first();
+
        
-        //var_dump($queue->count());
+        //var_dump($queue);
        
         if(!empty($queue))
         {
@@ -84,6 +129,7 @@ class QueuesController extends Controller
         
         //query
         $wouldLikeUpdate = Queue::find($requestSvr2['idTask']);
+
         if(!empty($wouldLikeUpdate))
         {
             $wouldLikeUpdate->orWhere('process_status', 'processing')

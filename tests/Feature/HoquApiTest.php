@@ -35,11 +35,13 @@ class HoquApiTest extends TestCase
     {
         Queue::truncate();
 
+
         $data = [
-            "instance" => "https:\/\/montepisanotree.org",
+            "instance" => "https://montepisanotree.org",
             "task" => "mptupdatepoi",
-            "parameters" => "prova",
+            "parameters" => ["a"=> "yes", "b"=> "no"]
         ];
+
 
         $response = $this->post('/api/queues',$data);
 
@@ -53,9 +55,13 @@ class HoquApiTest extends TestCase
 
         $dataDbTest = $response->json();
 
+     //   var_dump($dataDbTest[0]['parameters']);
+     //   var_dump($data['parameters']);
+     //   var_dump(json_encode($data['parameters']));
+
         $this->assertSame($dataDbTest[0]['instance'],$data['instance']);
         $this->assertSame($dataDbTest[0]['task'],$data['task']);
-        $this->assertSame($dataDbTest[0]['parameters'],$data['parameters']);
+        $this->assertSame(json_decode($dataDbTest[0]['parameters'],true),$data['parameters']);
         $this->assertSame($dataDbTest[0]['process_status'],'new');
 
         $this->assertSame(count($dataDbTest),1);
@@ -90,7 +96,7 @@ class HoquApiTest extends TestCase
         $data = [
             "instance" => "https:\/\/montepisanotree.org",
             "task" => "mptupdatepoi",
-            "parameters" => "prova",
+            "parameters" => ["a"=> "yes", "b"=> "no"],
         ];
 
         $response = $this->post('/api/queues',$data);
@@ -114,8 +120,8 @@ class HoquApiTest extends TestCase
         $this->assertSame($requestSvr1['id_server'],$dataDbTest['id_server']);
 
         $this->assertSame($data['instance'],$dataDbTest['instance']);
-
-        $this->assertSame($data['parameters'],$dataDbTest['parameters']);
+        
+        $this->assertSame($data['parameters'],json_decode(json_encode($dataDbTest['parameters']),true));
 
     }
 
@@ -166,7 +172,7 @@ class HoquApiTest extends TestCase
         $data = [
             "instance" => "https:\/\/montepisanotree.org",
             "task" => "task1",
-            "parameters" => "prova prova",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
 
         $response = $this->post('/api/queues',$data);
@@ -209,7 +215,7 @@ class HoquApiTest extends TestCase
         $this->assertSame($data['instance'],$dataDbTest['instance']);
 
         //check parameters
-        $this->assertSame($data['parameters'],$dataDbTest['parameters']);
+        $this->assertSame($data['parameters'],json_decode(json_encode($dataDbTest['parameters']),true));
 
         //check parameters
         $this->assertSame(1,$dataDbTest["id"]);
@@ -233,7 +239,7 @@ class HoquApiTest extends TestCase
         $data = [
             "instance" => "https:\/\/montepisanotree.org",
             "task" => "task1",
-            "parameters" => "prova",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>"maybe"],
         ];
 
         $response = $this->post('/api/queues',$data);
@@ -283,7 +289,7 @@ class HoquApiTest extends TestCase
         $data = [
             "instance" => "https:\/\/montepisanotree.org",
             "task" => "task1",
-            "parameters" => "prova",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>"maybe"],
         ];
 
         $response = $this->post('/api/queues',$data);
@@ -319,7 +325,7 @@ class HoquApiTest extends TestCase
         $data = [
             "instance" => "https:\/\/montepisanotree.org",
             "task" => "task1",
-            "parameters" => "prova",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
         ];
 
         $response = $this->post('/api/queues',$data);
@@ -380,7 +386,7 @@ class HoquApiTest extends TestCase
         $data = [
             "instance" => "https:\/\/montepisanotree.org",
             "task" => "task1",
-            "parameters" => "prova",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
         ];
 
         $response = $this->post('/api/queues',$data);
@@ -438,7 +444,7 @@ class HoquApiTest extends TestCase
         $data = [
             "instance" => "https:\/\/montepisanotree.org",
             "task" => "task1",
-            "parameters" => "prova",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
         ];
 
         $response = $this->post('/api/queues',$data);
@@ -473,6 +479,77 @@ class HoquApiTest extends TestCase
         $response ->assertForbidden();
 
     }
+
+    public function testAddApiHoquCheckInstance()
+    {
+        Queue::truncate();
+
+
+        $data = [
+            "instance" => "",
+            "task" => "mptupdatepoi",
+            "parameters" => ["a"=> "yes", "b"=> "no"]
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        $response ->assertStatus(400);
+
+
+    }
+
+    public function testAddApiHoquCheckTask()
+    {
+        Queue::truncate();
+
+
+        $data = [
+            "instance" => "fritto misto alla rotonda",
+            "task" => "",
+            "parameters" => ["a"=> "yes", "b"=> "no"]
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        $response ->assertStatus(400);
+
+
+    }
+
+    public function testAddApiHoquCheckParameters()
+    {
+        Queue::truncate();
+        
+        $data = [
+            "instance" => "fritto misto alla rotonda",
+            "task" => "mptupdatepoi",
+            "parameters" => []
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        $response ->assertStatus(400);
+
+
+    }
+
+    public function testAddApiHoquCheckParametersValidateJson()
+    {
+        Queue::truncate();
+        
+        $data = [
+            "instance" => "fritto misto alla rotonda",
+            "task" => "mptupdatepoi",
+            "parameters" => []
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        $response ->assertStatus(400);
+
+
+    }
+
 
     
 }

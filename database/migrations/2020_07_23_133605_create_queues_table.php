@@ -18,7 +18,7 @@ class CreateQueuesTable extends Migration
             $table->integer('id_server')->nullable();
             $table->text('instance');
             $table->text('task');
-            $table->text('parameters');
+            $table->json('parameters');
             $table->enum('process_status', ['new', 'processing', 'done','error'])->default('new');
             $table->enum('process_log',['new', 'processing', 'done','error'])->default('new');
             $table->timestamp('created_at')->useCurrent();
