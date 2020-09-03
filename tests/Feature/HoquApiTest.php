@@ -55,10 +55,6 @@ class HoquApiTest extends TestCase
 
         $dataDbTest = $response->json();
 
-     //   var_dump($dataDbTest[0]['parameters']);
-     //   var_dump($data['parameters']);
-     //   var_dump(json_encode($data['parameters']));
-
         $this->assertSame($dataDbTest[0]['instance'],$data['instance']);
         $this->assertSame($dataDbTest[0]['task'],$data['task']);
         $this->assertSame(json_decode($dataDbTest[0]['parameters'],true),$data['parameters']);
@@ -500,11 +496,10 @@ class HoquApiTest extends TestCase
 
     public function testAddApiHoquCheckTask()
     {
-        Queue::truncate();
 
 
         $data = [
-            "instance" => "fritto misto alla rotonda",
+            "instance" => "https://frittomisto.com",
             "task" => "",
             "parameters" => ["a"=> "yes", "b"=> "no"]
         ];
@@ -516,36 +511,127 @@ class HoquApiTest extends TestCase
 
     }
 
-    public function testAddApiHoquCheckParameters()
+    public function testAddApiHoquCheckParametersEmpty()
     {
         Queue::truncate();
-        
+
         $data = [
-            "instance" => "fritto misto alla rotonda",
+            "instance" => "https://frittomisto.com",
             "task" => "mptupdatepoi",
             "parameters" => []
         ];
 
         $response = $this->post('/api/queues',$data);
+        $response ->assertStatus(201);
+        $response->assertJson($data);
 
-        $response ->assertStatus(400);
+        //OPERATION 1
+        $response = $this->get('/api/queues');
+
+         //request that sends the "requesting server"
+         $requestSvr1 = [
+            "id_server" => 9,
+            "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+        ];
+
+        //OPERATIONS 2
+        $response = $this->put('/api/queuesPull',$requestSvr1);
+        
+        //check response 200
+        $response ->assertStatus(200);
+
+        //get value elaborate by pull
+        $dataDbTest = $response;
+
+        //check field process_status == processing
+        $this->assertSame('processing',$dataDbTest['process_status']);
+
+        //check id_server
+        $this->assertSame($requestSvr1['id_server'],$dataDbTest['id_server']);
+
+        //check instance
+        $this->assertSame($data['instance'],$dataDbTest['instance']);
+
+        //check parameters
+        $this->assertSame($data['parameters'],json_decode(json_encode($dataDbTest['parameters']),true));
+
+        //check parameters
+        $this->assertSame(1,$dataDbTest["id"]);
 
 
     }
 
     public function testAddApiHoquCheckParametersValidateJson()
     {
-        Queue::truncate();
         
         $data = [
-            "instance" => "fritto misto alla rotonda",
+            "instance" => "https://frittomisto.com",
             "task" => "mptupdatepoi",
-            "parameters" => []
+            "parameters" => 's',
         ];
 
         $response = $this->post('/api/queues',$data);
 
         $response ->assertStatus(400);
+
+        $data = [
+            "instance" => "https://frittomisto.com",
+            "task" => "mptupdatepoi",
+            "parameters" => [0,1,3],
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        $response ->assertStatus(400);
+
+        $data = [
+            "instance" => "https://frittomisto.com",
+            "task" => "mptupdatepoi",
+            "parameters" => ["a"=> "yes", "b"=> "no"],
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        $response ->assertStatus(201);
+
+        $data = [
+            "instance" => "https://frittomisto.com",
+            "task" => "mptupdatepoi",
+            "parameters" => 1,
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        $response ->assertStatus(400);
+
+        $data = [
+            "instance" => "https://frittomisto.com",
+            "task" => "mptupdatepoi",
+            "parameters" => true,
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        $response ->assertStatus(400);
+
+        $data = [
+            "instance" => "https://frittomisto.com",
+            "task" => "mptupdatepoi",
+            "parameters" => null,
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        $response ->assertStatus(201);
+
+        $data = [
+            "instance" => "https://frittomisto.com",
+            "task" => "mptupdatepoi",
+        ];
+
+        $response = $this->post('/api/queues',$data);
+
+        $response ->assertStatus(201);
 
 
     }

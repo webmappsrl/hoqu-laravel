@@ -40,48 +40,25 @@ class QueuesController extends Controller
         //get all data
         $request=$request->all();
 
-        //var_dump($request);
-
         //check instance
-        if(empty($request['instance']))
-        {
-            return response()->json(["error"=>"field instance is NULL"], 400);
-        }
-
+        if(empty($request['instance'])) return response()->json(["error"=>"field instance is NULL"], 400);
         //check task
-        if(empty($request['task']))
-        {
-            return response()->json(["error"=>"field task is NULL"], 400);
-        }
-
+        if(empty($request['task'])) return response()->json(["error"=>"field task is NULL"], 400);
         //check parameters
-        if(empty($request['parameters']))
+        if(!empty($request['parameters']))
         {
-            return response()->json(["error"=>"field parameters is NULL"], 400);
-        }
-        //validate value parameters
-        else
-        {
-            $rules = [
-                'a' => 'required',
-                'b' => 'required'
-            ];
-        
-            $validator = Validator::make($request['parameters'], $rules);
-            if ($validator->passes()) {
-
-                $queue = Queue::create($request);
-                return response()->json($queue, 201);
-
-            }
-            else
+            //check string
+            if(!is_array($request['parameters'])) return response()->json(["error"=>"erroe json"], 400);
+            //check multidimesional associative array
+            else if(array_keys($request['parameters'])===range(0, count($request['parameters']) - 1))
             {
-                $error = dd($validator->errors()->all());
-                return response()->json(["error"=>$error], 400);
-                
+                return response()->json(["error"=>"erroe json"], 400);   
             }
-
+            
         }
+        
+        $queue = Queue::create($request);
+        return response()->json($queue, 201);
         
     }
 
