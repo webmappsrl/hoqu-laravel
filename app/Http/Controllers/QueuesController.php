@@ -27,7 +27,7 @@ class QueuesController extends Controller
     public function index()
     {
        // return response()->json(Queue::get(), 200);
-        $cQ= DB::table('queues')->orderBy('created_at', 'asc')->get();
+        $cQ= DB::table('queues')->orderBy('created_at', 'asc')->orderByRaw("FIELD(process_status, 'new', 'processing', 'done','error')")->get();
         return response()->json($cQ, 200);
     }
 
@@ -119,7 +119,7 @@ class QueuesController extends Controller
                 $wouldLikeUpdate->save();
                 return response()->json($wouldLikeUpdate, 200);
             }
-            else return response()->json(['error' => 'Not authorized.'],403);
+            else return response()->json(['error' => 'Not authorized.'.$requestSvr2['id_server'].' VS '.$wouldLikeUpdate->id_server.''],403);
 
         }
         else return response()->json(['error' => 'Id not exist.'],403);
