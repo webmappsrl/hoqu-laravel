@@ -408,10 +408,10 @@ class HoquApiTest extends TestCase
             "idTask" => $dataDbTest['id'],
         ];
 
+        //generated status error
         $changeStatus = Queue::find(1);
         $changeStatus->process_status = 'error';
         $changeStatus->save(); 
-
 
         //OPERATIONS 2
         $response = $this->put('/api/queuesUpdate',$requestSvr1);
@@ -419,18 +419,11 @@ class HoquApiTest extends TestCase
         //get value elaborated by update
         $dataDbTestUp = $response;
 
-        $response ->assertStatus(200);
+        $response ->assertForbidden();
 
 
-        $this->assertSame('done',$dataDbTestUp['process_status']);
+        $this->assertSame('error',$changeStatus->process_status);
 
-        $this->assertSame($requestSvr1['id_server'],$dataDbTestUp['id_server']);
-
-        $this->assertSame($data['instance'],$dataDbTestUp['instance']);
-
-        $this->assertSame($data['parameters'],$dataDbTestUp['parameters']);
-
-        $this->assertSame(1,$dataDbTestUp["id"]);
 
     }
 
