@@ -111,7 +111,8 @@ class QueuesController extends Controller
         {
             if($requestSvr2['id_server']==$wouldLikeUpdate->id_server && ('processing'==$wouldLikeUpdate->process_status))
             {
-                $wouldLikeUpdate->process_status = 'done';    
+                $wouldLikeUpdate->process_status = $requestSvr2['status'];  
+                $wouldLikeUpdate->process_log = $requestSvr2['log'];  
                 $wouldLikeUpdate->save();
                 return response()->json($wouldLikeUpdate, 200);
             }

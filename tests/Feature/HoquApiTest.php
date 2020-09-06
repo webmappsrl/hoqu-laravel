@@ -257,7 +257,8 @@ class HoquApiTest extends TestCase
         //request that sends the "requesting server 2"
         $requestSvr2 = [
             "id_server" => 25,
-            "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi","mptinsertpoi", "mptinserttrack"],
+            "status" => "done",
+            "log" => "log test",
             "idTask" => $dataDbTest['id'],
         ];
 
@@ -293,7 +294,8 @@ class HoquApiTest extends TestCase
         //request that sends the "requesting server"
         $requestSvr1 = [
             "id_server" => 10,
-            "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "status" => "done",
+            "log" => "log test",
             "idTask" => $response['id'],
         ];
 
@@ -343,7 +345,8 @@ class HoquApiTest extends TestCase
         //request that sends the "requesting server 2"
         $requestSvr1 = [
             "id_server" => 10,
-            "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "status" => "done",
+            "log" => "log test",
             "idTask" => $dataDbTest['id'],
         ];
 
@@ -404,14 +407,10 @@ class HoquApiTest extends TestCase
         //request that sends the "requesting server 2"
         $requestSvr1 = [
             "id_server" => 10,
-            "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "status" => "error",
+            "log" => "log test",
             "idTask" => $dataDbTest['id'],
         ];
-
-        //generated status error
-        $changeStatus = Queue::find(1);
-        $changeStatus->process_status = 'error';
-        $changeStatus->save(); 
 
         //OPERATIONS 2
         $response = $this->put('/api/queuesUpdate',$requestSvr1);
@@ -419,10 +418,18 @@ class HoquApiTest extends TestCase
         //get value elaborated by update
         $dataDbTestUp = $response;
 
-        $response ->assertForbidden();
+        $response ->assertStatus(200);
 
 
-        $this->assertSame('error',$changeStatus->process_status);
+        $this->assertSame('error',$dataDbTestUp['process_status']);
+
+        $this->assertSame($requestSvr1['id_server'],$dataDbTestUp['id_server']);
+
+        $this->assertSame($data['instance'],$dataDbTestUp['instance']);
+
+        $this->assertSame($data['parameters'],$dataDbTestUp['parameters']);
+
+        $this->assertSame(1,$dataDbTestUp["id"]);
 
 
     }
