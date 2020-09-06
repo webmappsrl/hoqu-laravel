@@ -361,6 +361,8 @@ class HoquApiTest extends TestCase
 
         $this->assertSame('done',$dataDbTestUp['process_status']);
 
+        $this->assertSame($requestSvr1['log'],$dataDbTestUp['process_log']);
+
         $this->assertSame($requestSvr1['id_server'],$dataDbTestUp['id_server']);
 
         $this->assertSame($data['instance'],$dataDbTestUp['instance']);
@@ -422,6 +424,8 @@ class HoquApiTest extends TestCase
 
 
         $this->assertSame('error',$dataDbTestUp['process_status']);
+
+        $this->assertSame($requestSvr1['log'],$dataDbTestUp['process_log']);
 
         $this->assertSame($requestSvr1['id_server'],$dataDbTestUp['id_server']);
 
