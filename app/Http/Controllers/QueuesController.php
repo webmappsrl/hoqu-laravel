@@ -28,7 +28,7 @@ class QueuesController extends Controller
     public function index()
     {
        // return response()->json(Queue::get(), 200);
-        $cQ= DB::table('queues')->orderBy('created_at', 'asc')->orderByRaw("FIELD(process_status, 'new', 'processing', 'done','error')")->get();
+        $cQ= DB::table('queues')->orderByRaw("FIELD(process_status, 'new', 'processing', 'done','error')")->orderBy('created_at', 'asc')->get();
         return response()->json($cQ, 200);
     }
 
