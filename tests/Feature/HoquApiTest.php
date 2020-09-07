@@ -80,6 +80,16 @@ class HoquApiTest extends TestCase
     } 
 
     /*
+    Recupera il primo item di queues processabile di una richiesta di un server. Cambia lo stato in “processing” aggiunge id del server all’item e restituisce il json dell’item che deve essere processato.
+
+    Processabile: è il primo item in ordine temporale secondo logica FIFO che abbia nel campo task uno della lista inviata dal server
+
+
+    JSON di richiesta:
+
+    - lista dei task (array con lista dei nomi)
+    - server ID
+
     1. CLEAR DB Aggiungo con add un item, con pull lo recupero mettendo lo stesso task con cui ho inserito add. Verifico che la risposta sia un json con item con status in processing. Stato di uscita è 200. Verifico che instance sia uguale a quella che ha richiesto add, che parameters sia lo stesso che ha richiesto add
     */
     public function test1PullApiHoqu()
@@ -222,6 +232,12 @@ class HoquApiTest extends TestCase
     }
 
     /**
+     *UPDATE
+
+        *UPDATE: è la chiamata che fa un server verso HOQU per comunicare L’avvenuto svolgimento del task. Il server invia l’ID del TASK assieme all’esito (“done”, “error”) e ad un LOG, invia anche l’id del server per verifica. 
+
+        *L’API recupera l’item in queues (verifica che sia in status process e che sia lo stesso server che ha preso i un carico il task, altrimenti manda un codice non autorizzato). In caso in cui ID non esiste manda il codice di non esistenza. Aggiorna lo stato dell’item con  status=done|error in base a quello che viene inviato dal server, inserisce anche il log inviato da server.
+
      *1. Clear DB, add queue (task1), srv1 chiama pull che restituisce id. srv2 chiama update dell’id di cui sopra. Verificare che status è non autorizzato
      */
 
