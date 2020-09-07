@@ -72,7 +72,7 @@ class QueuesController extends Controller
         $requestSvr1 = $requestSvr1->all();
         
         //order
-        $queue = Queue::whereIn('task', $requestSvr1['taskAvailable'])->orderByRaw("FIELD(process_status, 'new', 'processing', 'done','error')")->orderBy('created_at', 'asc')->first();
+        $queue = Queue::whereIn('task', $requestSvr1['taskAvailable'])->where('process_status','=','new')->orderBy('created_at', 'asc')->first();
 
        
         //var_dump($queue);
