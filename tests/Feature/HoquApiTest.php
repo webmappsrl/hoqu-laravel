@@ -43,7 +43,7 @@ class HoquApiTest extends TestCase
         ];
 
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         $response ->assertStatus(201);
 
@@ -63,15 +63,15 @@ class HoquApiTest extends TestCase
         $this->assertSame(count($dataDbTest),1);
 
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         $dataDbTest = $response->json();
 
@@ -105,7 +105,7 @@ class HoquApiTest extends TestCase
             "parameters" => ["a"=> "yes", "b"=> "no"],
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         //request that sends the "requesting server"
         $requestSvr1 = [
@@ -148,7 +148,7 @@ class HoquApiTest extends TestCase
             "parameters" => "prova prova",
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         //request that sends the "requesting server"
         $requestSvr1 = [
@@ -181,7 +181,7 @@ class HoquApiTest extends TestCase
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         sleep(2);
 
@@ -191,7 +191,7 @@ class HoquApiTest extends TestCase
             "parameters" => "prova",
         ];
 
-        $response = $this->post('/api',$data1);
+        $response = $this->post('/api/add',$data1);
 
         //request that sends the "requesting server"
         $requestSvr1 = [
@@ -254,7 +254,7 @@ class HoquApiTest extends TestCase
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>"maybe"],
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         //request that sends the "requesting server"
         $requestSvr1 = [
@@ -305,7 +305,7 @@ class HoquApiTest extends TestCase
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>"maybe"],
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         //request that sends the "requesting server"
         $requestSvr1 = [
@@ -342,7 +342,7 @@ class HoquApiTest extends TestCase
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         //request that sends the "requesting server"
         $requestSvr1 = [
@@ -406,7 +406,7 @@ class HoquApiTest extends TestCase
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         //request that sends the "requesting server"
         $requestSvr1 = [
@@ -463,7 +463,7 @@ class HoquApiTest extends TestCase
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         //request that sends the "requesting server"
         $requestSvr1 = [
@@ -507,7 +507,7 @@ class HoquApiTest extends TestCase
             "parameters" => ["a"=> "yes", "b"=> "no"]
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         $response ->assertStatus(400);
 
@@ -524,7 +524,7 @@ class HoquApiTest extends TestCase
             "parameters" => ["a"=> "yes", "b"=> "no"]
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         $response ->assertStatus(400);
 
@@ -541,7 +541,7 @@ class HoquApiTest extends TestCase
             "parameters" => []
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
         $response ->assertStatus(201);
         $response->assertJson($data);
 
@@ -590,7 +590,7 @@ class HoquApiTest extends TestCase
             "parameters" => 's',
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         $response ->assertStatus(400);
 
@@ -600,7 +600,7 @@ class HoquApiTest extends TestCase
             "parameters" => [0,1,3],
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         $response ->assertStatus(400);
 
@@ -610,7 +610,7 @@ class HoquApiTest extends TestCase
             "parameters" => ["a"=> "yes", "b"=> "no"],
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         $response ->assertStatus(201);
 
@@ -620,7 +620,7 @@ class HoquApiTest extends TestCase
             "parameters" => 1,
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         $response ->assertStatus(400);
 
@@ -630,7 +630,7 @@ class HoquApiTest extends TestCase
             "parameters" => true,
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         $response ->assertStatus(400);
 
@@ -640,7 +640,7 @@ class HoquApiTest extends TestCase
             "parameters" => null,
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         $response ->assertStatus(201);
 
@@ -649,7 +649,7 @@ class HoquApiTest extends TestCase
             "task" => "mptupdatepoi",
         ];
 
-        $response = $this->post('/api',$data);
+        $response = $this->post('/api/add',$data);
 
         $response ->assertStatus(201);
 
