@@ -16,7 +16,8 @@ class QueuesController extends Controller
     public function countQueue()
     {
         $cQ= DB::table('queues')->count();
-        return view('welcome',['queues_count'=>$cQ]);
+        $config = config('app.version');
+        return view('welcome',['queues_count'=>$cQ, 'version'=>$config]);
     }
 
 

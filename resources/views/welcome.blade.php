@@ -89,7 +89,7 @@
                 </div>
 
                 <div class="small">
-                    VERSION 3 Sep 2020
+                    VERSION <?php echo $version ?>
                 </div>
 
             </div>
