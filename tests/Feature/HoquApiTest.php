@@ -77,7 +77,7 @@ class HoquApiTest extends TestCase
 
         $this->assertSame(count($dataDbTest),6);
 
-    } 
+    }
 
     /*
     Recupera il primo item di queues processabile di una richiesta di un server. Cambia lo stato in “processing” aggiunge id del server all’item e restituisce il json dell’item che deve essere processato.
@@ -456,6 +456,8 @@ class HoquApiTest extends TestCase
 
     public function testIdNotExistUpdateApiHoqu()
     {
+        Queue::truncate();
+
         //add data with api/queues
         $data = [
             "instance" => "https:\/\/montepisanotree.org",
@@ -583,6 +585,8 @@ class HoquApiTest extends TestCase
 
     public function testAddApiHoquCheckParametersValidateJson()
     {
+        Queue::truncate();
+
         
         $data = [
             "instance" => "https://frittomisto.com",
@@ -655,6 +659,71 @@ class HoquApiTest extends TestCase
 
 
     }
+
+    public function testDuplicateAddApiHoqu()
+    {
+        Queue::truncate();
+
+
+        $data = [
+            "instance" => "https://montepisanotree.org",
+            "task" => "mptupdatepoi",
+            "parameters" => ["a"=> "yes", "b"=> "no"],
+        ];
+
+        $dataDuplicate = [
+            "instance" => "https://montepisanotree.org",
+            "task" => "mptupdatepoi",
+            "parameters" => ["a"=> "yes", "b"=> "no"],
+        ];
+
+
+        $response = $this->post('/api/add',$data);
+
+        $response ->assertStatus(201);
+
+        $response->assertJson($data);
+
+        $response = $this->get('/api');
+
+        $response ->assertStatus(200);
+
+        $dataDbTest = $response->json();
+
+        $this->assertSame($dataDbTest[0]['instance'],$data['instance']);
+        $this->assertSame($dataDbTest[0]['task'],$data['task']);
+        $this->assertSame(json_decode($dataDbTest[0]['parameters'],true),$data['parameters']);
+        $this->assertSame($dataDbTest[0]['process_status'],'new');
+
+        $this->assertSame(count($dataDbTest),1);
+
+
+        $response = $this->post('/api/add',$dataDuplicate);
+
+        $response ->assertStatus(201);
+
+        $response->assertJson($dataDuplicate);
+
+        $response = $this->get('/api');
+
+        $response ->assertStatus(200);
+
+        $dataDbTest = $response->json();
+
+
+        $this->assertSame($dataDbTest[0]['instance'],$dataDuplicate['instance']);
+        $this->assertSame($dataDbTest[0]['task'],$dataDuplicate['task']);
+        $this->assertSame(json_decode($dataDbTest[0]['parameters'],true),$dataDuplicate['parameters']);
+        $this->assertSame($dataDbTest[0]['process_status'],'duplicate');
+
+        $dataDbTest = $response->json();
+
+        $this->assertSame(count($dataDbTest),2);
+
+
+
+
+    } 
 
 
     

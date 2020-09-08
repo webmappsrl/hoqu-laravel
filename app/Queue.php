@@ -9,7 +9,8 @@ class Queue extends Model
     protected $fillable=[
         'instance',
         'task',
-        'parameters'
+        'parameters',
+        'process_status',
     ];
 
     protected $casts = [
