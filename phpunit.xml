@@ -30,7 +30,7 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="DB_CONNECTION" value="mysql_test"/>
-        <env name="DB_TEST_DATABASE" value="hoqustagingtest"/>  
+        <env name="DB_TEST_DATABASE" value="hoquTest"/>  
         <env name="API_DEBUG" value="false"/>
         <env name="MAIL_DRIVER" value="log"/>
         <ini name="memory_limit" value="512M" />
