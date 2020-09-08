@@ -57,10 +57,36 @@ class QueuesController extends Controller
             }
             
         }
-        
-        $queue = Queue::create($request);
-        return response()->json($queue, 201);
-        
+
+        $queueDuplicate = Queue::where('instance','=',$request['instance'])
+        ->where('task','=',$request['task']);
+
+        if(isset($request['parameters']))
+        {
+            $queueDuplicate = Queue::where('instance','=',$request['instance'])
+            ->where('task','=',$request['task'])
+            ->whereJsonContains('parameters',$request['parameters'])
+            ->get();
+        }
+        else
+        {
+            $queueDuplicate = Queue::where('instance','=',$request['instance'])
+            ->where('task','=',$request['task'])
+            ->whereNull('parameters')
+            ->get();
+        }
+
+
+        if($queueDuplicate->isEmpty()) $queue = Queue::create($request);
+        else
+        { 
+            $queue = Queue::create($request);
+            $wouldLikeUpdate = Queue::find($queue->id);
+            $wouldLikeUpdate->process_status='duplicate';
+            $wouldLikeUpdate->save();
+        }
+
+        return response()->json($queue, 201);       
     }
 
        /*
@@ -83,9 +109,6 @@ class QueuesController extends Controller
             $queue->id_server = $requestSvr1['id_server'];
 
             $queue->save();
-
-            //var_dump($queue);
-
 
             return response()->json($queue, 200);
 
