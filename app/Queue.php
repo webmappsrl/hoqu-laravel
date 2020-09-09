@@ -10,8 +10,10 @@ class Queue extends Model
         'instance',
         'task',
         'parameters',
-        'process_status',
     ];
+
+    protected $hidden = [];
+
 
     protected $casts = [
         'parameters' => 'array',
