@@ -720,10 +720,85 @@ class HoquApiTest extends TestCase
 
         $this->assertSame(count($dataDbTest),2);
 
-
-
-
     } 
+
+    public function testCheckValueStatusUpdateApiHoqu()
+    {
+        Queue::truncate();
+
+        //1 TEST TDD
+
+        //add data with api/queues
+        $data = [
+            "instance" => "https:\/\/montepisanotree.org",
+            "task" => "task1",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
+        ];
+
+        $response = $this->post('/api/add',$data);
+
+        //request that sends the "requesting server"
+        $requestSvr1 = [
+            "id_server" => 10,
+            "taskAvailable" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+        ];
+
+        //OPERATIONS 1
+        $response = $this->put('/api/pull',$requestSvr1);
+        
+        $response ->assertStatus(200);
+
+        //get value elaborate by pull
+        $dataDbTest = $response;
+
+        //request that sends the "requesting server 2"
+        $requestSvr1 = [
+            "id_server" => 10,
+            "status" => '',
+            "log" => "log test",
+            "idTask" => $dataDbTest['id'],
+        ];
+
+        //OPERATIONS 2
+        $response = $this->put('/api/update',$requestSvr1);
+
+        //get value elaborated by update
+        $dataDbTestUp = $response;
+
+        $response ->assertForbidden();
+
+        //request that sends the "requesting server 2"
+        $requestSvr1 = [
+            "id_server" => 10,
+            "status" => 'duplicate',
+            "log" => "log test",
+            "idTask" => $dataDbTest['id'],
+        ];
+
+        //OPERATIONS 2
+        $response = $this->put('/api/update',$requestSvr1);
+
+        //get value elaborated by update
+        $dataDbTestUp = $response;
+
+        $response ->assertForbidden();
+
+        //request that sends the "requesting server 2"
+        $requestSvr1 = [
+            "id_server" => 10,
+            "log" => "log test",
+            "idTask" => $dataDbTest['id'],
+        ];
+
+        //OPERATIONS 2
+        $response = $this->put('/api/update',$requestSvr1);
+
+        //get value elaborated by update
+        $dataDbTestUp = $response;
+
+        $response ->assertForbidden();
+
+    }
 
 
     
