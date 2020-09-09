@@ -127,23 +127,32 @@ class QueuesController extends Controller
     {
         //get all data 
         $requestSvr2 = $requestSvr2->all();
-        
-        //query
-        $wouldLikeUpdate = Queue::find($requestSvr2['idTask']);
-
-        if(!empty($wouldLikeUpdate))
+        if(!empty($requestSvr2['status']) && ($requestSvr2['status']=='error'||$requestSvr2['status']=='done'))
         {
-            if($requestSvr2['id_server']==$wouldLikeUpdate->id_server && ('processing'==$wouldLikeUpdate->process_status))
+            //query
+            $wouldLikeUpdate = Queue::find($requestSvr2['idTask']);
+
+            if(!empty($wouldLikeUpdate))
             {
-                $wouldLikeUpdate->process_status = $requestSvr2['status'];  
-                $wouldLikeUpdate->process_log = $requestSvr2['log'];  
-                $wouldLikeUpdate->save();
-                return response()->json($wouldLikeUpdate, 200);
+                if($requestSvr2['id_server']==$wouldLikeUpdate->id_server && ('processing'==$wouldLikeUpdate->process_status))
+                {
+                    $wouldLikeUpdate->process_status = $requestSvr2['status'];  
+                    $wouldLikeUpdate->process_log = $requestSvr2['log'];  
+                    $wouldLikeUpdate->save();
+                    return response()->json($wouldLikeUpdate, 200);
+                }
+                else return response()->json(['error' => 'Not authorized.'.$requestSvr2['id_server'].' VS '.$wouldLikeUpdate->id_server.''],403);
+
             }
-            else return response()->json(['error' => 'Not authorized.'.$requestSvr2['id_server'].' VS '.$wouldLikeUpdate->id_server.''],403);
+            else return response()->json(['error' => 'Id not exist.'],403);
 
         }
-        else return response()->json(['error' => 'Id not exist.'],403);
+        else
+        {
+            return response()->json(['error' => 'status not exist or does not have the correct value.'],403);
+
+        }
+        
             
     }
 
