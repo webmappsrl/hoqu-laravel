@@ -28,8 +28,13 @@ class QueuesController extends Controller
     public function index()
     {
        // return response()->json(Queue::get(), 200);
-        $cQ= DB::table('queues')->orderByRaw('FIELD(process_status, "new", "processing", "done","error")asc')->orderBy('created_at', 'asc')->get();
+        $cQ= DB::table('queues')->orderByRaw('FIELD(process_status, "new", "processing", "done","error","duplicate")asc')->orderBy('created_at', 'asc')->get();
         return response()->json($cQ, 200);
+    }
+
+    public function indexId($id)
+    {
+        return response()->json(Queue::findOrFail($id), 200);
     }
 
     

@@ -662,64 +662,19 @@ class HoquApiTest extends TestCase
 
     public function testDuplicateAddApiHoqu()
     {
-        Queue::truncate();
-
-
-        $data = [
-            "instance" => "https://montepisanotree.org",
-            "task" => "mptupdatepoi",
-            "parameters" => ["a"=> "yes", "b"=> "no"],
-        ];
-
-        $dataDuplicate = [
-            "instance" => "https://montepisanotree.org",
-            "task" => "mptupdatepoi",
-            "parameters" => ["a"=> "yes", "b"=> "no"],
-        ];
-
-
+        $data = [ "instance" => "X", "task" => "X", "parameters" => ["k"=> "v"] ];
+        //OPERATIONS 1
         $response = $this->post('/api/add',$data);
-
-        $response ->assertStatus(201);
-
+        $response->assertStatus(201);
         $response->assertJson($data);
-
-        $response = $this->get('/api');
-
-        $response ->assertStatus(200);
-
-        $dataDbTest = $response->json();
-
-        $this->assertSame($dataDbTest[0]['instance'],$data['instance']);
-        $this->assertSame($dataDbTest[0]['task'],$data['task']);
-        $this->assertSame(json_decode($dataDbTest[0]['parameters'],true),$data['parameters']);
-        $this->assertSame($dataDbTest[0]['process_status'],'new');
-
-        $this->assertSame(count($dataDbTest),1);
-
-
-        $response = $this->post('/api/add',$dataDuplicate);
-
+        $ja = $this->get('/api/'.$response['id'])->json();
+        $this->assertSame('new',$ja["process_status"]);
+        //OPERATIONS 2
+        $response = $this->post('/api/add',$data);
         $response ->assertStatus(201);
-
-        $response->assertJson($dataDuplicate);
-
-        $response = $this->get('/api');
-
-        $response ->assertStatus(200);
-
-        $dataDbTest = $response->json();
-
-
-        $this->assertSame($dataDbTest[0]['instance'],$dataDuplicate['instance']);
-        $this->assertSame($dataDbTest[0]['task'],$dataDuplicate['task']);
-        $this->assertSame(json_decode($dataDbTest[0]['parameters'],true),$dataDuplicate['parameters']);
-        $this->assertSame($dataDbTest[0]['process_status'],'duplicate');
-
-        $dataDbTest = $response->json();
-
-        $this->assertSame(count($dataDbTest),2);
-
+        $response->assertJson($data);
+        $ja = $this->get('/api/'.$response['id'])->json();
+        $this->assertSame('duplicate',$ja['process_status']);
     } 
 
     public function testCheckValueStatusUpdateApiHoqu()
@@ -789,14 +744,49 @@ class HoquApiTest extends TestCase
             "log" => "log test",
             "idTask" => $dataDbTest['id'],
         ];
-
         //OPERATIONS 2
         $response = $this->put('/api/update',$requestSvr1);
-
         //get value elaborated by update
         $dataDbTestUp = $response;
-
         $response ->assertForbidden();
+
+    }
+
+    public function testCheckIndexIdHoqu()
+    {
+        Queue::truncate();
+        $data = [ "instance" => "X", "task" => "X", "parameters" => ["k"=> "v"] ];
+        $response = $this->json('POST', '/api/add', $data);
+        $ja = $this->get('/api/1')->json();
+        $this->assertSame(1,$ja["id"]);
+        $this->assertSame(null,$ja["id_server"]);
+        $this->assertSame($data['instance'],$ja["instance"]);
+        $this->assertSame($data['task'],$ja["task"]);
+        $this->assertSame('new',$ja["process_status"]);
+        $this->assertSame('new',$ja["process_log"]);
+        $this->assertSame($data['parameters'],json_decode(json_encode($ja['parameters']),true));
+        $data = [ "instance" => "X", "task" => "Z", "parameters" => ["k"=> "v"] ];
+        $response = $this->json('POST', '/api/add', $data);
+        $ja = $this->get('/api/2')->json();
+        $this->assertSame(2,$ja["id"]);
+        $this->assertSame(null,$ja["id_server"]);
+        $this->assertSame($data['instance'],$ja["instance"]);
+        $this->assertSame($data['task'],$ja["task"]);
+        $this->assertSame('new',$ja["process_status"]);
+        $this->assertSame('new',$ja["process_log"]);
+        $this->assertSame($data['parameters'],json_decode(json_encode($ja['parameters']),true));
+        $data = [ "instance" => "X", "task" => "Z", "parameters" => ["k"=>null]];
+        $response = $this->json('POST', '/api/add', $data);
+        $ja = $this->get('/api/3')->json();
+        $this->assertSame(3,$ja["id"]);
+        $this->assertSame(null,$ja["id_server"]);
+        $this->assertSame($data['instance'],$ja["instance"]);
+        $this->assertSame($data['task'],$ja["task"]);
+        $this->assertSame('new',$ja["process_status"]);
+        $this->assertSame('new',$ja["process_log"]);
+        $this->assertSame($data['parameters'],json_decode(json_encode($ja['parameters']),true));
+        $ja = $this->get('/api/4');
+        $ja->assertStatus(404);;
 
     }
 
