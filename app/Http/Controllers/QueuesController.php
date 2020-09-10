@@ -9,7 +9,7 @@ use DB;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Validator;
-
+use Illuminate\Support\Facades\Mail;
 class QueuesController extends Controller
 {
     //return # elements in queue
@@ -25,14 +25,14 @@ class QueuesController extends Controller
      give back all elements of the Queue
      FIFO sorting
      */
-    public function index()
+    public function list()
     {
        // return response()->json(Queue::get(), 200);
         $cQ= DB::table('queues')->orderByRaw('FIELD(process_status, "new", "processing", "done","error","duplicate")asc')->orderBy('created_at', 'asc')->get();
         return response()->json($cQ, 200);
     }
 
-    public function indexId($id)
+    public function item($id)
     {
         return response()->json(Queue::findOrFail($id), 200);
     }
@@ -41,7 +41,7 @@ class QueuesController extends Controller
     /*
     add elementsin Queue
     */
-    public function add(Request $request)
+    public function push(Request $request)
     {
         //get all data
         $request=$request->all();
@@ -94,7 +94,7 @@ class QueuesController extends Controller
         return response()->json($queue, 201);       
     }
 
-       /*
+    /*
     pull elementsin Queue
     */
     public function pull(Request $requestSvr1)

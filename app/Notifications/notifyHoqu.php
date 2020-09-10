@@ -41,7 +41,7 @@ class notifyHoqu extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->from('team@gmail.com', 'notify error Hoqu')
+                    ->from('team@webmapp.it', 'notify error Hoqu')
                     ->line('The introduction to the notification.')
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
