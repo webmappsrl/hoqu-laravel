@@ -76,7 +76,7 @@ class pushTest extends TestCase
         $response = $this->post('api/queue/push',$data);
         $response ->assertStatus(400);
     }
-    
+
     public function testApiHoquCheckTaskPush()
     {
         $data = [
@@ -184,6 +184,6 @@ class pushTest extends TestCase
         $response->assertJson($data);
         $ja = $this->get('api/queue/item/'.$response['id'])->json();
         $this->assertSame('duplicate',$ja['process_status']);
-    } 
+    }
 
 }

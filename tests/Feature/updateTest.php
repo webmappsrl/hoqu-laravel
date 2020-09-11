@@ -147,14 +147,12 @@ class updateTest extends TestCase
         //OPERATIONS 1
         $response = $this->put('api/queue/pull',$requestSvr1);
         $response ->assertStatus(200);
-        //get value elaborate by pull
-        $dataDbTest = $response;
         //request that sends the "requesting server 2"
         $requestSvr1 = [
             "id_server" => 10,
             "status" => "error",
             "log" => "log test",
-            "idTask" => $dataDbTest['id'],
+            "idTask" => $response['id'],
         ];
         //OPERATIONS 2
         $response = $this->put('api/queue/update',$requestSvr1);

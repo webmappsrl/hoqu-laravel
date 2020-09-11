@@ -93,10 +93,6 @@
                 </div>
 
                 <div class="small">
-                    id_server: {{ $mail_data['id_server'] }}<br/>
-                </div>
-
-                <div class="small">
                     task: {{ $mail_data['task'] }}<br/>
                 </div>
 

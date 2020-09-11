@@ -107,9 +107,6 @@ class QueuesController extends Controller
         //order
         $queue = Queue::whereIn('task', $requestSvr1['taskAvailable'])->where('process_status','=','new')->orderBy('created_at', 'asc')->first();
 
-
-        //var_dump($queue);
-
         if(!empty($queue))
         {
             $queue->process_status = 'processing';
@@ -149,7 +146,7 @@ class QueuesController extends Controller
                     //send mail
                     if($requestSvr2['status']=='error')
                     {
-                         Mail::to('team@webmapp.it')->send(new NotifyHoqu($wouldLikeUpdate));
+                         Mail::to('gianmarcogagliardi@webmapp.it')->send(new NotifyHoqu($wouldLikeUpdate));
                     }
                     return response()->json($wouldLikeUpdate, 200);
                 }
