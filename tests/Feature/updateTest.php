@@ -11,11 +11,11 @@ class updateTest extends TestCase
 {
     //migrate tables before each test
     use RefreshDatabase;
-    
+
     /**
      *UPDATE
 
-        *UPDATE: è la chiamata che fa un server verso HOQU per comunicare L’avvenuto svolgimento del task. Il server invia l’ID del TASK assieme all’esito (“done”, “error”) e ad un LOG, invia anche l’id del server per verifica. 
+        *UPDATE: è la chiamata che fa un server verso HOQU per comunicare L’avvenuto svolgimento del task. Il server invia l’ID del TASK assieme all’esito (“done”, “error”) e ad un LOG, invia anche l’id del server per verifica.
 
         *L’API recupera l’item in queues (verifica che sia in status process e che sia lo stesso server che ha preso i un carico il task, altrimenti manda un codice non autorizzato). In caso in cui ID non esiste manda il codice di non esistenza. Aggiorna lo stato dell’item con  status=done|error in base a quello che viene inviato dal server, inserisce anche il log inviato da server.
 
@@ -129,7 +129,7 @@ class updateTest extends TestCase
     /**
      * 4. Clear DB, add queue (task1), srv1 chiama pull che restituisce id. Srv1 chiama update con status in “error” e log “log test”. Verificare status UPDATE OK. Verificare da DB che la coda con ID abbia status in “error” e log “log test”
      */
-    public function test4UpdateApiHoqu()
+    public function testErrorUpdateApiHoqu()
     {
         Queue::truncate();
         //add data with api/queues

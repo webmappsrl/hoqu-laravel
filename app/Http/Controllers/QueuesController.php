@@ -10,6 +10,8 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\notifyHoqu;
+
 class QueuesController extends Controller
 {
     //return # elements in queue
@@ -37,7 +39,7 @@ class QueuesController extends Controller
         return response()->json(Queue::findOrFail($id), 200);
     }
 
-    
+
     /*
     add elementsin Queue
     */
@@ -58,9 +60,9 @@ class QueuesController extends Controller
             //check multidimesional associative array
             else if(array_keys($request['parameters'])===range(0, count($request['parameters']) - 1))
             {
-                return response()->json(["error"=>"erroe json"], 400);   
+                return response()->json(["error"=>"erroe json"], 400);
             }
-            
+
         }
 
         $queueDuplicate = Queue::where('instance','=',$request['instance'])
@@ -84,14 +86,14 @@ class QueuesController extends Controller
 
         if($queueDuplicate->isEmpty()) $queue = Queue::create($request);
         else
-        { 
+        {
             $queue = Queue::create($request);
             $wouldLikeUpdate = Queue::find($queue->id);
             $wouldLikeUpdate->process_status='duplicate';
             $wouldLikeUpdate->save();
         }
 
-        return response()->json($queue, 201);       
+        return response()->json($queue, 201);
     }
 
     /*
@@ -101,13 +103,13 @@ class QueuesController extends Controller
     {
         //get all data
         $requestSvr1 = $requestSvr1->all();
-        
+
         //order
         $queue = Queue::whereIn('task', $requestSvr1['taskAvailable'])->where('process_status','=','new')->orderBy('created_at', 'asc')->first();
 
-       
+
         //var_dump($queue);
-       
+
         if(!empty($queue))
         {
             $queue->process_status = 'processing';
@@ -121,7 +123,7 @@ class QueuesController extends Controller
         else
         {
             return response()->json([], 204);
-        } 
+        }
 
     }
 
@@ -130,7 +132,7 @@ class QueuesController extends Controller
     */
     public function update(Request $requestSvr2)
     {
-        //get all data 
+        //get all data
         $requestSvr2 = $requestSvr2->all();
         if(!empty($requestSvr2['status']) && ($requestSvr2['status']=='error'||$requestSvr2['status']=='done'))
         {
@@ -141,9 +143,14 @@ class QueuesController extends Controller
             {
                 if($requestSvr2['id_server']==$wouldLikeUpdate->id_server && ('processing'==$wouldLikeUpdate->process_status))
                 {
-                    $wouldLikeUpdate->process_status = $requestSvr2['status'];  
-                    $wouldLikeUpdate->process_log = $requestSvr2['log'];  
+                    $wouldLikeUpdate->process_status = $requestSvr2['status'];
+                    $wouldLikeUpdate->process_log = $requestSvr2['log'];
                     $wouldLikeUpdate->save();
+                    //send mail
+                    if($requestSvr2['status']=='error')
+                    {
+                         Mail::to('team@webmapp.it')->send(new NotifyHoqu($wouldLikeUpdate));
+                    }
                     return response()->json($wouldLikeUpdate, 200);
                 }
                 else return response()->json(['error' => 'Not authorized.'.$requestSvr2['id_server'].' VS '.$wouldLikeUpdate->id_server.''],403);
@@ -157,8 +164,8 @@ class QueuesController extends Controller
             return response()->json(['error' => 'status not exist or does not have the correct value.'],403);
 
         }
-        
-            
+
+
     }
 
 
