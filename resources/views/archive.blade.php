@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('HOQU Status') }}
+            {{ __('HOQU Archive') }}
         </h2>
         <div>
             <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -58,7 +58,7 @@
                         <div class="container mx-auto px-6 py-2">
                             <div class="flex flex-col mt-8">
                                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                                    <table class="table-auto ">
+                                    <table class="table-auto">
                                         <thead>
                                           <tr>
                                             <th class="px-4 py-6">id</th>
@@ -68,6 +68,8 @@
                                             <th class="px-4 py-6">process_status</th>
                                             <th class="px-4 py-6">create</th>
                                             <th class="px-4 py-6">worked</th>
+                                            <th class="px-4 py-6">elapsed time</th>
+
                                           </tr>
                                         </thead>
                                         <tbody>
@@ -84,6 +86,7 @@
                                                 <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->process_status }}</a></td>
                                                 <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->created_at}}</a></td>
                                                 <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->updated_at}}</a></td>
+                                                <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->created_at->floatDiffInSeconds($task->updated_at) }}</a></td>
                                                 </tr>
 
                                             @endforeach
@@ -91,6 +94,7 @@
                                         </tbody>
                                       </table>
                                       {{ $tasks->render()}}
+
 
 
                                 </div>

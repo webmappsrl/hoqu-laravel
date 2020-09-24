@@ -24,7 +24,9 @@ use App\Http\Controllers\TasksController;
 //     return view('dashboard');
 // })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/', [TasksController::class, 'index'])->name('dashboard');;
+Route::middleware(['auth:sanctum', 'verified'])->get('/', [TasksController::class, 'index'])->name('dashboard');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/archive', [TasksController::class, 'index_done'])->name('archive');;
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/{task}', [TasksController::class, 'show'])->name('task_details');;
 
