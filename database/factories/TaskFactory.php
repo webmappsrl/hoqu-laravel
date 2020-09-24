@@ -32,11 +32,20 @@ class TaskFactory extends Factory
             'job' => $this->faker->sentence(1),
             'parameters' => json_encode(["mtpupdate" => $this->faker->numberBetween(1,100)]),
             'process_status' => 'new',
-            // 'process_status' => 'processing',
             'process_log'=>'',
             'created_at'=> $date,
-            //commenta update per processing
             'updated_at'=>$date
         ];
     }
+
+    public function suspended()
+    {
+        return $this->state([
+            'process_status' => 'processing',
+            'created_at'=> $this->faker->dateTimeBetween($startDate = '-2 day', $endDate = 'now'),
+            'updated_at'=> $this->faker->dateTimeBetween($startDate = '-1 day', $endDate = 'now'),
+        ]);
+    }
+
+
 }
