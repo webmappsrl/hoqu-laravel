@@ -20,6 +20,12 @@ class TasksController extends Controller
         return view('archive',['tasks'=>$task]);
     }
 
+    public function index_error()
+    {
+        $task = Task::where('process_status', '=', 'error')->orderBy('created_at', 'asc')->paginate(50);
+        return view('error',['tasks'=>$task]);
+    }
+
     public function show(Task $task)
     {
         return view('task_details',['task'=>$task]);
