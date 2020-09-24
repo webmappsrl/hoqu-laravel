@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('HOQU Status') }}
+            {{ __('HOQU Reschedule') }}
         </h2>
         <div>
             <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -57,40 +57,33 @@
                     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-white-200">
                         <div class="container mx-auto px-6 py-2">
                             <div class="flex flex-col mt-8">
-                                <div class=" overflow-hidden  sm:rounded-lg">
-                                    <table class="table-auto ">
-                                        <thead>
-                                          <tr>
-                                            <th class="px-4 py-6">id</th>
-                                            <th class="px-4 py-6">instance</th>
-                                            <th class="px-4 py-6">job</th>
-                                            <th class="px-4 py-6">parameters</th>
-                                            <th class="px-4 py-6">process_status</th>
-                                            <th class="px-4 py-6">create</th>
-                                            <th class="px-4 py-6">worked</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($tasks as $index => $task)
-                                                @if ($index % 2)
-                                                <tr>
-                                                @else
-                                                <tr class="bg-gray-100">
-                                                @endif
-                                                <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->id }}</a></td>
-                                                <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->instance }}</a></td>
-                                                <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->job }}</a></td>
-                                                <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->parameters }}</a></td>
-                                                <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->process_status }}</a></td>
-                                                <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->created_at}}</a></td>
-                                                <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->updated_at}}</a></td>
-                                                </tr>
 
-                                            @endforeach
+                                <div class="max-w-sm rounded overflow-hidden">
 
-                                        </tbody>
-                                      </table>
-                                      {{ $tasks->render()}}
+
+
+                                    <form method='PUT' action="/{{$task->id}}">
+                                        @method('PATCH')
+                                        @csrf
+                                        <div class="field">
+                                            <div class='control'>
+                                                <p class="text-3xl">are you change status with ID:{{$task->id}} are you sure? </p>
+                                            </div>
+                                        </div>
+                                        <div class="field is-grouped">
+                                            <div class='control'>
+                                                <button class="bg-transparent hover:bg-red text-red-dark font-semibold hover:text-red py-2 px-4 border border-red hover:border-transparent rounded">
+                                                    OK
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                                  </div>
+
+
+
 
 
                                 </div>

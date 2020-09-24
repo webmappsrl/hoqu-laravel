@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('HOQU Status') }}
+            {{ __('HOQU Task Detail') }}
         </h2>
         <div>
             <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -53,11 +53,11 @@
 
                     </nav>
                 </div>
-                <div class="flex-1 flex flex-col overflow-hidden">
+                <div class="bg-white flex-1 flex flex-col overflow-hidden shadow-xl">
                     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-white-200">
                         <div class="container mx-auto px-6 py-2">
                             <div class="flex flex-col mt-8">
-                                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                                <div class=" overflow-hidden  sm:rounded-lg">
                                     <div class="max-w-sm rounded overflow-hidden shadow-lg">
                                         <div class="grid grid-cols-3 gap-4">
                                           <div class="font-bold text-xl mb-2">ID: {{$task->id}} </div>

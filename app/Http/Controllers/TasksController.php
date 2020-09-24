@@ -30,4 +30,16 @@ class TasksController extends Controller
     {
         return view('task_details',['task'=>$task]);
     }
+
+    public function edit(Task $task)
+    {
+        return view('reschedule',['task'=>$task]);
+    }
+
+    public function update(Task $task)
+    {
+        $task->process_status='new';
+        $task->save();
+        return redirect('/'.$task->id);
+    }
 }

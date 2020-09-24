@@ -53,11 +53,11 @@
 
                     </nav>
                 </div>
-                <div class="flex-1 flex flex-col overflow-hidden">
+                <div class="bg-white flex-1 flex flex-col overflow-hidden shadow-xl">
                     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-white-200">
                         <div class="container mx-auto px-6 py-2">
                             <div class="flex flex-col mt-8">
-                                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                                <div class=" overflow-hidden  sm:rounded-lg">
                                     <table class="table-auto">
                                         <thead>
                                           <tr>
