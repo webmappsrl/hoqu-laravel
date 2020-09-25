@@ -2,6 +2,8 @@
     <x-jet-authentication-card>
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
+            {{-- <img class="max-w-md mx-aut" src="/image/logo-webmapp.png" alt="Sunset in the mountains"> --}}
+
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />
