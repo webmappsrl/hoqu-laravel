@@ -3,8 +3,13 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('HOQU Error') }}
         </h2>
-        <div>
+    </x-slot>
+            <div>
             <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
 
             <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200">
                 <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false" class="fixed z-20 inset-0 bg-black opacity-50 transition-opacity lg:hidden"></div>
@@ -58,6 +63,8 @@
                         <div class="container mx-auto px-6 py-2">
                             <div class="flex flex-col mt-8">
                                 <div class="overflow-hidden  sm:rounded-lg">
+          
+    
                                     <table class="table-auto">
                                         <thead>
                                           <tr>
@@ -87,10 +94,18 @@
                                                 <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->created_at}}</a></td>
                                                 <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->updated_at}}</a></td>
                                                 <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->created_at->floatDiffInSeconds($task->updated_at) }}</a></td>
-                                                <td class="border-0 px-4 py-6">
+                                                {{-- <td class="border-0 px-4 py-6">
                                                     <a href="/{{$task->id }}/reschedule"><button class="bg-transparent hover:bg-red text-red-dark font-semibold hover:text-red py-2 px-4 border border-red hover:border-transparent rounded">
                                                         Reschedule
                                                     </button></a>
+                                                </td> --}}
+
+                                                <td border-0 px-4 py-6>
+                                                    <button wire:click="edit({{ $task }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
+
+
+
+
                                                 </td>
                                                 </tr>
 
@@ -111,6 +126,5 @@
                 </div>
             </div>
         </div>
-    </x-slot>
 
 </x-app-layout>

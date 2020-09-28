@@ -3,7 +3,10 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('HOQU Task Detail') }}
         </h2>
-        <div>
+        
+    </x-slot>
+
+    <div>
             <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
             <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200">
@@ -98,7 +101,6 @@
                 </div>
             </div>
         </div>
-    </x-slot>
 
 
 </x-app-layout>
