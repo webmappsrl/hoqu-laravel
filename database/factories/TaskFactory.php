@@ -41,8 +41,8 @@ class TaskFactory extends Factory
 
     public function suspended()
     {
-        $n=rand(-4,-10);
-        $n1 = rand(-1,-3);
+        $n=rand(-8,-10);
+        $n1 = rand(0,-2);
         return $this->state([
             'process_status' => 'processing',
             'created_at'=> $this->faker->dateTimeBetween($startDate = $n .' day', $endDate = 'now'),
@@ -52,19 +52,20 @@ class TaskFactory extends Factory
 
     public function create_done()
     {
-        $n=rand(-4,-22);
-        $n1 = rand(-1,-3);
+        $n=rand(-8,-22);
+        $n1 = rand(0,-3);
         return $this->state([
             'process_status' => 'done',
             'process_log' => '',
             'created_at'=> $this->faker->dateTimeBetween($startDate = $n .' day', $endDate = 'now'),
-            'updated_at'=> $this->faker->dateTimeBetween($startDate = $n1 .' day', $endDate = 'now'),
+                        'updated_at'=> $this->faker->dateTimeBetween($startDate = $n1 .' day', $endDate = 'now'),
+
         ]);
     }
     public function create_error()
     {
-        $n=rand(-4,-10);
-        $n1 = rand(-1,-3);
+        $n=rand(-8,-10);
+        $n1 = rand(0,-3);
         return $this->state([
             'process_status' => 'error',
             'process_log' => '[2020-09-24 10:17:47] production.ERROR: require(/home/forge/hoqustaging.webmapp.it/vendor/laravel/jetstream/src/../routes/.php): failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): require(/home/forge/hoqustaging.webmapp.it/vendor/laravel/jetstream/src/../routes/.php): failed to open stream: No such file or directory at /home/forge/hoqustaging.webmapp.it/vendor/laravel/framework/src/Illuminate/Support/ServiceProvider.php:144)
@@ -93,8 +94,9 @@ class TaskFactory extends Factory
                 #21 /home/forge/hoqustaging.webmapp.it/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
                 #22 /home/forge/hoqustaging.webmapp.it/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
                 #23 {main}',
-            'created_at'=> $this->faker->dateTimeBetween($startDate = $n .' day', $endDate = 'now'),
-            'updated_at'=> $this->faker->dateTimeBetween($startDate = $n1 .' day', $endDate = 'now'),
+            'created_at'=> $this->faker->dateTimeBetween($startDate = $n .' day', $endDate = 'now +1'),
+                        'updated_at'=> $this->faker->dateTimeBetween($startDate = $n1 .' day', $endDate = 'now'),
+
         ]);
     }
 

@@ -19,7 +19,7 @@ class Tasks extends Component
     {
         $this->tasks = Task::where('process_status', '=', 'error')->orderBy('created_at', 'asc')->get();
 
-        return view('livewire.tasks',['posts' => Task::paginate(50)]);
+        return view('livewire.tasks',['posts' => Task::where('process_status', '=', 'error')->paginate(50)]);
     }
 
     /**
@@ -96,12 +96,9 @@ class Tasks extends Component
      *
      * @var array
      */
-    public function store()
+    public function update()
     {
-        $this->validate([
-            'instance' => 'required',
-            'job' => 'required',
-        ]);
+ 
 
         Task::updateOrCreate(['id' => $this->Task_id], [
             'instance' => $this->instance,
@@ -111,7 +108,7 @@ class Tasks extends Component
         ]);
 
         session()->flash('message',
-            $this->Task_id ? 'changed the process status of ' .$this->Task_id . ' in NEW' : 'Task Created Successfully.');
+            'changed the process status of ' .$this->Task_id . ' in NEW');
 
         $this->closeModal();
         $this->resetInputFields();
@@ -123,12 +120,9 @@ class Tasks extends Component
      */
     public function edit(Task $task)
     {
-    	$this->Task_id = $task->id;
-        $this->instance = $task->instance;
-        $this->job = $task->job;
-        $task->process_status='new';
-        $task->process_log='';
-   		
+    	$this->Task_id = $task->id; 
+    	$this->instance = $task->instance;
+        $this->job = $task->job;		
 
         $this->openModal();
 
