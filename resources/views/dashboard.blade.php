@@ -46,7 +46,7 @@
                <div class="container mx-auto px-6 py-2">
                   <div class="flex flex-col mt-8">
                      <div class=" overflow-hidden  sm:rounded-lg">
-                        <table class="table-auto ">
+                        <table id='hometable' class="table-auto ">
                            <thead>
                               <tr>
                                  <th class="px-4 py-6">id</th>
@@ -60,6 +60,8 @@
                            </thead>
                            <tbody>
                               @foreach ($tasks as $index => $task)
+
+
                               @if ($index % 2)
                               <tr>
                                  @else

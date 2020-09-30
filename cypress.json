@@ -1,3 +1,5 @@
 {
-  "baseUrl": "http://cy_jet_hoqu_l8.test"
+  "viewportWidth": 1300,
+  "viewportHeight": 960,
+  "baseUrl": "http://hoqu-laravel.test"
 }
