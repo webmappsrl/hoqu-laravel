@@ -41,7 +41,7 @@
                                 <path d="M11 13C11 11.8954 11.8954 11 13 11H15C16.1046 11 17 11.8954 17 13V15C17 16.1046 16.1046 17 15 17H13C11.8954 17 11 16.1046 11 15V13Z" fill="currentColor"/>
                             </svg>
 
-                            <span class="mx-4">Archive</span>
+                            <span id="link_archive" class="mx-4">Archive</span>
                         </a>
 
                         <a class="flex items-center mt-4 py-2 px-6 border-l-4 border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100" href="/error" >
@@ -51,7 +51,7 @@
                                 <path d="M2 11C2 9.89543 2.89543 9 4 9H16C17.1046 9 18 9.89543 18 11V15C18 16.1046 17.1046 17 16 17H4C2.89543 17 2 16.1046 2 15V11Z" fill="currentColor"/>
                             </svg>
 
-                            <span class="mx-4">Error</span>
+                            <span id="link_error" class="mx-4">Error</span>
                         </a>
 
 
@@ -63,9 +63,9 @@
                         <div class="container mx-auto px-6 py-2">
                             <div class="flex flex-col mt-8">
                                 <div class="overflow-hidden  sm:rounded-lg">
-          
-    
-                                    <table class="table-auto">
+
+
+                                    <table id="hometable" class="table-auto">
                                         <thead>
                                           <tr>
                                             <th class="px-4 py-6">id</th>
@@ -94,12 +94,6 @@
                                                 <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->created_at}}</a></td>
                                                 <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->updated_at}}</a></td>
                                                 <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->created_at->floatDiffInSeconds($task->updated_at) }}</a></td>
-                                                {{-- <td class="border-0 px-4 py-6">
-                                                    <a href="/{{$task->id }}/reschedule"><button class="bg-transparent hover:bg-red text-red-dark font-semibold hover:text-red py-2 px-4 border border-red hover:border-transparent rounded">
-                                                        Reschedule
-                                                    </button></a>
-                                                </td> --}}
-
                                                 <td border-0 px-4 py-6>
                                                     <button wire:click="edit({{ $task }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
 
