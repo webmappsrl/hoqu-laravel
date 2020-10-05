@@ -19,6 +19,12 @@ class ApiTokenTest extends TestCase
 
         $response = $this->withHeaders([
             'Content-Type' => 'application/json',
+            'Accept' => 'application/json'
+        ])->get('/api');
+        $response->assertStatus(401);
+
+        $response = $this->withHeaders([
+            'Content-Type' => 'application/json',
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$token_fake,
         ])->get('/api');
