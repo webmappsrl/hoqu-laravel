@@ -10,6 +10,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/archive', [Tasks::class, 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/error', Tasks::class);
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/{task}', [Tasks::class, 'show'])->name('task_details');
-Route::middleware(['auth:sanctum', 'verified'])->put('/{task}', [Tasks::class, 'update'])->name('reschedule');
+Route::middleware(['auth:sanctum', 'verified'])->get('/{task}/show', [Tasks::class, 'show'])->name('task_details');
+
 

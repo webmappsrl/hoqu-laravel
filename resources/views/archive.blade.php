@@ -66,14 +66,14 @@
                                   @else
                                <tr class="bg-gray-100">
                                   @endif
-                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->id }}</a></td>
-                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->instance }}</a></td>
-                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->job }}</a></td>
-                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->parameters }}</a></td>
-                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->process_status }}</a></td>
-                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->created_at}}</a></td>
-                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->updated_at}}</a></td>
-                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}">{{ $task->created_at->floatDiffInSeconds($task->updated_at) }}</a></td>
+                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}/show">{{ $task->id }}</a></td>
+                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}/show">{{ $task->instance }}</a></td>
+                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}/show">{{ $task->job }}</a></td>
+                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}/show">{{ $task->parameters }}</a></td>
+                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></td>
+                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}/show">{{ $task->created_at}}</a></td>
+                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}/show">{{ $task->updated_at}}</a></td>
+                                  <td class="border-0 px-4 py-6"><a href="/{{$task->id }}/show">{{ $task->created_at->floatDiffInSeconds($task->updated_at) }}</a></td>
                                </tr>
                                @endforeach
                             </tbody>
