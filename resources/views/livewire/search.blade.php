@@ -11,9 +11,6 @@ wire:model='query'
         <td>
             <a href="/{{$task['id']}}/show"> {{ $task['id'] }}</a>
         </td>
-        <td>
-            <a href="/{{$task['id'] }}/show"> {{ $task['job'] }}</a>
-        </td>
     </tr>
     @endforeach
 </table>
