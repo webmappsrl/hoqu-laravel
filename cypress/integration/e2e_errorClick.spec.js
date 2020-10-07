@@ -4,7 +4,7 @@ describe('Registration', () => {
     const email = 'team@webmapp.it'
     const password = 'webmapp'
 
-    it('e2e1', () => {
+    it('e2eReschedule', () => {
         cy.visit('/login')
         const a = 'team';
         cy.get('input[name=email]').type(email)
@@ -16,25 +16,39 @@ describe('Registration', () => {
 
         cy.get('span#link_error').click()
 
-        //ASSERT archive
+        //ASSERT error
         cy.url().should('contain', '/error')
 
+        //Check Cancel Button
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
-        const id1 = cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)')
-        cy.get('#hometable > tbody > tr:nth-child(1) > td.border.px-4.py-2 > button').click()
-        cy.get('#buttonChange > span.flex.w-full.rounded-md.shadow-sm.sm\:ml-3.sm\:w-auto > button').click()
+            cy.get('#hometable > tbody > tr:nth-child(1) > td.border.px-4.py-2 > button').click()
+            cy.contains('Cancel').click()
 
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
+              expect(text1).to.eq(text2)
+            })
+        })
 
+        //Check Reschedule Button
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
+            cy.get('#hometable > tbody > tr:nth-child(1) > td.border.px-4.py-2 > button').click()
+            cy.contains('Change').click()
 
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
+              expect(text1).not.to.eq(text2)
+            })
+            cy.visit('/'+text1+"/show")
+            cy.url().should('contain', '/'+text1+"/show")
+            cy.get('#processStatus').each(($e, index, $list) => {
+                const text = $e.text()
+                expect(text).to.contain('\n                                 Status: new\n                              ')
 
-
-
-
-        cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
-        cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
-
-
+            })
+        })
+         cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
+         cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
 
     })
 })

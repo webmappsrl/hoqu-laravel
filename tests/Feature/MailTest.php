@@ -34,6 +34,7 @@ class MailTest extends TestCase
             return 4 === $count;
         });
 
+
         Mail::assertSent(sendError::class, 1);
     }
 }

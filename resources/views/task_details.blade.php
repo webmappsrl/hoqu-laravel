@@ -58,7 +58,7 @@
                               <p class="text-gray-700 text-base">
                                  Parameters: {{$task->parameters}}
                               </p>
-                              <p class="text-gray-700 text-base">
+                              <p id="processStatus" class="text-gray-700 text-base">
                                  Status: {{$task->process_status}}
                               </p>
                               <p class="text-gray-700 text-base">
