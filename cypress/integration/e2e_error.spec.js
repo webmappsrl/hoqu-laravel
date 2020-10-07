@@ -2,7 +2,7 @@
 describe('Registration', () => {
     //FASE LOGIN
     const email = 'team@webmapp.it'
-    const password = 'T1tup4atmA'
+    const password = 'webmapp'
 
     it('e2e1', () => {
         cy.visit('/login')

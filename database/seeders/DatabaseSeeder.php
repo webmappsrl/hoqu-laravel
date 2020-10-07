@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user = $x[0];
-        $token = $user->createToken('instance-token',['server:create'])->plainTextToken;
+        $token = $user->createToken('instance-token',["create"])->plainTextToken;
         $tokens['instance@webmapp.it']=$token;
 
         $x = \App\Models\User::factory(1)->create([
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
 
         ]);
         $user = $x[0];
-        $token = $user->createToken('server-token',['server:read'])->plainTextToken;
+        $token = $user->createToken('server-token',["read"])->plainTextToken;
         $tokens['server@webmapp.it']=$token;
 
         // SAVE TOKENS to file that will be used by TESTS

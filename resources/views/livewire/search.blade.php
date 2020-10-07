@@ -1,9 +1,13 @@
-<input type="text"
+<div>
+
+    <input type="text"
 class="form-input w-full h-16 px-3 my-2 rounded-lg text-xl px-8 shadow-lg"
 placeholder="Search ID Task"
 wire:model='query'
 
 >
+
+
 <table class="table table-bordered" style="margin: 10px 0 10px 0;">
 
     @foreach ($tasks as $task)
@@ -14,3 +18,8 @@ wire:model='query'
     </tr>
     @endforeach
 </table>
+
+
+
+</div>
+

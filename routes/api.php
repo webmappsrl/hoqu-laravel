@@ -8,7 +8,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->get('/', function (Request $request) {
-    return response([ "name" => "HOQU-API","version" => "0.1.0"]);
+    if($request->user()->tokenCan('read'))
+    {
+        return response([ "name" => "HOQU-API","version" => "0.1.0"]);
+    }
+    else return abort(403,'Unauthorized');
 });
 
 
