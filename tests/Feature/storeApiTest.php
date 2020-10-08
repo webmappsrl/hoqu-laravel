@@ -76,10 +76,14 @@ class storeApiTest extends TestCase
             'Authorization' => 'Bearer '.$user_tokens['instance@webmapp.it'],
         ])->post('/api/store',$data);
         $response->assertStatus(201);
+
         $t1 = Task::find($response['id']);
         $this->assertSame($response['instance'],$t1['instance']);
         $this->assertSame($response['job'],$t1['job']);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($t1['parameters'],TRUE));
+        $this->assertSame($data['instance'],$t1['instance']);
+        $this->assertSame($data['job'],$t1['job']);
+        $this->assertSame($data['parameters'],json_decode($t1['parameters'],TRUE));
 
         // Check that instance@webmapp.it access to api/
         $response = $this->withHeaders([
@@ -91,6 +95,9 @@ class storeApiTest extends TestCase
         $this->assertSame($response['instance'],$t1['instance']);
         $this->assertSame($response['job'],$t1['job']);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($t1['parameters'],TRUE));
+        $this->assertSame($data['instance'],$t1['instance']);
+        $this->assertSame($data['job'],$t1['job']);
+        $this->assertSame($data['parameters'],json_decode($t1['parameters'],TRUE));
 
         // Check that instance@webmapp.it access to api/
         $response = $this->withHeaders([
@@ -102,6 +109,9 @@ class storeApiTest extends TestCase
         $this->assertSame($response['instance'],$t1['instance']);
         $this->assertSame($response['job'],$t1['job']);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($t1['parameters'],TRUE));
+        $this->assertSame($data['instance'],$t1['instance']);
+        $this->assertSame($data['job'],$t1['job']);
+        $this->assertSame($data['parameters'],json_decode($t1['parameters'],TRUE));
 
 
     }
