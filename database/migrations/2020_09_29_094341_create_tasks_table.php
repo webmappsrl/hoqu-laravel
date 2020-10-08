@@ -19,8 +19,8 @@ class CreateTasksTable extends Migration
             $table->text('instance');
             $table->text('job');
             $table->json('parameters')->nullable();
-            $table->text('process_status');
-            $table->text('process_log');
+            $table->string('process_status', 100)->default('new');
+            $table->text('process_log')->nullable();
             $table->timestamps();
         });
     }

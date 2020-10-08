@@ -37,7 +37,7 @@ class ApiTokenTest extends TestCase
         $response = $this->withHeaders([
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$user_tokens['instance@webmapp.it'],
+            'Authorization' => 'Bearer '.$user_tokens['test-token@webmapp.it'],
         ])->get('/api');
         $response->assertStatus(403);
 

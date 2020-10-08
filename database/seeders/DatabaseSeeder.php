@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user = $x[0];
-        $token = $user->createToken('instance-token',["create"])->plainTextToken;
+        $token = $user->createToken('instance-token',["read","create"])->plainTextToken;
         $tokens['instance@webmapp.it']=$token;
 
         $x = \App\Models\User::factory(1)->create([
@@ -46,8 +46,20 @@ class DatabaseSeeder extends Seeder
 
         ]);
         $user = $x[0];
-        $token = $user->createToken('server-token',["read"])->plainTextToken;
+        $token = $user->createToken('server-token',["read","update"])->plainTextToken;
         $tokens['server@webmapp.it']=$token;
+
+        $x = \App\Models\User::factory(1)->create([
+
+            'name'=>'test',
+            'email'=>'test@webmapp.it',
+            'password'=>bcrypt('webmapp')
+
+        ]);
+
+        $user = $x[0];
+        $token = $user->createToken('test-token',["create"])->plainTextToken;
+        $tokens['test-token@webmapp.it']=$token;
 
         // SAVE TOKENS to file that will be used by TESTS
         // storage/app/test_data/tokens_text.json

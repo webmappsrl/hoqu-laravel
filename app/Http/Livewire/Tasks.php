@@ -33,13 +33,9 @@ class Tasks extends Component
         $this->openModal();
     }
 
-  
 
-   public function index()
-    {
-        $task = Task::orwhere('process_status', '=', 'new')->orwhere('process_status', '=', 'processing')->orderByRaw('FIELD(process_status, "new", "processing")asc')->orderBy('created_at', 'asc')->paginate(50);
-        return view('dashboard',['tasks'=>$task]);
-    }
+
+
 
     public function index_done()
     {
@@ -98,7 +94,7 @@ class Tasks extends Component
      */
     public function update()
     {
- 
+
 
         Task::updateOrCreate(['id' => $this->Task_id], [
             'instance' => $this->instance,
@@ -120,9 +116,9 @@ class Tasks extends Component
      */
     public function edit(Task $task)
     {
-    	$this->Task_id = $task->id; 
+    	$this->Task_id = $task->id;
     	$this->instance = $task->instance;
-        $this->job = $task->job;		
+        $this->job = $task->job;
 
         $this->openModal();
 

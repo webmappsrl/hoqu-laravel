@@ -19,7 +19,7 @@ class Search extends Component
 
     public function updatedQuery()
     {
-        $this->tasks= Task::where('job','like','%'. $this->query .'%')
+        $this->tasks= Task::where('id','like','%'. $this->query .'%')
         ->orderBy('created_at', 'asc')
         ->get()
         ->toArray();
