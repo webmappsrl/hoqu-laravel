@@ -104,25 +104,29 @@ class TasksController extends Controller
             //get all data
             $requestSvr2 = $requestSvr2->all();
 
-            // $validatedData = $requestSvr2->validate([
-            //     'id_server' => 'required|integer',
-            //     'status' => 'required',
-            //     'log'=>'required',
-            //     'id_task'=>'required'
-            // ]);
+            $validator = Validator::make($requestSvr2, [
+                'id_server' => 'required|integer',
+                'status' => 'required',
+                'log'=>'required',
+                'id_task'=>'required'
+            ]);
+
+            if($validator->fails()){
+                return response(['error' => $validator->errors(), 'Validation Error'],400);
+            }
+
             $wouldLikeUpdate = Task::findOrFail($requestSvr2['id_task']);
 
             if(!empty($wouldLikeUpdate))
             {
                 if($requestSvr2['id_server']==$wouldLikeUpdate->id_server && ('processing'==$wouldLikeUpdate->process_status))
                 {
-                    dd($wouldLikeUpdate);
                     $wouldLikeUpdate->process_status = $requestSvr2['status'];
                     $wouldLikeUpdate->process_log = $requestSvr2['log'];
                     $wouldLikeUpdate->save();
                     return response()->json($wouldLikeUpdate, 200);
                 }
-                else response()->json($wouldLikeUpdate, 204);
+                else return abort(403,'You do not have the permissions');
             }
             else return response()->json(['error' => 'Id not exist.'],403);
         }

@@ -70,12 +70,11 @@ class updateDoneApiTest extends TestCase
             "id_task" => $dataDbTest['id'],
         ];
         //OPERATIONS 2
-        $responses = $this->withHeaders([
+        $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
         ])->put('/api/updateDone',$requestSvr2);
-        dd($responses);
-        $response->assertForbidden();
+        $response->assertStatus(403);
     }
 
 }
