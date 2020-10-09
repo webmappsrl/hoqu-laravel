@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->get('/', function (Request $request) {
 
 Route::middleware('auth:sanctum')->post('/store',[TasksController::class, 'store']);
 Route::middleware('auth:sanctum')->put('/pull',[TasksController::class, 'pull']);
+Route::middleware('auth:sanctum')->put('/updateDone',[TasksController::class, 'updateDone']);
+
 
 
 

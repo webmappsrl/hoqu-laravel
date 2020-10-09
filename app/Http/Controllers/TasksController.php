@@ -55,6 +55,7 @@ class TasksController extends Controller
                 return response(['error' => $validator->errors(), 'Validation Error'],400);
             }
             $task = Task::create($request);
+
             return response()->json($task, 201);
 
         }
@@ -64,6 +65,7 @@ class TasksController extends Controller
 
     public function pull(Request $requestSvr)
     {
+        // echo(json_encode($requestSvr->user()) . "\n\n");
         if($requestSvr->user()->tokenCan('update'))
         {
             $requestSvr->all();
@@ -93,6 +95,38 @@ class TasksController extends Controller
         }
         else return abort(403,'Unauthorized');
 
+    }
+
+    public function updateDone(Request $requestSvr2)
+    {
+        if($requestSvr2->user()->tokenCan('update'))
+        {
+            //get all data
+            $requestSvr2 = $requestSvr2->all();
+
+            // $validatedData = $requestSvr2->validate([
+            //     'id_server' => 'required|integer',
+            //     'status' => 'required',
+            //     'log'=>'required',
+            //     'id_task'=>'required'
+            // ]);
+            $wouldLikeUpdate = Task::findOrFail($requestSvr2['id_task']);
+
+            if(!empty($wouldLikeUpdate))
+            {
+                if($requestSvr2['id_server']==$wouldLikeUpdate->id_server && ('processing'==$wouldLikeUpdate->process_status))
+                {
+                    dd($wouldLikeUpdate);
+                    $wouldLikeUpdate->process_status = $requestSvr2['status'];
+                    $wouldLikeUpdate->process_log = $requestSvr2['log'];
+                    $wouldLikeUpdate->save();
+                    return response()->json($wouldLikeUpdate, 200);
+                }
+                else response()->json($wouldLikeUpdate, 204);
+            }
+            else return response()->json(['error' => 'Id not exist.'],403);
+        }
+        else return abort(403,'Unauthorized');
     }
 
 }
