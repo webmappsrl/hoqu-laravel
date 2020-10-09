@@ -8,7 +8,8 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.8.12/tailwind.min.css" integrity="sha512-KO1h5ynYuqsFuEicc7DmOQc+S9m2xiCKYlC3zcZCSEw0RGDsxcMnppRaMZnb0DdzTDPaW22ID/gAGCZ9i+RT/w==" crossorigin="anonymous" />
         <!-- Styles -->
         <style>
             html, body {
@@ -64,7 +65,52 @@
         </style>
     </head>
     <body>
-     stocazzo
+        <div class="flex-center position-ref full-height">
+            @if (Route::has('login'))
+                <div class="top-right links">
+                    @auth
+                        <a href="{{ url('/home') }}">Home</a>
+                    @else
+                        <a href="{{ route('login') }}">Login</a>
+
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}">Register</a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
+
+            <div class="content">
+                <div class="title m-b-md">
+                    Error Hoqu:
+                </div>
+
+                <div class="small">
+                    id: {{ $mail_data['id'] }}<br/>
+                </div>
+
+                <div class="small">
+                    id_server: {{ $mail_data['id_server'] }}<br/>
+                </div>
+
+                <div class="small">
+                    task: {{ $mail_data['job'] }}<br/>
+                </div>
+
+                <div class="small">
+                    process_status: {{ $mail_data['process_status'] }}<br>
+                </div>
+
+                <div class="small">
+                    process_log: {{ $mail_data['process_log'] }}<br/>
+                </div>
+                <div class="small">
+                    <button class="bg-blue hover:bg-blue-light text-white font-bold py-2 px-4 border-b-4 border-blue-dark hover:border-blue rounded"><a href="http://hoqu-laravel.test/error"> Go to Error</a>
+
+                </div>
+        </div>
+
+  </button>
     </body>
 </html>
 

@@ -133,4 +133,41 @@ class TasksController extends Controller
         else return abort(403,'Unauthorized');
     }
 
+    public function updateError(Request $requestSvr2)
+    {
+        if($requestSvr2->user()->tokenCan('update'))
+        {
+            //get all data
+            $requestSvr2 = $requestSvr2->all();
+
+            $validator = Validator::make($requestSvr2, [
+                'id_server' => 'required|integer',
+                'status' => 'required',
+                'log'=>'required',
+                'id_task'=>'required'
+            ]);
+
+            if($validator->fails()){
+                return response(['error' => $validator->errors(), 'Validation Error'],400);
+            }
+
+            $wouldLikeUpdate = Task::findOrFail($requestSvr2['id_task']);
+
+            if(!empty($wouldLikeUpdate))
+            {
+                if($requestSvr2['id_server']==$wouldLikeUpdate->id_server && ('processing'==$wouldLikeUpdate->process_status))
+                {
+                    $wouldLikeUpdate->process_status = $requestSvr2['status'];
+                    $wouldLikeUpdate->process_log = $requestSvr2['log'];
+                    $wouldLikeUpdate->save();
+                    Mail::to('gianmarxgagliardi@gmail.com')->send(new sendError($wouldLikeUpdate));
+                    return response()->json($wouldLikeUpdate, 200);
+                }
+                else return abort(403,'You do not have the permissions');
+            }
+            else return response()->json(['error' => 'Id not exist.'],403);
+        }
+        else return abort(403,'Unauthorized');
+    }
+
 }

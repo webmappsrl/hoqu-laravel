@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class updateDoneApiTest extends TestCase
+class updateErrorApiTest extends TestCase
 {
     public function resetAuth(array $guards = null)
     {
@@ -28,7 +28,7 @@ class updateDoneApiTest extends TestCase
         $protectedProperty->setValue($this->app['auth'], []);
     }
 
-    public function testNotAuthorizedIdSUpdateDoneApiHoqu()
+    public function testNotAuthorizedIdSUpdateErrorApiHoqu()
     {
         Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
@@ -61,7 +61,7 @@ class updateDoneApiTest extends TestCase
         ])->put('/api/pull',$requestSvr1);
         $response->assertStatus(200);
 
-        //get value elaborate by store
+        //get value elaborate by pull
         $dataDbTest = $response;
         //request that sends the "requesting server 2"
         $requestSvr2 = [
@@ -74,12 +74,12 @@ class updateDoneApiTest extends TestCase
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
-        ])->put('/api/updateDone',$requestSvr2);
+        ])->put('/api/updateError',$requestSvr2);
         $response->assertStatus(403);
     }
 
 
-    public function testIdNotExistUpdateDoneApiHoqu()
+    public function testIdNotExistupdateErrorApiHoqu()
     {
         Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
@@ -122,14 +122,14 @@ class updateDoneApiTest extends TestCase
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
-        ])->put('/api/updateDone',$requestSvr2);
+        ])->put('/api/updateError',$requestSvr2);
         $dataDbTestUp = $response;
         $response->assertStatus(400);
     }
 
 
 
-    public function testCheckValueStatusUpdateDoneApiHoqu()
+    public function testCheckValueStatusupdateErrorApiHoqu()
     {
         Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
@@ -175,7 +175,7 @@ class updateDoneApiTest extends TestCase
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
-        ])->put('/api/updateDone',$requestSvr2);
+        ])->put('/api/updateError',$requestSvr2);
         //get value elaborated by update
         $dataDbTestUp = $response;
         $response->assertStatus(400);
@@ -191,7 +191,7 @@ class updateDoneApiTest extends TestCase
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
-        ])->put('/api/updateDone',$requestSvr2);
+        ])->put('/api/updateError',$requestSvr2);
         //get value elaborated by update
         $response->assertStatus(400);
 
@@ -205,22 +205,23 @@ class updateDoneApiTest extends TestCase
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
-        ])->put('/api/updateDone',$requestSvr2);
+        ])->put('/api/updateError',$requestSvr2);
         $response->assertStatus(400);
     }
 
 
-public function testDoneUpdateDoneApiHoqu()
+    public function testErrorUpdateApiHoqu()
     {
         Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
-        //add data with api/queues
+        //add data with api/store
         $data = [
             "instance" => "https:\/\/montepisanotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
         ];
+
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['instance@webmapp.it']
@@ -235,30 +236,30 @@ public function testDoneUpdateDoneApiHoqu()
             "id_server" => 10,
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
+
         //OPERATIONS 1
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
         ])->put('/api/pull',$requestSvr1);
         $response ->assertStatus(200);
-        //get value elaborate by pull
-        $dataDbTest = $response;
+
         //request that sends the "requesting server 2"
         $requestSvr2 = [
             "id_server" => 10,
-            "status" => "done",
+            "status" => "error",
             "log" => "log test",
-            "id_task" => $dataDbTest['id'],
+            "id_task" => $response['id'],
         ];
         //OPERATIONS 2
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
-        ])->put('/api/updateDone',$requestSvr2);
+        ])->put('/api/updateError',$requestSvr2);
         //get value elaborated by update
-        $ja = Task::find($response['id']);
         $response ->assertStatus(200);
-        $this->assertSame('done',$ja['process_status']);
+        $ja = Task::find($response['id']);
+        $this->assertSame('error',$ja['process_status']);
         $this->assertSame($requestSvr2['log'],$ja['process_log']);
         $this->assertSame($requestSvr2['id_server'],$ja['id_server']);
         $this->assertSame($data['instance'],$ja['instance']);
@@ -266,6 +267,5 @@ public function testDoneUpdateDoneApiHoqu()
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
         $this->assertSame($response['id'],$ja["id"]);
     }
-
 
 }
