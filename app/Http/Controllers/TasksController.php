@@ -62,4 +62,37 @@ class TasksController extends Controller
 
     }
 
+    public function pull(Request $requestSvr)
+    {
+        if($requestSvr->user()->tokenCan('update'))
+        {
+            $requestSvr->all();
+
+            $validatedData = $requestSvr->validate([
+                'id_server' => 'required|integer',
+                'task_available' => 'required|array'
+            ]);
+
+            $task = Task::whereIn('job', $requestSvr['task_available'])->where('process_status','=','new')->orderBy('created_at', 'asc')->first();
+
+            if(!empty($task))
+            {
+                $task->process_status = 'processing';
+                $task->id_server = $requestSvr['id_server'];
+
+                $task->save();
+
+                return response()->json($task, 200);
+
+            }
+            else
+            {
+                return response()->json([], 204);
+            }
+
+        }
+        else return abort(403,'Unauthorized');
+
+    }
+
 }
