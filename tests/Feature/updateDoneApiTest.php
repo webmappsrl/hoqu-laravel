@@ -267,5 +267,11 @@ public function testDoneUpdateDoneApiHoqu()
         $this->assertSame($response['id'],$ja["id"]);
     }
 
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate:fresh --seed');
+    }
+
 
 }

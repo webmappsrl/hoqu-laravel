@@ -157,10 +157,10 @@ class TasksController extends Controller
             {
                 if($requestSvr2['id_server']==$wouldLikeUpdate->id_server && ('processing'==$wouldLikeUpdate->process_status))
                 {
-                    $wouldLikeUpdate->process_status = $requestSvr2['status'];
+                    $wouldLikeUpdate->process_status = 'error';
                     $wouldLikeUpdate->process_log = $requestSvr2['log'];
                     $wouldLikeUpdate->save();
-                    Mail::to('gianmarxgagliardi@gmail.com')->send(new sendError($wouldLikeUpdate));
+                    Mail::to('team@webmapp.it')->send(new sendError($wouldLikeUpdate));
                     return response()->json($wouldLikeUpdate, 200);
                 }
                 else return abort(403,'You do not have the permissions');

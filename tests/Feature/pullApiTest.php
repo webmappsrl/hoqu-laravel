@@ -172,7 +172,10 @@ public function testFineFirstElementPullApiHoqu()
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
 
     }
-
-
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate:fresh --seed');
+    }
 
 }

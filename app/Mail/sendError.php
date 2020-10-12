@@ -30,7 +30,7 @@ class sendError extends Mailable
      */
     public function build()
     {
-        return $this->from('gianmarx-8f849a@inbox.mailtrap.io')->subject('Error Hoqu')->view('mail.error',['mail_data'=>$this->itemHoqu]);
+        return $this->from('noreply@webmapp.it')->subject('Error Hoqu')->view('mail.error',['mail_data'=>$this->itemHoqu]);
     }
 
 
