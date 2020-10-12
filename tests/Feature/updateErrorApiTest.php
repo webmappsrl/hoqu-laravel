@@ -326,4 +326,5 @@ class updateErrorApiTest extends TestCase
         $this->artisan('migrate:fresh --seed');
     }
 
+
 }
