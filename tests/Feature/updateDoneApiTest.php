@@ -28,6 +28,45 @@ class updateDoneApiTest extends TestCase
         $protectedProperty->setValue($this->app['auth'], []);
     }
 
+    public function testTokenUpdateDoneFail()
+    {
+        $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
+        $token_fake = 'token-fake';
+
+        $requestSvr1 = [
+            "id_server" => 10,
+            "task_available" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+        ];
+        $requestSvr1['task_available'] =  json_encode($requestSvr1['task_available']);
+
+        // NO TOKEN: assert 401
+        $response = $this->withHeaders([
+            'Accept' => 'application/json'
+        ])->put('/api/updateDone',$requestSvr1);
+        $response->assertStatus(401);
+
+        // WRONG TOKEN: assert 401
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$token_fake,
+        ])->put('/api/updateDone',$requestSvr1);
+        $response->assertStatus(401);
+
+        // Check that instance@webmapp.it access to api/pull with token only read/create
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$user_tokens['instance@webmapp.it'],
+        ])->put('/api/updateDone',$requestSvr1);
+        $response->assertStatus(403);
+
+        // Check that test-token@webmapp.it access to api/pull with token only create
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$user_tokens['test-token@webmapp.it'],
+        ])->put('/api/updateDone',$requestSvr1);
+        $response->assertStatus(403);
+    }
+
     public function testNotAuthorizedIdSUpdateDoneApiHoqu()
     {
         Task::truncate();
