@@ -11,7 +11,7 @@ use Tests\TestCase;
 class pullApiTest extends TestCase
 {
 
-    public function resetAuth(array $guards = null)
+    protected function resetAuth(array $guards = null)
     {
         $guards = $guards ?: array_keys(config('auth.guards'));
 

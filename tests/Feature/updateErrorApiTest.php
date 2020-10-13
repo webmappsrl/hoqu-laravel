@@ -12,7 +12,7 @@ use Tests\TestCase;
 class updateErrorApiTest extends TestCase
 {
 
-    public function resetAuth(array $guards = null)
+    protected function resetAuth(array $guards = null)
     {
         $guards = $guards ?: array_keys(config('auth.guards'));
 
@@ -357,11 +357,6 @@ class updateErrorApiTest extends TestCase
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
         $this->assertSame($response['id'],$ja["id"]);
     }
-
-    // $emails = $this->app->make('swift.transport')->driver()->messages();
-
-    // $this->assertCount($emails, 1);
-    // $this->assertEquals(['foo@bar.net'], array_keys($emails[0]->getTo()));
 
     public function setUp(): void
     {
