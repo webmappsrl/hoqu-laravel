@@ -29,28 +29,6 @@ class updateErrorMailTest extends TestCase
         $protectedProperty->setAccessible(true);
         $protectedProperty->setValue($this->app['auth'], []);
     }
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testSendSimplyMailError()
-    {
-        Mail::fake();
-        $ja=["id"=>1,'id_server'=>10, 'process_status'=>'error','process_log'=>'log test'];
-        $order = new sendError($ja);
-        Mail::to('team@webmapp.it')->send($order);
-        Mail::assertSent(function (sendError $mail) use ($order) {
-            $count = 0;
-            if($mail->itemHoqu['id'] === $order->itemHoqu['id']) $count++;
-            if($mail->itemHoqu['id_server'] === $order->itemHoqu['id_server']) $count++;
-            if($mail->itemHoqu['process_status'] === $order->itemHoqu['process_status']) $count++;
-            if($mail->itemHoqu['process_log'] === $order->itemHoqu['process_log']) $count++;
-
-            return 4 === $count;
-        });
-        Mail::assertSent(sendError::class, 1);
-    }
 
     /**
      * viene chiamata api/store ("job" => "task1"), srv1 chiama pull che restituisce id. Srv2 chiama updateError con status in “VDC” e log “log test” perché il server ha avuto qualche problema. SI verifica il corretto invio della email e dei suoi contenuti.
