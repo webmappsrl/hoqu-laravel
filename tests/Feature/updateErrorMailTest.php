@@ -52,6 +52,10 @@ class updateErrorMailTest extends TestCase
         Mail::assertSent(sendError::class, 1);
     }
 
+    /**
+     * viene chiamata api/store ("job" => "task1"), srv1 chiama pull che restituisce id. Srv2 chiama updateError con status in “VDC” e log “log test” perché il server ha avuto qualche problema. SI verifica il corretto invio della email e dei suoi contenuti.
+     */
+
     public function testMailSendUpdateError()
     {
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
@@ -111,6 +115,9 @@ class updateErrorMailTest extends TestCase
         Mail::assertSent(sendError::class, 1);
     }
 
+    /**
+     * Srv2 chiama updateError senza il parametro status e con id non esistente. Viene risposto errore 400 e si verifica che la mail non venga inviata.
+     */
     public function testMailNoSendUpdateError()
     {
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
