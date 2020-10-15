@@ -218,6 +218,7 @@ class updateDoneApiTest extends TestCase
         $ja = Task::find($response['id']);
         $this->assertSame('done',$ja['process_status']);
         $this->assertSame($requestSvr2['id_server'],$ja['id_server']);
+        $this->assertSame(null,$ja['process_log']);
         $this->assertSame($data['instance'],$ja['instance']);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
