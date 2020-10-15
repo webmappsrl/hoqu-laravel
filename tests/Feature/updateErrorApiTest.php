@@ -7,6 +7,8 @@ use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+
 use Tests\TestCase;
 
 class updateErrorApiTest extends TestCase
@@ -28,7 +30,8 @@ class updateErrorApiTest extends TestCase
         $protectedProperty->setAccessible(true);
         $protectedProperty->setValue($this->app['auth'], []);
     }
-    public function testTokenUpdateErrorFail()
+
+    public function checkPermissionTokenUE()
     {
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
         $token_fake = 'token-fake';
@@ -67,11 +70,11 @@ class updateErrorApiTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function testNotAuthorizedIdSUpdateErrorApiHoqu()
+    public function idServerWrong()
     {
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
-        //add data with api/queues
+        //add data with api/store
         $data = [
             "instance" => "https:\/\/montepisanotree.org",
             "job" => "task1",
@@ -117,7 +120,7 @@ class updateErrorApiTest extends TestCase
     }
 
 
-    public function testIdNotExistupdateErrorApiHoqu()
+    public function withoutLog()
     {
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
         //add data with api/store
@@ -160,12 +163,12 @@ class updateErrorApiTest extends TestCase
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
         ])->put('/api/updateError',$requestSvr2);
-        $dataDbTestUp = $response;
         $response->assertStatus(400);
     }
 
     public function testCheckValueStatusupdateErrorApiHoqu()
     {
+        Mail::fake();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
         //add data with api/store
@@ -210,9 +213,17 @@ class updateErrorApiTest extends TestCase
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
         ])->put('/api/updateError',$requestSvr2);
-        //get value elaborated by update
+        //get value elaborated by updateError
         $dataDbTestUp = $response;
-        $response->assertStatus(400);
+        $response->assertStatus(200);;
+        $ja = Task::find($response['id']);
+        $this->assertSame('error',$ja['process_status']);
+        $this->assertSame($requestSvr2['log'],$ja['process_log']);
+        $this->assertSame($requestSvr2['id_server'],$ja['id_server']);
+        $this->assertSame($data['instance'],$ja['instance']);
+        $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
+        $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
+        $this->assertSame($response['id'],$ja["id"]);
 
         //request that sends the "requesting server 2"
         $requestSvr1 = [
@@ -227,7 +238,7 @@ class updateErrorApiTest extends TestCase
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
         ])->put('/api/updateError',$requestSvr2);
         //get value elaborated by update
-        $response->assertStatus(400);
+        $response->assertStatus(403);
 
         //request that sends the "requesting server 2"
         $requestSvr1 = [
@@ -240,13 +251,15 @@ class updateErrorApiTest extends TestCase
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
         ])->put('/api/updateError',$requestSvr2);
-        $response->assertStatus(400);
+        $response->assertStatus(403);
     }
 
 
     public function testErrorUpdateApiHoqu()
     {
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
+        Mail::fake();
+
 
         //add data with api/store
         $data = [
@@ -280,7 +293,6 @@ class updateErrorApiTest extends TestCase
         //request that sends the "requesting server 2"
         $requestSvr2 = [
             "id_server" => 10,
-            "status" => "error",
             "log" => "log test",
             "id_task" => $response['id'],
         ];
@@ -301,9 +313,10 @@ class updateErrorApiTest extends TestCase
         $this->assertSame($response['id'],$ja["id"]);
     }
 
-    public function testErrorUpdateCheckApiHoqu()
+    public function testCheckPositiveUE()
     {
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
+        Mail::fake();
 
         //add data with api/store
         $data = [
@@ -363,6 +376,4 @@ class updateErrorApiTest extends TestCase
         parent::setUp();
         $this->artisan('migrate:fresh --seed');
     }
-
-
 }

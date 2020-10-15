@@ -106,23 +106,25 @@ class TasksController extends Controller
 
             $validator = Validator::make($requestSvr2, [
                 'id_server' => 'required|integer',
-                'status' => 'required',
-                'log'=>'required',
-                'id_task'=>'required'
+                'id_task'=>'required|integer'
             ]);
 
             if($validator->fails()){
                 return response(['error' => $validator->errors(), 'Validation Error'],400);
             }
 
-            $wouldLikeUpdate = Task::findOrFail($requestSvr2['id_task']);
+            $wouldLikeUpdate = Task::find($requestSvr2['id_task']);
 
             if(!empty($wouldLikeUpdate))
             {
                 if($requestSvr2['id_server']==$wouldLikeUpdate->id_server && ('processing'==$wouldLikeUpdate->process_status))
                 {
-                    $wouldLikeUpdate->process_status = $requestSvr2['status'];
-                    $wouldLikeUpdate->process_log = $requestSvr2['log'];
+                    $wouldLikeUpdate->process_status = 'done';
+                    if(!empty($requestSvr2['log']))
+                    {
+                        $wouldLikeUpdate->process_log = $requestSvr2['log'];
+                    }
+
                     $wouldLikeUpdate->save();
                     return response()->json($wouldLikeUpdate, 200);
                 }
@@ -142,17 +144,15 @@ class TasksController extends Controller
 
             $validator = Validator::make($requestSvr2, [
                 'id_server' => 'required|integer',
-                'status' => 'required',
                 'log'=>'required',
-                'id_task'=>'required'
+                'id_task'=>'required|integer'
             ]);
 
             if($validator->fails()){
                 return response(['error' => $validator->errors(), 'Validation Error'],400);
             }
 
-            $wouldLikeUpdate = Task::findOrFail($requestSvr2['id_task']);
-
+            $wouldLikeUpdate = Task::find($requestSvr2['id_task']);
             if(!empty($wouldLikeUpdate))
             {
                 if($requestSvr2['id_server']==$wouldLikeUpdate->id_server && ('processing'==$wouldLikeUpdate->process_status))
@@ -169,5 +169,6 @@ class TasksController extends Controller
         }
         else return abort(403,'Unauthorized');
     }
+
 
 }

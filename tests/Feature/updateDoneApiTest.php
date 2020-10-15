@@ -28,7 +28,7 @@ class updateDoneApiTest extends TestCase
         $protectedProperty->setValue($this->app['auth'], []);
     }
 
-    public function testTokenUpdateDoneFail()
+    public function testCheckPermissionTokenUD()
     {
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
         $token_fake = 'token-fake';
@@ -67,7 +67,7 @@ class updateDoneApiTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function testNotAuthorizedIdSUpdateDoneApiHoqu()
+    public function testIdServerWrongUD()
     {
         Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
@@ -162,8 +162,7 @@ class updateDoneApiTest extends TestCase
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
         ])->put('/api/updateDone',$requestSvr2);
-        $dataDbTestUp = $response;
-        $response->assertStatus(400);
+        $response->assertStatus(403);
     }
 
 
@@ -206,7 +205,6 @@ class updateDoneApiTest extends TestCase
         $requestSvr2 = [
             "id_server" => 10,
             "status" => '',
-            "log" => "log test",
             "id_task" => $dataDbTest['id'],
         ];
 
@@ -215,9 +213,15 @@ class updateDoneApiTest extends TestCase
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
         ])->put('/api/updateDone',$requestSvr2);
-        //get value elaborated by update
-        $dataDbTestUp = $response;
-        $response->assertStatus(400);
+        //get value elaborated by updateDone
+        $response ->assertStatus(200);
+        $ja = Task::find($response['id']);
+        $this->assertSame('done',$ja['process_status']);
+        $this->assertSame($requestSvr2['id_server'],$ja['id_server']);
+        $this->assertSame($data['instance'],$ja['instance']);
+        $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
+        $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
+        $this->assertSame($response['id'],$ja["id"]);
 
         //request that sends the "requesting server 2"
         $requestSvr1 = [
@@ -230,9 +234,9 @@ class updateDoneApiTest extends TestCase
         $response = $this->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
-        ])->put('/api/updateDone',$requestSvr2);
+        ])->put('/api/updateDone',$requestSvr1);
         //get value elaborated by update
-        $response->assertStatus(400);
+        $response->assertStatus(403);
 
         //request that sends the "requesting server 2"
         $requestSvr1 = [
@@ -245,11 +249,11 @@ class updateDoneApiTest extends TestCase
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
         ])->put('/api/updateDone',$requestSvr2);
-        $response->assertStatus(400);
+        $response->assertStatus(403);
     }
 
 
-public function testDoneUpdateDoneApiHoqu()
+public function testCheckPositiveUD()
     {
         Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);

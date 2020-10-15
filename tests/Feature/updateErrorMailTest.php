@@ -112,7 +112,7 @@ class updateErrorMailTest extends TestCase
             'Accept' => 'application/json',
             'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
         ])->put('/api/updateError',$requestSvr2);
-        $response->assertStatus(400);
+        $response->assertStatus(403);
         Mail::assertNotSent(sendError::class);
     }
 

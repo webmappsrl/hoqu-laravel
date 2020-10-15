@@ -1,4 +1,4 @@
-{{-- <div class="flex flex-col items-center relative">
+ <div class="flex flex-col items-center relative">
     <input type="text"
 class="form-input w-full h-16 px-3 my-2 rounded-lg text-xl px-8 shadow-lg"
 placeholder="Search ID Task"
@@ -24,7 +24,7 @@ wire:model='query'
 
 
 
-</div> --}}
+</div>
 
 
 
