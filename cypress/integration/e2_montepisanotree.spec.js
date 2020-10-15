@@ -8,7 +8,7 @@ describe('Registration', () => {
     var id
 
 
-  it('create new POI by Mario', () => {
+  before( () => {
       cy.visit('https://test.montepisanotree.org/wp-admin')
       cy.get('input[name=log]').type(email)
       cy.get('input[name=pwd]').type(password)
@@ -25,24 +25,26 @@ describe('Registration', () => {
       cy.get('input[type=submit]').contains('Pubblica').click({ force: true })
       cy.visit('https://test.montepisanotree.org/wp-admin/edit.php?post_type=poi')
       cy.get('tbody#the-list td').first().invoke('val').as('id')
-      cy.get('tbody#the-list td').first().invoke('text').then((value) => {
-        id = value.substring(0, 4);
-        cy.log(value)
-        cy.log(id)
-        // cy.wait(3000)
+      cy.get('tbody#the-list td').first().invoke('val').as('id')
 
-        // cy.request({
-        //     url: 'https://hoqustaging.webmapp.it/'+id+'/show',
-        //     headers:{
-        //         Authorization: 'Bearer SXakAvk01hbXD5zKLQ0tt6QAvmKWpq0IQ26WT6yC'
-        //     }
-        // })
-        // .then((resp) => {
-        //     // redirect status code is 302
-        //     expect(resp.status).to.eq(200)
-        // })
+    //   cy.get('tbody#the-list td').first().invoke('text').then((value) => {
+    //     id = value.substring(0, 4);
+    //     cy.log(value)
+    //     cy.log(id)
+    //     // cy.wait(3000)
 
-     })
+    //     // cy.request({
+    //     //     url: 'https://hoqustaging.webmapp.it/'+id+'/show',
+    //     //     headers:{
+    //     //         Authorization: 'Bearer SXakAvk01hbXD5zKLQ0tt6QAvmKWpq0IQ26WT6yC'
+    //     //     }
+    //     // })
+    //     // .then((resp) => {
+    //     //     // redirect status code is 302
+    //     //     expect(resp.status).to.eq(200)
+    //     // })
+
+    //  })
 
       cy.request({
         url: 'https://test.montepisanotree.org/poi/'+title
@@ -62,21 +64,21 @@ describe('Registration', () => {
 
    })
 
-//    it('id', () => {
-//     cy.visit('https://hoqustaging.webmapp.it/')
-//     cy.get('input[name=email]').type('team@webmapp.it')
-//     cy.get('input[name=password]').type('31xwdf.f')
-//     cy.get('button').contains('Login').click()
-//     cy.get('@id').then((id) => {
-//        cy.get('#hometable > tbody > tr > td:nth-child(4)').each(($e, index, $list) => {
-//           const text = $e.text()
-//           cy.log(id)
-//           if (text.includes(id)) { //if I put a number instead of id it works
-//              assert.strictEqual(text, '{"id":' + id + '}', 'id nedo ok')
-//           }
-//        })
-//     })
-//  })
+   it('id', () => {
+    cy.visit('https://hoqustaging.webmapp.it/')
+    cy.get('input[name=email]').type('team@nedo.hi')
+    cy.get('input[name=password]').type('nedo')
+    cy.get('button').contains('Login').click()
+    cy.get('@id').then((id) => {
+       cy.get('#hometable > tbody > tr > td:nth-child(4)').each(($e, index, $list) => {
+          const text = $e.text()
+          cy.log(id)
+          if (text.includes(id)) { //if I put a number instead of id it works
+             assert.strictEqual(text, '{"id":' + id + '}', 'id nedo ok')
+          }
+       })
+    })
+ })
 
 
 

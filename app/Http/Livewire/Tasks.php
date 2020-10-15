@@ -39,7 +39,7 @@ class Tasks extends Component
 
     public function index_done()
     {
-        $task = Task::where('process_status', '=', 'done')->orderBy('created_at', 'asc')->paginate(50);
+        $task = Task::where('process_status', '=', 'done')->orderBy('created_at', 'desc')->paginate(50);
         return view('archive',['tasks'=>$task]);
     }
 
