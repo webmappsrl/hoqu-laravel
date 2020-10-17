@@ -98,7 +98,6 @@ class storeApiTest extends TestCase
         $this->assertSame($data['instance'],$t1['instance']);
         $this->assertSame($data['job'],$t1['job']);
         $this->assertSame($data['parameters'],json_decode($t1['parameters'],TRUE));
-        $this->assertSame('new',$t1['process_status']);
 
         // Check that instance@webmapp.it access to api/
         $response = $this->withHeaders([
@@ -113,7 +112,6 @@ class storeApiTest extends TestCase
         $this->assertSame($data['instance'],$t1['instance']);
         $this->assertSame($data['job'],$t1['job']);
         $this->assertSame($data['parameters'],json_decode($t1['parameters'],TRUE));
-        $this->assertSame('duplicate',$t1['process_status']);
 
 
     }
@@ -175,6 +173,4 @@ class storeApiTest extends TestCase
         $response ->assertStatus(201);
 
     }
-
-
 }

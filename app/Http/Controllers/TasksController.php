@@ -54,34 +54,7 @@ class TasksController extends Controller
             if($validator->fails()){
                 return response(['error' => $validator->errors(), 'Validation Error'],400);
             }
-
-            $taskDuplicate = Task::where('instance','=',$request['instance'])
-            ->where('job','=',$request['job']);
-
-            if(isset($request['parameters']))
-            {
-                $taskDuplicate = Task::where('instance','=',$request['instance'])
-                ->where('job','=',$request['job'])
-                ->whereJsonContains('parameters',$request['parameters'])
-                ->get();
-            }
-            else
-            {
-                $taskDuplicate = Task::where('instance','=',$request['instance'])
-                ->where('job','=',$request['job'])
-                ->whereNull('parameters')
-                ->get();
-            }
-
-
-            if($taskDuplicate->isEmpty()) $task = Task::create($request);
-            else
-            {
-                $task = Task::create($request);
-                $wouldLikeUpdate = Task::find($task->id);
-                $wouldLikeUpdate->process_status='duplicate';
-                $wouldLikeUpdate->save();
-            }
+            $task = Task::create($request);
 
             return response()->json($task, 201);
 
