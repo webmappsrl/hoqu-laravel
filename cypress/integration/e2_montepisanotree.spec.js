@@ -1,10 +1,5 @@
-import faker from 'faker'
-import {
-    last
-} from 'lodash'
-const password = 'ped86KingWebmapp'
 
-describe('Registration', () => {
+describe('Final Test', () => {
     const email = 'gianmarcogagliardi@webmapp.it'
     const password = 'ped86KingWebmapp'
     var id
