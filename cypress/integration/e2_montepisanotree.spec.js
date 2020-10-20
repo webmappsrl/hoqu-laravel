@@ -39,7 +39,6 @@ describe('Final Test', () => {
                     // assert status code is 200
                     expect(resp.status).to.eq(200)
                 })
-
         })
         //previously created POI check for server response and POI color
         cy.request({

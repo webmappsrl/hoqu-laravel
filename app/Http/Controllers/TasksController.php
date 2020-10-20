@@ -28,6 +28,12 @@ class TasksController extends Controller
         return view('dashboard',['tasks'=>$task]);
     }
 
+    public function indexDuplicate()
+    {
+        $task = Task::orwhere('process_status', '=', 'duplicate')->orderBy('created_at', 'asc')->paginate(50);
+        return view('duplicate',['tasks'=>$task]);
+    }
+
     public function store(Request $request)
     {
         if($request->user()->tokenCan('create'))
@@ -54,9 +60,36 @@ class TasksController extends Controller
             if($validator->fails()){
                 return response(['error' => $validator->errors(), 'Validation Error'],400);
             }
-            $task = Task::create($request);
+
+            //check duplicate
+            if(isset($request['parameters']))
+            {
+                $taskDuplicate = Task::where('instance','=',$request['instance'])
+                ->where('job','=',$request['job'])
+                ->where('process_status','=','new')
+                ->whereJsonContains('parameters',json_decode($request['parameters'],TRUE))
+                ->get();
+            }
+            else
+            {
+                $taskDuplicate = Task::where('instance','=',$request['instance'])
+                ->where('job','=',$request['job'])
+                ->where('process_status','=','new')
+                ->whereNull('parameters')
+                ->get();
+            }
+
+            if($taskDuplicate->isEmpty()) $task = Task::create($request);
+            else
+            {
+                $task = Task::create($request);
+                $wouldLikeUpdate = Task::find($task->id);
+                $wouldLikeUpdate->process_status='duplicate';
+                $wouldLikeUpdate->save();
+            }
 
             return response()->json($task, 201);
+
 
         }
         else return abort(403,'Unauthorized');

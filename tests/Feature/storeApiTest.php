@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Task;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
+use Laravel\Sanctum\Sanctum;
+
 
 
 class storeApiTest extends TestCase
@@ -113,7 +115,6 @@ class storeApiTest extends TestCase
         $this->assertSame($data['job'],$t1['job']);
         $this->assertSame($data['parameters'],json_decode($t1['parameters'],TRUE));
 
-
     }
 
     //check field json parameters
@@ -171,6 +172,36 @@ class storeApiTest extends TestCase
             'Authorization' => 'Bearer '.$user_tokens['instance@webmapp.it'],
         ])->post('/api/store',$data);
         $response ->assertStatus(201);
+    }
+
+    public function testDuplicateStore()
+    {
+        $data = [
+            "instance" => "https://montepisanotree.org",
+            "job" => "mptupdatepoi",
+            "parameters" => ["a"=> "yes", "b"=> "no"]
+        ];
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['create']
+        );
+        //OPERATIONS 1
+        $response = $this->post('/api/store',$data);
+        $response->assertStatus(201);
+        $t1 = Task::find($response['id']);
+        $this->assertSame('duplicate',$t1['process_status']);
+        sleep(2);
+        //OPERATIONS 2
+        $response = $this->post('/api/store',$data);
+        $response->assertStatus(201);
+        $t1 = Task::find($response['id']);
+        $this->assertSame('duplicate',$t1['process_status']);
+        sleep(2);
+        //OPERATIONS 3
+        $response = $this->post('/api/store',$data);
+        $response->assertStatus(201);
+        $t1 = Task::find($response['id']);
+        $this->assertSame('duplicate',$t1['process_status']);
 
     }
 }
