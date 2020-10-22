@@ -1,6 +1,6 @@
 describe('Final Test Sentiero Italia E2E2', () => {
-    const email = 'katanchi'
-    const password = 'T1tup4atmA'
+    const email = 'gagliardi'
+    const password = 'webmappForHoqu'
     var id
     var title
     var osmid
