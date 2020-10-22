@@ -14,3 +14,5 @@ yarn.lock
 .idea
 composer.lock
 /storage/app/test_data
+/cypress/videos
+/cypress/screenshots
