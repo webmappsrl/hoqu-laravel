@@ -187,6 +187,7 @@ class storeApiTest extends TestCase
         );
         //OPERATIONS 1
         $response = $this->post('/api/store',$data);
+        $response = $this->post('/api/store',$data);
         $response->assertStatus(201);
         $t1 = Task::find($response['id']);
         $this->assertSame('duplicate',$t1['process_status']);
