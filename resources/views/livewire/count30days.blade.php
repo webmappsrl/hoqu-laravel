@@ -6,6 +6,6 @@
     </div>
     <div class="mx-5" wire:poll.10s>
         <h4 class="text-2xl font-semibold text-gray-700">{{ $count_30days }}</h4>
-       <div class="text-gray-500">all Tasks of the last 30 days</div>
+       <div class="text-gray-500">All Tasks of the last 30 days</div>
     </div>
 </div>
