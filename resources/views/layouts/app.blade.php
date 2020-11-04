@@ -20,10 +20,10 @@
     </head>
     <body class="relative">
         <div class="min-h-screen bg-white-100">
-            <div class="container mx-auto py-4">
-                @livewire('navigation-dropdown')
+            {{-- <div class="container mx-auto py-4"> --}}
+                {{-- @livewire('navigation-dropdown') --}}
                 {{-- @livewire('search') --}}
-          </div>
+          {{-- </div> --}}
 
             <!-- Page Heading -->
             {{-- <header class="bg-white shadow">
