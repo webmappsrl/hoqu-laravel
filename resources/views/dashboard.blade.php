@@ -92,6 +92,12 @@
                          <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/5 xl:mt-0">
                             @livewire('count-duplicate')
                          </div>
+                         <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
+                            @livewire('count-all')
+                         </div>
+                         <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
+                            @livewire('count30days')
+                         </div>
                       </div>
                    </div>
                    <div class="mt-8">
