@@ -14,6 +14,7 @@ class ChartJob extends Component
     {
         $query = Task::select('job',DB::raw('count(*) as total'))
         ->groupBy('job')
+        ->orderByRaw('total')
         ->get();
         $job = $query->map(function ($item) {
             return $item->job;
