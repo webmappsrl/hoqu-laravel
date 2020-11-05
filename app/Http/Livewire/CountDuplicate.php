@@ -11,7 +11,7 @@ class CountDuplicate extends Component
 
     public function render()
     {
-        $this->count_duplicate = Task::where('process_status', '=', 'error')->count();
+        $this->count_duplicate = Task::where('process_status', '=', 'duplicate')->count();
         return view('livewire.count-duplicate');
     }
 }
