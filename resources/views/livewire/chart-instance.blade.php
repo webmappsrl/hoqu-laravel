@@ -1,9 +1,10 @@
 
                 <div class="panel-body">
-                    <canvas id="canvas" height="280" width="600"></canvas>
+                    <canvas id="canvas2" height="280" width="600"></canvas>
                 </div>
 
 <script>
+
 
     window.addEventListener('load', (event) => {
         var hour = <?php echo $hour; ?>;
@@ -11,12 +12,12 @@
     var barChartData = {
         labels: hour,
         datasets: [{
-            label: 'Task',
-            backgroundColor: "orange",
+            label: 'Instance',
+            backgroundColor: "indingo",
             data: job
         }]
     };
-        var ctx = document.getElementById("canvas").getContext("2d");
+        var ctx = document.getElementById("canvas2").getContext("2d");
         window.myBar = new Chart(ctx, {
             type: 'bar',
             data: barChartData,
@@ -31,11 +32,10 @@
                 responsive: true,
                 title: {
                     display: true,
-                    text: '24 hour'
+                    text: 'instance'
                 }
             }
         });
     });
-
 </script>
 

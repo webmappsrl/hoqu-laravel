@@ -1,14 +1,8 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 offset-md-1">
-            <div class="panel panel-default">
+
                 <div class="panel-body">
                     <canvas id="canvas1" height="280" width="600"></canvas>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <script>
 
 
