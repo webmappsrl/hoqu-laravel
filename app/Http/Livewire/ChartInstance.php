@@ -14,6 +14,7 @@ class ChartInstance extends Component
 
         $query = Task::select('instance',DB::raw('count(*) as total'))
         ->groupBy('instance')
+        ->orderByRaw('total')
         ->get();
         $instance = $query->map(function ($item) {
             return $item->instance;
