@@ -1,54 +1,49 @@
-<div class="container mx-auto space-y-4 p-4 sm:p-0">
-    <ul class="flex flex-col sm:flex-row sm:space-x-8 sm:items-center">
-        <li>
-            <input type="checkbox" value="new" wire:model="types"/>
-            <span>new</span>
-        </li>
-        <li>
-            <input type="checkbox" value="processing" wire:model="types"/>
-            <span>Processing</span>
-        </li>
-        <li>
-            <input type="checkbox" value="error" wire:model="types"/>
-            <span>Error</span>
-        </li>
-        <li>
-            <input type="checkbox" value="duplicate" wire:model="types"/>
-            <span>Duplicate</span>
-        </li>
-        <li>
-            <input type="checkbox" value="done" wire:model="types"/>
-            <span>Done</span>
-        </li>
-    </ul>
-
-    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-        <div class="shadow rounded p-4 border bg-white flex-1" style="height: 32rem;">
-            <livewire:livewire-column-chart
-                key="{{ $columnChartModel->reactiveKey() }}"
-                :column-chart-model="$columnChartModel"
-            />
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <canvas id="canvas1" height="280" width="600"></canvas>
+                </div>
+            </div>
         </div>
-
-        <div class="shadow rounded p-4 border bg-white flex-1" style="height: 32rem;">
-            <livewire:livewire-pie-chart
-                key="{{ $pieChartModel->reactiveKey() }}"
-                :pie-chart-model="$pieChartModel"
-            />
-        </div>
-    </div>
-
-    <div class="shadow rounded p-4 border bg-white" style="height: 32rem;">
-        <livewire:livewire-line-chart
-            key="{{ $lineChartModel->reactiveKey() }}"
-            :line-chart-model="$lineChartModel"
-        />
-    </div>
-
-    <div class="shadow rounded p-4 border bg-white" style="height: 32rem;">
-        <livewire:livewire-area-chart
-            key="{{ $areaChartModel->reactiveKey() }}"
-            :area-chart-model="$areaChartModel"
-        />
     </div>
 </div>
+<script>
+
+
+    window.addEventListener('load', (event) => {
+        var hour = <?php echo $hour; ?>;
+    var job = <?php echo $job; ?>;
+    var barChartData = {
+        labels: hour,
+        datasets: [{
+            label: 'Task',
+            backgroundColor: "blue",
+            data: job
+        }]
+    };
+
+
+        var ctx = document.getElementById("canvas1").getContext("2d");
+        window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                elements: {
+                    rectangle: {
+                        borderWidth: 2,
+                        borderColor: '#c1c1c1',
+                        borderSkipped: 'bottom'
+                    }
+                },
+                responsive: true,
+                title: {
+                    display: true,
+                    text: '30 days'
+                }
+            }
+        });
+    });
+</script>
+

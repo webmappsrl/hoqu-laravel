@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Tasks;
 use App\Http\Livewire\Chart30days;
+use App\Http\Controllers\ChartJsController;
 
 use App\Http\Controllers\TasksController;
 
@@ -23,5 +24,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/{task}/show', [Tasks::cla
 Route::get('/mail',[TasksController::class, 'sendEmail'])->name('mail');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/duplicate', [TasksController::class, 'indexDuplicate'])->name('duplicate');
+
+Route::get('/nedo', [ChartJsController::class, 'index'])->name('error');
+
 
 

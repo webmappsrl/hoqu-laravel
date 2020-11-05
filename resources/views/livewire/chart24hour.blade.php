@@ -1,9 +1,7 @@
-
 <div class="container">
     <div class="row">
         <div class="col-md-10 offset-md-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
                 <div class="panel-body">
                     <canvas id="canvas" height="280" width="600"></canvas>
                 </div>
@@ -11,20 +9,19 @@
         </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 <script>
-    var year = <?php echo $year; ?>;
-    var user = <?php echo $user; ?>;
+
+    window.addEventListener('load', (event) => {
+        var hour = <?php echo $hour; ?>;
+    var job = <?php echo $job; ?>;
     var barChartData = {
-        labels: year,
+        labels: hour,
         datasets: [{
-            label: 'Job',
-            backgroundColor: "red",
-            data: user
+            label: 'Task',
+            backgroundColor: "orange",
+            data: job
         }]
     };
-
-    window.onload = function() {
         var ctx = document.getElementById("canvas").getContext("2d");
         window.myBar = new Chart(ctx, {
             type: 'bar',
@@ -40,10 +37,11 @@
                 responsive: true,
                 title: {
                     display: true,
-                    text: 'Yearly User Joined'
+                    text: '24 hour'
                 }
             }
         });
-    };
+    });
+
 </script>
 
