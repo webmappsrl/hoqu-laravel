@@ -30,25 +30,22 @@ describe('Registration', () => {
             })
         })
 
-        //Check Reschedule Button
+        //Check Reschedule Button Skip
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
             cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
-            cy.contains('Reschedule').click()
+            cy.contains('Skip').click()
 
             cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
                 expect(text1).not.to.eq(text2)
             })
             cy.visit('/'+text1+"/show")
-            cy.url().should('contain', '/'+text1+"/show")
             cy.get('#processStatus').each(($e, index, $list) => {
                 const text = $e.text()
-                expect(text).to.contain('\n                                 Status: new\n                              ')
+                expect(text).to.contain('\n                                 Status: skip\n                              ')
 
             })
         })
-         cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
-         cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
 
     })
 })
