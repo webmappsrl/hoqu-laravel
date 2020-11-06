@@ -33,16 +33,6 @@ class Tasks extends Component
         $this->openModal();
     }
 
-
-
-
-
-    public function index_done()
-    {
-        $task = Task::where('process_status', '=', 'done')->orderBy('created_at', 'desc')->paginate(50);
-        return view('archive',['tasks'=>$task]);
-    }
-
     public function index_error()
     {
         $task = Task::where('process_status', '=', 'error')->orderBy('created_at', 'asc')->paginate(50);
@@ -105,6 +95,24 @@ class Tasks extends Component
 
         session()->flash('message',
             'changed the process status of ' .$this->Task_id . ' in NEW');
+
+        $this->closeModal();
+        $this->resetInputFields();
+    }
+
+    public function updateSkip()
+    {
+
+
+        Task::updateOrCreate(['id' => $this->Task_id], [
+            'instance' => $this->instance,
+            'job' => $this->job,
+            'process_status' => 'skip'
+
+        ]);
+
+        session()->flash('message',
+            'changed the process status of ' .$this->Task_id . ' in SKIP');
 
         $this->closeModal();
         $this->resetInputFields();

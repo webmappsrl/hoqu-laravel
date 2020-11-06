@@ -10,12 +10,9 @@ use App\Http\Controllers\TasksController;
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/', [TasksController::class, 'index'])->name('dashboard');
-// Route::middleware(['auth:sanctum', 'verified'])->get('/nedo',Chart30days::class)->name('error');
-Route::get('/nedo', function () {
-    return view('error');
-});
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/archive', [Tasks::class, 'index_done'])->name('archive');
+Route::middleware(['auth:sanctum', 'verified'])->get('/archive', [TasksController::class, 'indexDone'])->name('archive');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/error', Tasks::class);
 

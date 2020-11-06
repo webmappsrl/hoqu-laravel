@@ -5,7 +5,7 @@
           <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="fixed z-30 inset-y-0 left-0 w-64 transition duration-300 transform bg-white overflow-y-auto lg:translate-x-0 lg:static lg:inset-0">
              <div class="flex items-center justify-center mt-8">
                 <div class="flex items-center">
-                   <img class="object-contain h-13" src="/image/logo-webmapp.png" alt="Sunset in the mountains">
+                   <img class="object-contain h-13" src="/image/logo-webmapp.png" alt="Hoqu by Webmapp">
                 </div>
              </div>
              <nav class="mt-10">
@@ -97,7 +97,6 @@
                                         class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                         Parameters
                                      </th>
-                                     <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
                                      <th
                                         class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                         Status
@@ -133,8 +132,7 @@
                                      <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                         <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->parameters }}</a></div>
                                      </td>
-                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                     </td>
+
                                      <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                         @if($task->process_status=='new')
                                         <span
@@ -147,7 +145,7 @@
                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
                                         @elseif($task->process_status=='skip')
                                         <span
-                                           class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indingo-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
+                                           class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
                                         @endif
                                      </td>
                                      <td
