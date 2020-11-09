@@ -108,9 +108,10 @@ class TasksController extends Controller
         if($requestSvr->user()->tokenCan('update'))
         {
             $requestSvr->all();
+            $requestSvr['id_server'] = (string) $requestSvr['id_server'];
 
             $validatedData = $requestSvr->validate([
-                'id_server' => 'required|integer',
+                'id_server' => 'required|string',
                 'task_available' => 'required|array'
             ]);
 
