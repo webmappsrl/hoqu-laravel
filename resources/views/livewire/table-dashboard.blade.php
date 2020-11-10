@@ -41,7 +41,7 @@
 
                 </tr>
              </thead>
-             <tbody class="bg-white">
+             <tbody class="bg-white" wire:poll.5s>
               @foreach ($tasks as $index => $task)
 
                 <tr>
