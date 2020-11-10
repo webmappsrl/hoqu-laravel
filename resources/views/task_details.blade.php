@@ -53,7 +53,7 @@
                             stroke-linejoin="round"></path>
                       </svg>
                    </button>
-                   <div class="relative mx-4 lg:mx-0">
+                   {{-- <div class="relative mx-4 lg:mx-0">
                       <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
                          <svg class="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
                             <path
@@ -64,7 +64,7 @@
                       </span>
                       <input class="form-input w-32 sm:w-64 rounded-md pl-10 pr-4 focus:border-indigo-600" type="text"
                          placeholder="Search">
-                   </div>
+                   </div> --}}
                 </div>
                 <div class="flex items-center">
                    <div x-data="{ dropdownOpen: false }" class="relative">
@@ -72,59 +72,7 @@
                    </div>
                 </div>
              </header>
-             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-indigo-100">
-                <div class="container mx-auto px-6 py-8">
-                   <div class="mt-4">
-                      <div class="flex flex-wrap">
-                         <div class="grid grid-cols-4 gap-6 mb-12 mt-12">
-                            <div class="flex items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                               <h4 class="text-2xl font-semibold text-gray-700">ID:  {{$task->id}}</h4>
-                            </div>
-                            <div class="flex items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                               <h4 class="text-2xl font-semibold text-gray-700">ID Server:  {{$task->id_server}}</h4>
-                            </div>
-                            <div class="flex items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                               <h4 class="text-2xl font-semibold text-gray-700">Instance:  {{$task->instance}}</h4>
-                            </div>
-                            <div class="flex items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                               <h4 class="text-2xl font-semibold text-gray-700">Job: <br> {{$task->job}}</h4>
-                            </div>
-                         </div>
-
-                      </div>
-                      <div class="grid grid-cols-2 gap-6 mb-16 mt-2">
-                        <div class="flex items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                           <h4 class="text-2xl font-semibold text-gray-700">status:  {{$task->process_status}}</h4>
-                        </div>
-                        <div class="flex items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                           <h4 class="text-2xl font-semibold text-gray-700">parameters:  {{$task->parameters}}</h4>
-                        </div>
-                     </div>
-                     <div class="grid grid-cols-2 gap-6 mb-16">
-                        <div class="flex items-center px-8 py-6 shadow-sm rounded-md bg-white " >
-                           <h4 class="text-2xl font-semibold text-gray-700">create:  {{$task->created_at}}</h4>
-                        </div>
-                        <div class="flex items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                           <h4 class="text-2xl font-semibold text-gray-700">worked:  {{$task->updated_at}}</h4>
-                        </div>
-                     </div>
-                     <div class="grid grid-cols-1 gap-6 ">
-                        <div class="flex items-center px-8 py-6 shadow-sm rounded-md bg-white " >
-                           <h4 class="text-2xl font-semibold text-gray-700">log:  {{$task->process_log}}</h4>
-                        </div>
-                     </div>
-                   </div>
-                   <div class="mt-8">
-                   </div>
-                   <div class="flex flex-col mt-8 ">
-                      <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                         {{-- @livewire('search',['instance'=>$tasks['instance'], 'job'=>$tasks['job']]) --}}
-                      </div>
-                   </div>
-                </div>
-          </div>
-       </div>
-       </main>
+             @livewire('status-show',[$task->id])
     </div>
     </div>
     </div>

@@ -8,13 +8,17 @@ use Livewire\Component;
 
 class StatusShow extends Component
 {
-    public function show(Task $task)
+
+    public $task;
+
+    public function mount($id)
     {
-        return view('livewire.status-show',['task'=>$task]);
+        $this->task = Task::find($id);
     }
 
     public function render()
     {
+        return view('livewire.status-show',['task' =>$this->task]);
 
     }
 }
