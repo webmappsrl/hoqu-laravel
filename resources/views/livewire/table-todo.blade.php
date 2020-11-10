@@ -1,9 +1,33 @@
 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-indigo-100">
     <div class="container mx-auto px-6 py-8">
        <div class="flex flex-col mt-8 ">
+
           <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+            <div class="mb-8">
+                <label class="inline-block w-32 font-bold">Filter:</label>
+                <select class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"name="instance" class="border shadow p-2 bg-white" wire:model='instance'
+                >
+                    <option value=''>Choose a Instance</option>
+                    @foreach($instances as $instance)
+                        <option value={{ $instance->id }}>{{ $instance->instance }}</option>
+                    @endforeach
+                </select >
+
+                @if(count($jobs) > 0)
+
+                <select class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"name="job" class="border shadow p-2 bg-white" wire:model='job'
+                >
+                    <option value=''>Choose a job</option>
+                    @foreach($jobs as $job)
+                        <option value={{ $job->id }}>{{ $job->job }}</option>
+                    @endforeach
+                </select >
+                @endif
+            </div>
+
              <div
                 class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+
                 <table id='hometable' class="min-w-full" wire:poll.5s>
                     <thead>
                       <tr>

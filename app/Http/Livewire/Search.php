@@ -27,21 +27,33 @@ class Search extends Component
 
     public function updatedinstance()
     {
-        dd($this->instance);
-        $in = Task::findOrFail($this->instance);
+        $in = Task::find($this->instance);
 
-
-        $this->tasks= Task::where('process_status', '=', 'new')
-        ->where('instance','=', $in->instance)
-        ->orderBy('created_at', 'asc')
-        ->get()
-        ->toArray();
+        if(!empty($in))
+        {
+            $this->tasks= Task::whereIn('process_status', ['new','processing'])
+            ->where('instance','=', $in->instance)
+            ->orderByRaw('FIELD(process_status, "new", "processing")asc')
+            ->orderBy('created_at', 'asc')
+            ->get()
+            ;
 
             $this->jobs = Task::where('process_status', '=', 'new')
             ->where('instance','=', $in->instance)
-                        ->orderBy('created_at', 'asc')->get();
+            ->orderBy('created_at', 'asc')
+            ->get()
+            ;
+        }
+        else
+        {
+            $this->tasks= Task::whereIn('process_status', ['new','processing'])
+            ->orderByRaw('FIELD(process_status, "new", "processing")asc')
+            ->orderBy('created_at', 'asc')
+            ->get()
+            ;
 
-
+            $this->jobs = [];
+        }
 
     }
 
@@ -51,19 +63,29 @@ class Search extends Component
         $in = Task::find($this->instance);
         $in_job = Task::find($this->job);
 
-        $this->tasks = Task::where('process_status', '=', 'new')
-        ->where('instance', '=', $in->instance)
-        ->where('job', '=', $in_job->job)
-        ->orderBy('created_at', 'asc')->get();
+        if(!empty($in_job))
+        {
+            $this->tasks = Task::whereIn('process_status', ['new','processing'])
+            ->where('instance', '=', $in->instance)
+            ->where('job', '=', $in_job->job)
+            ->orderByRaw('FIELD(process_status, "new", "processing")asc')
+            ->orderBy('created_at', 'asc')
+            ->get();
+        }
+        else
+        {
+            $this->tasks = Task::whereIn('process_status', ['new','processing'])
+            ->where('instance', '=', $in->instance)
+            ->orderByRaw('FIELD(process_status, "new", "processing")asc')
+            ->orderBy('created_at', 'asc')
+            ->get();
+        }
 
     }
-
-
 
     public function render()
     {
         $this->instances = Task::where('process_status', '=', 'new')->orderBy('created_at', 'asc')->get();
-
         return view('livewire.search');
     }
 }
