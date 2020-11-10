@@ -24,8 +24,14 @@ class TasksController extends Controller
 
     public function index()
     {
-        $task = Task::orwhere('process_status', '=', 'new')->orwhere('process_status', '=', 'processing')->orderByRaw('FIELD(process_status, "new", "processing")asc')->orderBy('created_at', 'asc')->paginate(50);
+        $task = Task::orderBy('updated_at', 'desc')->paginate(10);
         return view('dashboard',['tasks'=>$task]);
+    }
+
+    public function indexTodo()
+    {
+        $task = Task::orwhere('process_status', '=', 'new')->orwhere('process_status', '=', 'processing')->orderByRaw('FIELD(process_status, "new", "processing")asc')->orderBy('created_at', 'asc')->paginate(50);
+        return view('todo',['tasks'=>$task]);
     }
 
     public function indexDone()
