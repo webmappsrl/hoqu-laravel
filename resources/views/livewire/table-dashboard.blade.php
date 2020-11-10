@@ -4,7 +4,7 @@
   </div>
        <div
           class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
-          <table id='hometable' class="min-w-full">
+          <table id='hometable' class="min-w-full" wire:poll.5s>
              <thead>
                 <tr>
                    <th
@@ -41,7 +41,7 @@
 
                 </tr>
              </thead>
-             <tbody class="bg-white" wire:poll.5s>
+             <tbody class="bg-white" >
               @foreach ($tasks as $index => $task)
 
                 <tr>
