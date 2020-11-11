@@ -83,9 +83,9 @@ namespace App\Http\Livewire;
 
         public function render()
         {
-            $this->instances = Task::select('instance')->whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->groupBy('instance')->get();
+            $this->instances = Task::select('instance')->whereIn('process_status', ['new','processing'])->orderBy('instance', 'asc')->groupBy('instance')->get();
 
-            $this->jobs = Task::select('job')->whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->groupBy('job')->get();
+            $this->jobs = Task::select('job')->whereIn('process_status', ['new','processing'])->orderBy('job', 'asc')->groupBy('job')->get();
 
             if($this->countJ == 1 && $this->countI == 0)
             {

@@ -27,10 +27,18 @@ namespace App\Http\Livewire;
             $this->openModal();
         }
 
+        public function openModal()
+        {
+            $this->isOpen = true;
+        }
+
+
         public function closeModal()
-    {
-        $this->isOpen = false;
-    }
+        {
+            $this->isOpen = false;
+        }
+
+
 
     /**
      * The attributes that are mass assignable.
@@ -58,14 +66,13 @@ namespace App\Http\Livewire;
             $this->jobs=[];
         }
 
-        public function updatedinstance()
+        public function updatedInstance()
         {
-            $in = Task::find($this->instance);
-
-            if(!empty($in))
+            if(!empty($this->instance))
             {
                 $tasks= Task::whereIn('process_status', ['error'])
-                ->where('instance','like', $in->instance)
+                ->where('instance','like', $this->instance)
+                ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                 ->orderBy('created_at', 'asc')
                 ->paginate(50)
                 ;
@@ -73,6 +80,7 @@ namespace App\Http\Livewire;
             else
             {
                 $tasks= Task::whereIn('process_status', ['error'])
+                ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                 ->orderBy('created_at', 'asc')
                 ->paginate(50)
                 ;
@@ -83,21 +91,21 @@ namespace App\Http\Livewire;
 
         }
 
-        public function updatedjob()
+        public function updatedJob()
         {
 
-            $in_job = Task::find($this->job);
-
-            if(!empty($in_job))
+            if(!empty($this->job))
             {
                 $tasks = Task::whereIn('process_status', ['error'])
-                ->where('job', 'like', $in_job->job)
+                ->where('job', 'like', $this->job)
+                ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                 ->orderBy('created_at', 'asc')
                 ->paginate(50);
             }
             else
             {
                 $tasks = Task::whereIn('process_status', ['error'])
+                ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                 ->orderBy('created_at', 'asc')
                 ->paginate(50);
             }
@@ -106,22 +114,73 @@ namespace App\Http\Livewire;
             return $tasks;
         }
 
+        public function update()
+        {
+
+
+            Task::updateOrCreate(['id' => $this->Task_id], [
+                'instance' => $this->instance,
+                'job' => $this->job,
+                'process_status' => 'new'
+
+            ]);
+
+            session()->flash('message',
+                'changed the process status of ' .$this->Task_id . ' in NEW');
+
+            $this->closeModal();
+            $this->resetInputFields();
+        }
+
+        public function updateSkip()
+        {
+
+
+            Task::updateOrCreate(['id' => $this->Task_id], [
+                'instance' => $this->instance,
+                'job' => $this->job,
+                'process_status' => 'skip'
+
+            ]);
+
+            session()->flash('message',
+                'changed the process status of ' .$this->Task_id . ' in SKIP');
+
+            $this->closeModal();
+            $this->resetInputFields();
+        }
+        /**
+         * The attributes that are mass assignable.
+         *
+         * @var array
+         */
+        public function edit(Task $task)
+        {
+            $this->Task_id = $task->id;
+            $this->instance = $task->instance;
+            $this->job = $task->job;
+
+            $this->openModal();
+
+        }
+
+
 
         public function render()
         {
-            $this->instances = Task::whereIn('process_status', ['error'])->orderBy('created_at', 'asc')->get();
+            $this->instances = Task::select('instance')->whereIn('process_status', ['error'])->groupBy('instance')->orderBy('instance', 'asc')->get();
 
-            $this->jobs = Task::whereIn('process_status', ['error'])->orderBy('created_at', 'asc')->get();
+            $this->jobs = Task::select('job')->whereIn('process_status', ['error'])->groupBy('job')->orderBy('job', 'asc')->get();
 
             if($this->countJ == 1 && $this->countI == 0)
             {
                 $this->countJ = 0;
-                $tasks=$this->updatedjob();
+                $tasks=$this->updatedJob();
             }
             if($this->countI == 1 && $this->countJ == 0)
             {
                 $this->countI = 0;
-                $tasks=$this->updatedinstance();
+                $tasks=$this->updatedInstance();
             }
 
             return view('livewire.table-error',['tasks' => $tasks]);
