@@ -40,6 +40,12 @@ class TasksController extends Controller
         return view('archive',['tasks'=>$task]);
     }
 
+    public function indexError()
+    {
+        $task = Task::orwhere('process_status', '=', 'error')->orderByRaw('FIELD(process_status, "done", "skip")asc')->orderBy('created_at', 'asc')->paginate(50);
+        return view('error',['tasks'=>$task]);
+    }
+
     public function indexDuplicate()
     {
         $task = Task::orwhere('process_status', '=', 'duplicate')->orderBy('created_at', 'asc')->paginate(50);

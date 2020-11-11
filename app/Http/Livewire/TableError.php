@@ -6,7 +6,7 @@ namespace App\Http\Livewire;
     use App\Models\Task;
     use Livewire\Component;
 
-    class TableTodo extends Component
+    class TableError extends Component
     {
         use WithPagination;
 
@@ -15,8 +15,35 @@ namespace App\Http\Livewire;
         public $jobs;
         public $countJ = 0;
         public $countI = 1;
+        public $isOpen = 0;
+
+        public $instance1, $job1,$parameters, $process_status, $process_log, $Task_id;
 
         public $instances;
+
+        public function create()
+        {
+            $this->resetInputFields();
+            $this->openModal();
+        }
+
+        public function closeModal()
+    {
+        $this->isOpen = false;
+    }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+        private function resetInputFields(){
+        $this->instance1 = '';
+        $this->job1 = '';
+        $this->parameters = '';
+        $this->process_status = '';
+        $this->process_log = '';
+    }
 
         public function updatinginstance()
         {
@@ -27,7 +54,6 @@ namespace App\Http\Livewire;
         {
             $this->instance=$instance;
             $this->job=$job;
-            // $this->tasks=[];
             $this->instances=[];
             $this->jobs=[];
         }
@@ -38,17 +64,15 @@ namespace App\Http\Livewire;
 
             if(!empty($in))
             {
-                $tasks= Task::whereIn('process_status', ['new','processing'])
+                $tasks= Task::whereIn('process_status', ['error'])
                 ->where('instance','like', $in->instance)
-                ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                 ->orderBy('created_at', 'asc')
                 ->paginate(50)
                 ;
             }
             else
             {
-                $tasks= Task::whereIn('process_status', ['new','processing'])
-                ->orderByRaw('FIELD(process_status, "new", "processing")asc')
+                $tasks= Task::whereIn('process_status', ['error'])
                 ->orderBy('created_at', 'asc')
                 ->paginate(50)
                 ;
@@ -66,16 +90,14 @@ namespace App\Http\Livewire;
 
             if(!empty($in_job))
             {
-                $tasks = Task::whereIn('process_status', ['new','processing'])
+                $tasks = Task::whereIn('process_status', ['error'])
                 ->where('job', 'like', $in_job->job)
-                ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                 ->orderBy('created_at', 'asc')
                 ->paginate(50);
             }
             else
             {
-                $tasks = Task::whereIn('process_status', ['new','processing'])
-                ->orderByRaw('FIELD(process_status, "new", "processing")asc')
+                $tasks = Task::whereIn('process_status', ['error'])
                 ->orderBy('created_at', 'asc')
                 ->paginate(50);
             }
@@ -87,9 +109,9 @@ namespace App\Http\Livewire;
 
         public function render()
         {
-            $this->instances = Task::whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->distinct()->get();
+            $this->instances = Task::whereIn('process_status', ['error'])->orderBy('created_at', 'asc')->get();
 
-            $this->jobs = Task::whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->distinct()->get();
+            $this->jobs = Task::whereIn('process_status', ['error'])->orderBy('created_at', 'asc')->get();
 
             if($this->countJ == 1 && $this->countI == 0)
             {
@@ -102,6 +124,6 @@ namespace App\Http\Livewire;
                 $tasks=$this->updatedinstance();
             }
 
-            return view('livewire.table-todo',['tasks' => $tasks]);
+            return view('livewire.table-error',['tasks' => $tasks]);
         }
     }

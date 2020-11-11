@@ -24,6 +24,3 @@ Route::get('/mail',[TasksController::class, 'sendEmail'])->name('mail');
 Route::middleware(['auth:sanctum', 'verified'])->get('/duplicate', [TasksController::class, 'indexDuplicate'])->name('duplicate');
 
 Route::get('/nedo', [ChartJsController::class, 'index'])->name('error');
-
-
-
