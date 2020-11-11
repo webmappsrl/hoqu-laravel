@@ -88,7 +88,6 @@ class TableTodo extends Component
         $this->instances = Task::whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->get();
 
         $this->jobs = Task::whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->get();
-
         return view('livewire.table-todo',['posts' => Task::whereIn('process_status', ['new','processing'])->paginate(50)]);
     }
 }

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\Task;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\Sanctum;
 
 use Tests\TestCase;
 
@@ -94,7 +95,7 @@ class pullApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "id_server" => 'server_mtp',
+            "id_server" => 'webmapp_server_staging_all_nombtiles',
             "task_available" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
         ];
 
@@ -140,7 +141,7 @@ public function testFineFirstElementPullApiHoqu()
         ])->post('/api/store',$data1);
         $response->assertStatus(201);
         $requestSvr1 = [
-            "id_server" => '9',
+            "id_server" => 'webmapp_server_staging_all_nombtiles',
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
