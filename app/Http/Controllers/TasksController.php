@@ -17,9 +17,14 @@ class TasksController extends Controller
 
     }
 
-    public function show(Task $task)
+    public function show(Request $request,Task $task)
     {
-        return response()->json($task,200);
+        if($request->user()->tokenCan('read'))
+        {
+            return response()->json($task,200);
+        }
+        else return abort(403,'Unauthorized');
+
     }
 
     public function index()
