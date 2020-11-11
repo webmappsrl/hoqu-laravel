@@ -84,8 +84,8 @@
                    </div>
                 </div>
              </header>
-             @livewire('table-todo')
-          </div>
+      @livewire('table-todo',['instance'=>$tasks['instance'], 'job'=>$tasks['job']])
+    </div>
        </div>
     </div>
  </x-app-layout>

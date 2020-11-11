@@ -21,32 +21,32 @@
              @if($task->process_status=='new')
              <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
                 <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                <h4 class="text-2xl font-semibold text-gray-700 bg-blue-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
+                <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-blue-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
              </div>
              @elseif($task->process_status=='processing')
              <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
                 <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                <h4 class="text-2xl font-semibold text-gray-700 bg-orange-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
+                <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-orange-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
              </div>
              @elseif($task->process_status=='error')
              <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
                 <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                <h4 class="text-2xl font-semibold text-gray-700 bg-red-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
+                <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-red-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
              </div>
              @elseif($task->process_status=='done')
              <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
                 <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                <h4 class="text-2xl font-semibold text-gray-700 bg-green-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
+                <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-green-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
              </div>
              @elseif($task->process_status=='duplicate')
              <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
                 <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                <h4 class="text-2xl font-semibold text-gray-700 bg-yellow-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
+                <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-yellow-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
              </div>
              @elseif($task->process_status=='skip')
              <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
                 <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                <h4 class="text-2xl font-semibold text-gray-700 bg-indigo-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
+                <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-indigo-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
              </div>
              @endif
              <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >

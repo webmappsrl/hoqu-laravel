@@ -40,9 +40,9 @@ describe('Registration', () => {
                 expect(text1).not.to.eq(text2)
             })
             cy.visit('/'+text1+"/show")
-            cy.get('#processStatus').each(($e, index, $list) => {
+            cy.get('h4#processStatus').each(($e, index, $list) => {
                 const text = $e.text()
-                expect(text).to.contain('\n                                 Status: skip\n                              ')
+                expect(text).to.contain('skip')
 
             })
         })

@@ -19,7 +19,7 @@
                 >
                     <option value=''>Choose a job</option>
                     @foreach($jobs as $job)
-                        <option value={{ $job->id }}>{{ $job->job }}</option>
+                        <option value={{ $job->id}}>{{ $job->job }}</option>
                     @endforeach
                 </select >
                 @endif
@@ -115,7 +115,7 @@
                    </tbody>
                 </table>
                 <ul class="w-7/12 px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                    {{ $posts->links() }}
+                    {{-- {{ $tasks->links() }} --}}
                 </ul>
              </div>
           </div>
