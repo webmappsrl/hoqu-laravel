@@ -9,7 +9,7 @@
                 >
                     <option value=''>Choose a Instance</option>
                     @foreach($instances as $instance)
-                        <option value={{ $instance->id }}>{{ $instance->instance }}</option>
+                        <option value={{ $instance->instance }}>{{ $instance->instance }}</option>
                     @endforeach
                 </select >
 
@@ -19,7 +19,7 @@
                 >
                     <option value=''>Choose a job</option>
                     @foreach($jobs as $job)
-                        <option value={{ $job->id}}>{{ $job->job }}</option>
+                        <option value={{ $job->job}}>{{ $job->job }}</option>
                     @endforeach
                 </select >
                 @endif

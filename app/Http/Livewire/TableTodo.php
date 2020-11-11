@@ -34,12 +34,10 @@ namespace App\Http\Livewire;
 
         public function updatedinstance()
         {
-            $in = Task::find($this->instance);
-
-            if(!empty($in))
+            if(!empty($this->instance))
             {
                 $tasks= Task::whereIn('process_status', ['new','processing'])
-                ->where('instance','like', $in->instance)
+                ->where('instance','like', $this->instance)
                 ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                 ->orderBy('created_at', 'asc')
                 ->paginate(50)
@@ -62,12 +60,10 @@ namespace App\Http\Livewire;
         public function updatedjob()
         {
 
-            $in_job = Task::find($this->job);
-
-            if(!empty($in_job))
+            if(!empty($this->job))
             {
                 $tasks = Task::whereIn('process_status', ['new','processing'])
-                ->where('job', 'like', $in_job->job)
+                ->where('job', 'like', $this->job)
                 ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                 ->orderBy('created_at', 'asc')
                 ->paginate(50);
@@ -87,9 +83,9 @@ namespace App\Http\Livewire;
 
         public function render()
         {
-            $this->instances = Task::whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->distinct('instance')->get();
+            $this->instances = Task::select('instance')->whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->groupBy('instance')->get();
 
-            $this->jobs = Task::whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->distinct('job')->get();
+            $this->jobs = Task::select('job')->whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->groupBy('job')->get();
 
             if($this->countJ == 1 && $this->countI == 0)
             {
