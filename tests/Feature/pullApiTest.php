@@ -145,7 +145,6 @@ public function testFineFirstElementPullApiHoqu()
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
-
         //OPERATIONS
         // Check that server@webmapp.it access to api/
         $response = $this->withHeaders([
@@ -165,6 +164,7 @@ public function testFineFirstElementPullApiHoqu()
         //get value elaborate by pull
         $ja = Task::find($response['id']);
         $this->assertSame('processing',$ja['process_status']);
+        //comparison server_id string with that on the DB
         $this->assertSame($requestSvr1['id_server'],$ja['id_server']);
         $this->assertSame($data['instance'],$ja['instance']);
         $this->assertSame($response['instance'],$ja['instance']);
@@ -193,7 +193,7 @@ public function testFineFirstElementPullApiHoqu()
         sleep(2);
 
         $requestSvr1 = [
-            "id_server" => 9,
+            "id_server" => 999,
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
@@ -209,6 +209,7 @@ public function testFineFirstElementPullApiHoqu()
         //get value elaborate by pull
         $ja = Task::find($response['id']);
         $this->assertSame('processing',$ja['process_status']);
+        //I check that the integer has become a string
         $this->assertSame(((string)$requestSvr1['id_server']),$ja['id_server']);
         $this->assertSame($data['instance'],$ja['instance']);
         $this->assertSame($response['instance'],$ja['instance']);
