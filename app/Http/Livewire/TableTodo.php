@@ -87,9 +87,9 @@ namespace App\Http\Livewire;
 
         public function render()
         {
-            $this->instances = Task::whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->distinct()->get();
+            $this->instances = Task::whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->distinct('instance')->get();
 
-            $this->jobs = Task::whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->distinct()->get();
+            $this->jobs = Task::whereIn('process_status', ['new','processing'])->orderBy('created_at', 'asc')->distinct('job')->get();
 
             if($this->countJ == 1 && $this->countI == 0)
             {
