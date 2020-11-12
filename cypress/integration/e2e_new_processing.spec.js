@@ -33,7 +33,7 @@ describe('Registration', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('new')) {
-                expect(text).to.eq('\n                                                        new\n                                                     ')
+                expect(text).to.eq('\n                                                              new\n                                                           ')
             }
             if (text.includes('processing')) {
                 expect(text).to.eq('\n                                                processing\n                                             ')
@@ -58,7 +58,7 @@ describe('Registration', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('new')) {
-                expect(text).to.eq('\n                                                        new\n                                                     ')
+                expect(text).to.eq('\n                                                              new\n                                                           ')
             }
             if (text.includes('processing')) {
                 assert.strictEqual(text, 'processing', 'processing ok ')
@@ -84,7 +84,7 @@ describe('Registration', () => {
                 assert.strictEqual(text, 'new', 'new ok')
             }
             if (text.includes('processing')) {
-                expect(text).to.eq('\n                                                        processing\n                                                     ')
+                expect(text).to.eq('\n                                                              processing\n                                                           ')
             }
 
         })
@@ -108,7 +108,7 @@ describe('Registration', () => {
                 assert.strictEqual(text, 'new', 'new ok')
             }
             if (text.includes('processing')) {
-                expect(text).to.eq('\n                                                        processing\n                                                     ')
+                expect(text).to.eq('\n                                                              processing\n                                                           ')
             }
 
         })
