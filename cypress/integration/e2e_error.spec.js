@@ -34,13 +34,13 @@ describe('Registration', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('error')) {
-                assert.strictEqual(text, 'error', 'error ok')
+                expect(text).to.eq('\n                                                error\n                                             ')
             }
 
         })
 
         //ASSERT HOME page 2
-        cy.get('a.relative.inline-flex.items-center').contains('2').click()
+        cy.get('#paginationDone > div > nav > div > div:nth-child(2) > span > span:nth-child(3)').contains('2').click()
         cy.url().should('contain', '/error?page=2')
 
         //check the data that are in ascending order
@@ -56,9 +56,8 @@ describe('Registration', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('error')) {
-                assert.strictEqual(text, 'error', 'error ok')
+                expect(text).to.eq('\n                                                error\n                                             ')
             }
-
         })
 
 

@@ -16,7 +16,54 @@ namespace App\Http\Livewire;
         public $countJ = 0;
         public $countI = 1;
 
+        public $parameters;
+
+
         public $instances;
+
+        public $isOpen = 0;
+
+        public function create()
+        {
+            $this->resetInputFields();
+            $this->openModal();
+        }
+
+        public function openModal()
+        {
+            $this->isOpen = true;
+        }
+
+        public function closeModal()
+        {
+            $this->isOpen = false;
+        }
+
+        private function resetInputFields(){
+            $this->instance = '';
+            $this->job = '';
+            $this->parameters = '';
+        }
+
+        public function store()
+    {
+        $this->validate([
+            'instance' => 'required',
+                'job' => 'required'
+        ]);
+
+        Task::updateOrCreate([
+            'instance' => $this->instance,
+            'job' => $this->job,
+            'parameters' => $this->parameters
+        ]);
+
+        session()->flash('message',
+                'insert ' .$this->instance1 . ' nedo');
+
+        $this->closeModal();
+        $this->resetInputFields();
+    }
 
         public function updatinginstance()
         {

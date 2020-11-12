@@ -34,11 +34,31 @@ describe('Registration', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('duplicate')) {
-                assert.strictEqual(text, 'duplicate', 'duplicate ok')
+                expect(text).to.eq('\n                                                        duplicate\n                                                     ')
             }
 
         })
 
+        //ASSERT HOME page 2
+        cy.get('#paginationDone > div > nav > div > div:nth-child(2) > span > span:nth-child(3)').contains('2').click()
+        cy.url().should('contain', '/duplicate?page=2')
+
+        //check the data that are in ascending order
+
+        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+          if (index == 0)time_prev=0
+            time = Math.round(new Date($e.text()).getTime() / 1000)
+            assert.isBelow(time_prev, time, 'previous date is below actual')
+            time_prev = time
+        })
+
+        //check that the data with status new and processing are present
+        cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
+            const text = $e.text()
+            if (text.includes('duplicate')) {
+                expect(text).to.eq('\n                                                        duplicate\n                                                     ')
+            }
+        })
 
         cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
         cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()

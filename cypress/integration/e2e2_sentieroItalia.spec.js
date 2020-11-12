@@ -31,9 +31,10 @@ describe('Final Test Sentiero Italia E2E2', () => {
                 })
                 cy.get('#post-title-0').type(title)
                 cy.get('input#acf-wm_track_osmid').invoke('val').then((osm) => {
+                    cy.log(osm)
                     osmid = osm
                     cy.get('#editor > div > div > div.components-navigate-regions > div > div.block-editor-editor-skeleton__header > div > div.edit-post-header__settings > button.components-button.editor-post-publish-button.editor-post-publish-button__button.is-primary').click()
-                    cy.wait(10000)
+                    cy.wait(20000)
 
                     cy.request('GET', 'https://a.webmapp.it/els.be.webmapp.it/geojson/' + id + '.geojson').then((response) => {
                         const obj = JSON.parse(response.body)

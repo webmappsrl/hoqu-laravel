@@ -14,6 +14,11 @@ describe('Registration', () => {
         //ASSERT HOME BASE
         cy.url().should('contain', '/')
 
+        cy.get('span#link_todo').click()
+
+        //ASSERT archive
+        cy.url().should('contain', '/todo')
+
         //check the data that are in ascending order
         var time_prev = 0
         var time = 0
@@ -28,17 +33,17 @@ describe('Registration', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('new')) {
-                assert.strictEqual(text, 'new', 'new ok')
+                expect(text).to.eq('\n                                                        new\n                                                     ')
             }
             if (text.includes('processing')) {
-                assert.strictEqual(text, 'processing', 'processing ok ')
+                expect(text).to.eq('\n                                                processing\n                                             ')
             }
 
         })
 
-        //ASSERT HOME page 2
-        cy.get('a.relative.inline-flex.items-center').contains('2').click()
-        cy.url().should('contain', '/?page=2')
+        // ASSERT HOME page 2
+        cy.get('#paginationDone > div > nav > div > div:nth-child(2) > span > span:nth-child(3)').contains('2').click()
+        cy.url().should('contain', '/todo?page=2')
 
         //check the data that are in ascending order
 
@@ -53,7 +58,7 @@ describe('Registration', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('new')) {
-                assert.strictEqual(text, 'new', 'new ok')
+                expect(text).to.eq('\n                                                        new\n                                                     ')
             }
             if (text.includes('processing')) {
                 assert.strictEqual(text, 'processing', 'processing ok ')
@@ -61,9 +66,9 @@ describe('Registration', () => {
 
         })
 
-        //ASSERT HOME page 3
-        cy.get('a.relative.inline-flex.items-center').contains('3').click()
-        cy.url().should('contain', '/?page=3')
+        // // //ASSERT HOME page 3
+        cy.get('#paginationDone > div > nav > div > div:nth-child(2) > span > span:nth-child(4) > button').click()
+        cy.url().should('contain', '/todo?page=3')
         //check the data that are in ascending order
         cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
             if (index == 0){time_prev=0}
@@ -79,14 +84,14 @@ describe('Registration', () => {
                 assert.strictEqual(text, 'new', 'new ok')
             }
             if (text.includes('processing')) {
-                assert.strictEqual(text, 'processing', 'processing ok ')
+                expect(text).to.eq('\n                                                        processing\n                                                     ')
             }
 
         })
 
         //ASSERT HOME page 4
-        cy.get('a.relative.inline-flex.items-center').contains('4').click()
-        cy.url().should('contain', '/?page=4')
+        cy.get('#paginationDone > div > nav > div > div:nth-child(2) > span > span:nth-child(6) > button > svg').click()
+        cy.url().should('contain', '/todo?page=4')
 
         //check the data that are in ascending order
         cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
@@ -103,7 +108,7 @@ describe('Registration', () => {
                 assert.strictEqual(text, 'new', 'new ok')
             }
             if (text.includes('processing')) {
-                assert.strictEqual(text, 'processing', 'processing ok ')
+                expect(text).to.eq('\n                                                        processing\n                                                     ')
             }
 
         })
