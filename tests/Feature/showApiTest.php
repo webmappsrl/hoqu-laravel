@@ -132,10 +132,10 @@ class showApiTest extends TestCase
         $t1->assertStatus(404);
     }
 
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->artisan('migrate:fresh --seed');
-    }
+    // public function setUp(): void
+    // {
+    //     parent::setUp();
+    //     $this->artisan('migrate:fresh --seed');
+    // }
 
 }

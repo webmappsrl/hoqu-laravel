@@ -4,7 +4,8 @@
           <div class="flex flex-wrap">
              <div class="grid grid-cols-4 gap-12 mb-12 mt-12">
                 <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                   <h4 class="text-2xl font-semibold text-gray-700">ID:  {{$task->id}}</h4>
+                    <h4 class="text-2xl font-semibold text-gray-700">ID:</h4>
+                    <h4 id="idTask"class="text-2xl font-semibold text-gray-700">{{$task->id}}</h4>
                 </div>
                 <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
                    <h4 class="text-2xl font-semibold text-gray-700">ID Server:  {{$task->id_server}}</h4>

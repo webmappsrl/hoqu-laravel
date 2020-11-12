@@ -36,9 +36,13 @@ describe('Registration', () => {
             cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
             cy.contains('Skip').click()
 
-            // cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
-            //     expect(text1).not.to.eq(text2)
-            // })
+            //id via notification
+            cy.get('p.text-lg').invoke('text').then((text) => {
+                var id = text.split(' ')[5]
+                var idA = text1.split(' ')[5]
+                cy.log(idA)
+                expect(text1).to.eq('\n                        \n                           '+id+'\n                        \n                     ')
+        })
             cy.visit('/'+text1+"/show")
             cy.get('h4#processStatus').each(($e, index, $list) => {
                 const text = $e.text()
