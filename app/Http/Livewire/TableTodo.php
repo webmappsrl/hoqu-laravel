@@ -16,7 +16,7 @@ namespace App\Http\Livewire;
         public $countJ = 0;
         public $countI = 1;
 
-        public $parameters;
+        public $parameters,$in,$jo;
 
 
         public $instances;
@@ -49,17 +49,21 @@ namespace App\Http\Livewire;
     {
         $this->validate([
             'instance' => 'required',
-                'job' => 'required'
+                'job' => 'required',
+                'parameters' => 'required|json'
         ]);
 
-        Task::updateOrCreate([
+
+
+        $s = Task::updateOrCreate([
             'instance' => $this->instance,
             'job' => $this->job,
             'parameters' => $this->parameters
         ]);
 
+
         session()->flash('message',
-                'insert ' .$this->instance1 . ' nedo');
+                'Task entered successfully: id: ' .$s['id']. ' instance: '.$s['instance'].' job: '.$s['job'].' parameters: '.$s['parameters']);
 
         $this->closeModal();
         $this->resetInputFields();
