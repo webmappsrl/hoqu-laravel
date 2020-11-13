@@ -2,6 +2,5 @@
   "viewportWidth": 1300,
   "viewportHeight": 960,
   "baseUrl": "http://hoqu-laravel.test",
-  "chromeWebSecurity": false,
-  "retries": 2
+  "chromeWebSecurity": false
 }

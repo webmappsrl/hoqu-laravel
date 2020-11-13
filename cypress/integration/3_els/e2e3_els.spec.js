@@ -29,7 +29,7 @@ describe('Final Test Sentiero Italia E2E3', () => {
                         force: true
                     })
                     cy.get('input#acf-wm_track_osmid').type('4179533')
-                    cy.get('button.button.button-secondary').contains('Update').click()
+                    cy.get('input#update_button_track_osmid').contains('Update').click()
                     cy.wait(2000)
                     cy.get('#editor > div > div > div.components-navigate-regions > div > div.block-editor-editor-skeleton__header > div > div.edit-post-header__settings > button.components-button.editor-post-publish-button.editor-post-publish-button__button.is-primary').click()
                     cy.wait(20000)
@@ -44,7 +44,7 @@ describe('Final Test Sentiero Italia E2E3', () => {
                     cy.visit('http://els.be.webmapp.it/wp-admin/post.php?post=' + id + '&action=edit&lang=it')
                     cy.get('input#acf-wm_track_osmid').clear()
                     cy.get('input#acf-wm_track_osmid').type(osmid)
-                    cy.get('button.button.button-secondary').contains('Update').click()
+                    cy.get('input#update_button_track_osmid').contains('Update').click()
                     cy.wait(2000)
                     cy.get('#editor > div > div > div.components-navigate-regions > div > div.block-editor-editor-skeleton__header > div > div.edit-post-header__settings > button.components-button.editor-post-publish-button.editor-post-publish-button__button.is-primary').click()
                 })
