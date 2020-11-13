@@ -34,7 +34,7 @@ class updateDoneApiTest extends TestCase
         $token_fake = 'token-fake';
 
         $requestSvr1 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "task_available" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
         $requestSvr1['task_available'] =  json_encode($requestSvr1['task_available']);
@@ -89,7 +89,7 @@ class updateDoneApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
@@ -139,7 +139,7 @@ class updateDoneApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
         //OPERATIONS 1
@@ -153,7 +153,7 @@ class updateDoneApiTest extends TestCase
         $dataDbTest = $response;
         //request that sends the "requesting server 2"
         $requestSvr2 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
             "id_task" => 100,
         ];
@@ -189,7 +189,7 @@ class updateDoneApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
         ];
 
@@ -203,7 +203,7 @@ class updateDoneApiTest extends TestCase
         $dataDbTest = $response;
         //request that sends the "requesting server 2"
         $requestSvr2 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "status" => '',
             "id_task" => $dataDbTest['id'],
         ];
@@ -276,7 +276,7 @@ public function testCheckPositiveUD()
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
         //OPERATIONS 1
@@ -289,7 +289,7 @@ public function testCheckPositiveUD()
         $dataDbTest = $response;
         //request that sends the "requesting server 2"
         $requestSvr2 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "status" => "done",
             "log" => "log test",
             "id_task" => $dataDbTest['id'],

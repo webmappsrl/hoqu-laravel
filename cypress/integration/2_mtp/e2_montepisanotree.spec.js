@@ -31,7 +31,7 @@ describe('Final Test', () => {
 
         cy.get('tbody#the-list td').first().invoke('text').then((value) => {
             id = value.substring(0, 4);
-            cy.wait(3000)
+            cy.wait(10000)
             cy.request({
                     url: 'https://test.montepisanotree.org/?p=' + id
                 })

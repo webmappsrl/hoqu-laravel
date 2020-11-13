@@ -56,7 +56,7 @@ class updateErrorMailTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 

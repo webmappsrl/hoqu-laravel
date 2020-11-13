@@ -1,5 +1,5 @@
 
-describe('Registration', () => {
+describe('Page Done', () => {
     //FASE LOGIN
     const email = 'team@webmapp.it'
     const password = 'webmapp'
@@ -14,10 +14,10 @@ describe('Registration', () => {
         //ASSERT HOME BASE
         cy.url().should('contain', '/')
 
-        cy.get('span#link_archive').click()
+        cy.get('span#link_done').click()
 
         //ASSERT archive
-        cy.url().should('contain', '/archive')
+        cy.url().should('contain', '/done')
 
 
         //check the data that are in ascending order
@@ -34,14 +34,14 @@ describe('Registration', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('done')) {
-                assert.strictEqual(text, 'done', 'done ok')
+                expect(text).to.eq('\n                                                done\n                                             ')
             }
 
         })
 
         //ASSERT HOME page 2
-        cy.get('a.relative.inline-flex.items-center').contains('2').click()
-        cy.url().should('contain', '/archive?page=2')
+        cy.get('#paginationDone > div > nav > div > div:nth-child(2) > span > span:nth-child(3)').contains('2').click()
+        cy.url().should('contain', '/done?page=2')
 
         //check the data that are in ascending order
 
@@ -56,16 +56,12 @@ describe('Registration', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('done')) {
-                assert.strictEqual(text, 'done', 'done ok')
+                expect(text).to.eq('\n                                                done\n                                             ')
             }
-
         })
-
 
         cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
         cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
-
-
 
     })
 })

@@ -17,15 +17,38 @@ class TasksController extends Controller
 
     }
 
-    public function show(Task $task)
+    public function show(Request $request,Task $task)
     {
-        return response()->json($task,200);
+        if($request->user()->tokenCan('read'))
+        {
+            return response()->json($task,200);
+        }
+        else return abort(403,'Unauthorized');
+
     }
 
     public function index()
     {
-        $task = Task::orwhere('process_status', '=', 'new')->orwhere('process_status', '=', 'processing')->orderByRaw('FIELD(process_status, "new", "processing")asc')->orderBy('created_at', 'asc')->paginate(50);
+        $task = Task::orderBy('updated_at', 'desc')->paginate(10);
         return view('dashboard',['tasks'=>$task]);
+    }
+
+    public function indexTodo()
+    {
+        $task = Task::orwhere('process_status', '=', 'new')->orwhere('process_status', '=', 'processing')->orderByRaw('FIELD(process_status, "new", "processing")asc')->orderBy('created_at', 'asc')->paginate(50);
+        return view('todo',['tasks'=>$task]);
+    }
+
+    public function indexDone()
+    {
+        $task = Task::orwhere('process_status', '=', 'done')->orwhere('process_status', '=', 'skip')->orderByRaw('FIELD(process_status, "done", "skip")asc')->orderBy('created_at', 'asc')->paginate(50);
+        return view('archive',['tasks'=>$task]);
+    }
+
+    public function indexError()
+    {
+        $task = Task::orwhere('process_status', '=', 'error')->orderByRaw('FIELD(process_status, "done", "skip")asc')->orderBy('created_at', 'asc')->paginate(50);
+        return view('error',['tasks'=>$task]);
     }
 
     public function indexDuplicate()
@@ -102,9 +125,10 @@ class TasksController extends Controller
         if($requestSvr->user()->tokenCan('update'))
         {
             $requestSvr->all();
+            $requestSvr['id_server'] = (string) $requestSvr['id_server'];
 
             $validatedData = $requestSvr->validate([
-                'id_server' => 'required|integer',
+                'id_server' => 'required|string',
                 'task_available' => 'required|array'
             ]);
 

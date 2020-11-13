@@ -50,6 +50,17 @@ class TaskFactory extends Factory
         ]);
     }
 
+    public function duplicated()
+    {
+        $n=rand(-8,-10);
+        $n1 = rand(0,-2);
+        return $this->state([
+            'process_status' => 'duplicate',
+            'created_at'=> $this->faker->dateTimeBetween($startDate = $n .' day', $endDate = 'now'),
+            'updated_at'=> $this->faker->dateTimeBetween($startDate = $n1 .' day', $endDate = 'now'),
+        ]);
+    }
+
     public function create_done()
     {
         $n=rand(-8,-22);

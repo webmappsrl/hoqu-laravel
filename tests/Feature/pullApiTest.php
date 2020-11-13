@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Models\Task;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\Sanctum;
 
 use Tests\TestCase;
 
@@ -94,7 +95,7 @@ class pullApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "id_server" => 9,
+            "id_server" => 'webmapp_server_staging_all_nombtiles',
             "task_available" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
         ];
 
@@ -140,10 +141,9 @@ public function testFineFirstElementPullApiHoqu()
         ])->post('/api/store',$data1);
         $response->assertStatus(201);
         $requestSvr1 = [
-            "id_server" => 9,
+            "id_server" => 'webmapp_server_staging_all_nombtiles',
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
-
 
         //OPERATIONS
         // Check that server@webmapp.it access to api/
@@ -164,7 +164,53 @@ public function testFineFirstElementPullApiHoqu()
         //get value elaborate by pull
         $ja = Task::find($response['id']);
         $this->assertSame('processing',$ja['process_status']);
+        //comparison server_id string with that on the DB
         $this->assertSame($requestSvr1['id_server'],$ja['id_server']);
+        $this->assertSame($data['instance'],$ja['instance']);
+        $this->assertSame($response['instance'],$ja['instance']);
+        $this->assertSame($response['id'],$ja["id"]);
+        $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
+        $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
+
+    }
+
+    public function testFineFirstElementPullIntegerApiHoqu()
+    {
+        $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
+
+        //add data with api/store
+        $data = [
+            "instance" => "https:\/\/montepisanotree.org",
+            "job" => "task1",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
+        ];
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$user_tokens['instance@webmapp.it'],
+        ])->post('/api/store',$data);
+        $response->assertStatus(201);
+        sleep(2);
+
+        $requestSvr1 = [
+            "id_server" => 999,
+            "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+        ];
+
+        $this->resetAuth();
+
+        //OPERATIONS
+        // Check that server@webmapp.it access to api/
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
+        ])->put('/api/pull',$requestSvr1);
+        $response->assertStatus(200);
+        //get value elaborate by pull
+        $ja = Task::find($response['id']);
+        $this->assertSame('processing',$ja['process_status']);
+        //I check that the integer has become a string
+        $this->assertSame(((string)$requestSvr1['id_server']),$ja['id_server']);
         $this->assertSame($data['instance'],$ja['instance']);
         $this->assertSame($response['instance'],$ja['instance']);
         $this->assertSame($response['id'],$ja["id"]);

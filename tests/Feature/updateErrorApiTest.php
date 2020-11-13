@@ -188,7 +188,7 @@ class updateErrorApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
         ];
 
@@ -202,7 +202,7 @@ class updateErrorApiTest extends TestCase
         $dataDbTest = $response;
         //request that sends the "requesting server 2"
         $requestSvr2 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "status" => '',
             "log" => "log test",
             "id_task" => $dataDbTest['id'],
@@ -227,7 +227,7 @@ class updateErrorApiTest extends TestCase
 
         //request that sends the "requesting server 2"
         $requestSvr1 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "status" => 'duplicate',
             "log" => "log test",
             "id_task" => $dataDbTest['id'],
@@ -279,7 +279,7 @@ class updateErrorApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
@@ -292,7 +292,7 @@ class updateErrorApiTest extends TestCase
 
         //request that sends the "requesting server 2"
         $requestSvr2 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "log" => "log test",
             "id_task" => $response['id'],
         ];
@@ -336,7 +336,7 @@ class updateErrorApiTest extends TestCase
 
         //request that sends the "requesting server"
         $requestSvr1 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
@@ -349,7 +349,7 @@ class updateErrorApiTest extends TestCase
 
         //request that sends the "requesting server 2"
         $requestSvr2 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "status" => "VDC",
             "log" => "log test",
             "id_task" => $response['id'],

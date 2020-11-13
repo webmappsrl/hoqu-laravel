@@ -1,5 +1,5 @@
 
-describe('Registration', () => {
+describe('Button Skip Error', () => {
     //FASE LOGIN
     const email = 'team@webmapp.it'
     const password = 'webmapp'
@@ -22,7 +22,7 @@ describe('Registration', () => {
         //Check Cancel Button
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td.border.px-4.py-2 > button').click()
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
             cy.contains('Cancel').click()
 
             cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
@@ -30,25 +30,26 @@ describe('Registration', () => {
             })
         })
 
-        //Check Reschedule Button
+        //Check Reschedule Button Skip
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td.border.px-4.py-2 > button').click()
-            cy.contains('Change').click()
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
+            cy.contains('Skip').click()
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
-              expect(text1).not.to.eq(text2)
-            })
+            //id via notification
+            cy.get('p.text-lg').invoke('text').then((text) => {
+                var id = text.split(' ')[5]
+                var idA = text1.split(' ')[5]
+                cy.log(idA)
+                expect(text1).to.eq('\n                        \n                           '+id+'\n                        \n                     ')
+        })
             cy.visit('/'+text1+"/show")
-            cy.url().should('contain', '/'+text1+"/show")
-            cy.get('#processStatus').each(($e, index, $list) => {
+            cy.get('h4#processStatus').each(($e, index, $list) => {
                 const text = $e.text()
-                expect(text).to.contain('\n                                 Status: new\n                              ')
+                expect(text).to.contain('skip')
 
             })
         })
-         cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
-         cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
 
     })
 })
