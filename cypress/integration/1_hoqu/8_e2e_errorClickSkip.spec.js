@@ -1,5 +1,5 @@
 
-describe('Registration', () => {
+describe('Button Skip Error', () => {
     //FASE LOGIN
     const email = 'team@webmapp.it'
     const password = 'webmapp'
@@ -34,7 +34,7 @@ describe('Registration', () => {
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
             cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
-            cy.contains('Reschedule').click()
+            cy.contains('Skip').click()
 
             //id via notification
             cy.get('p.text-lg').invoke('text').then((text) => {
@@ -43,11 +43,10 @@ describe('Registration', () => {
                 cy.log(idA)
                 expect(text1).to.eq('\n                        \n                           '+id+'\n                        \n                     ')
         })
-
             cy.visit('/'+text1+"/show")
             cy.get('h4#processStatus').each(($e, index, $list) => {
                 const text = $e.text()
-                expect(text).to.contain('new')
+                expect(text).to.contain('skip')
 
             })
         })

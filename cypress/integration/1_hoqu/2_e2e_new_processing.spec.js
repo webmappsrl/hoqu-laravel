@@ -1,5 +1,5 @@
 
-describe('Registration', () => {
+describe('New and Processing', () => {
     //FASE LOGIN
     const email = 'team@webmapp.it'
     const password = 'webmapp'
