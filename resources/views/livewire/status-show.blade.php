@@ -8,13 +8,13 @@
                     <h4 id="idTask"class="text-2xl font-semibold text-gray-700">{{$task->id}}</h4>
                 </div>
                 <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                   <h4 class="text-2xl font-semibold text-gray-700">ID Server:  {{$task->id_server}}</h4>
+                   <h4 id="idServer"class="text-2xl font-semibold text-gray-700">ID Server:  {{$task->id_server}}</h4>
                 </div>
                 <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                   <h4 class="text-2xl font-semibold text-gray-700">Instance:  {{$task->instance}}</h4>
+                   <h4 id="idInstance" class="text-2xl font-semibold text-gray-700">Instance:  {{$task->instance}}</h4>
                 </div>
                 <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                   <h4 class="text-2xl font-semibold text-gray-700">Job: <br> {{$task->job}}</h4>
+                   <h4 id="idJob"class="text-2xl font-semibold text-gray-700">Job: <br> {{$task->job}}</h4>
                 </div>
              </div>
           </div>
@@ -51,7 +51,7 @@
              </div>
              @endif
              <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                <h4 class="text-2xl font-semibold text-gray-700">parameters:  {{$task->parameters}}</h4>
+                <h4 id="idParameters" class="text-2xl font-semibold text-gray-700">parameters:  {{$task->parameters}}</h4>
              </div>
           </div>
           <div class="grid grid-cols-2 gap-6 mb-16">
