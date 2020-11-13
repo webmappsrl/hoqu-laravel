@@ -104,7 +104,7 @@ class updateDoneApiTest extends TestCase
         $dataDbTest = $response;
         //request that sends the "requesting server 2"
         $requestSvr2 = [
-            "id_server" => 25,
+            "id_server" => '25',
             "status" => "done",
             "log" => "log test",
             "id_task" => $dataDbTest['id'],
@@ -226,7 +226,7 @@ class updateDoneApiTest extends TestCase
 
         //request that sends the "requesting server 2"
         $requestSvr1 = [
-            "id_server" => 10,
+            "id_server" => '10',
             "status" => 'duplicate',
             "log" => "log test",
             "id_task" => $dataDbTest['id'],

@@ -160,9 +160,11 @@ class TasksController extends Controller
         {
             //get all data
             $requestSvr2 = $requestSvr2->all();
+            $requestSvr2['id_server'] = (string) $requestSvr2['id_server'];
+
 
             $validator = Validator::make($requestSvr2, [
-                'id_server' => 'required|integer',
+                'id_server' => 'required|string',
                 'id_task'=>'required|integer'
             ]);
 
@@ -198,9 +200,11 @@ class TasksController extends Controller
         {
             //get all data
             $requestSvr2 = $requestSvr2->all();
+            $requestSvr2['id_server'] = (string) $requestSvr2['id_server'];
+
 
             $validator = Validator::make($requestSvr2, [
-                'id_server' => 'required|integer',
+                'id_server' => 'required|string',
                 'log'=>'required',
                 'id_task'=>'required|integer'
             ]);
