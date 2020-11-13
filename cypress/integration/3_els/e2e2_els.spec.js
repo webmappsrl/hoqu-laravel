@@ -18,6 +18,7 @@ describe('Final Test Sentiero Italia E2E2', () => {
         cy.get('#menu-posts-track > a > div.wp-menu-name').click()
         cy.wait(2000)
         cy.get('tbody#the-list td').first().invoke('text').then((value) => {
+            cy.log(value)
             id = value.substring(0, 4);
             cy.request('GET', 'https://a.webmapp.it/els.be.webmapp.it/geojson/' + id + '.geojson').then((response) => {
                 objPre = JSON.parse(response.body)
