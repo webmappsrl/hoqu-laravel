@@ -84,11 +84,14 @@ class updateErrorMailTest extends TestCase
             $count = 0;
             if($mail->itemHoqu['id'] === $order->itemHoqu['id']) $count++;
             if($mail->itemHoqu['id_server'] === $order->itemHoqu['id_server']) $count++;
+            if($mail->itemHoqu['job'] === $order->itemHoqu['job']) $count++;
+            if($mail->itemHoqu['instance'] === $order->itemHoqu['instance']) $count++;
             if($mail->itemHoqu['process_status'] === $order->itemHoqu['process_status']) $count++;
             if($mail->itemHoqu['process_log'] === $order->itemHoqu['process_log']) $count++;
             if($mail->itemHoqu['parameters'] === $order->itemHoqu['parameters']) $count++;
+            if(request()->getHost() === 'hoqu-laravel.test') $count++;
 
-            return 5 === $count;
+            return 8 === $count;
         });
         Mail::assertSent(sendError::class, 1);
     }
