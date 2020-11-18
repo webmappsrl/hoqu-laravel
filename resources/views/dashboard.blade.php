@@ -54,6 +54,7 @@
                       </svg>
                     <span id="link_info" class="mx-4">Info</span>
                  </a>
+
              </nav>
           </div>
           <div class="flex-1 flex flex-col overflow-hidden">
@@ -78,11 +79,13 @@
                          placeholder="Search">
                    </div> --}}
                 </div>
+
                 <div class="flex items-center">
                    <div x-data="{ dropdownOpen: false }" class="relative">
                       @livewire('navigation-dropdown')
                    </div>
                 </div>
+
              </header>
              <main class="flex-1 overflow-x-hidden overflow-y-auto bg-indigo-100">
                 <div class="container mx-auto px-6 py-8">
@@ -103,25 +106,28 @@
                          <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/5 xl:mt-0">
                             @livewire('count-duplicate')
                          </div>
-                         <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
-                            @livewire('count-all')
-                         </div>
-                         <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
-                            @livewire('count30days')
-                         </div>
-                         <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
-                            @livewire('chart24hour')
-                         </div>
-                         <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
-                            @livewire('chart30days')
-                         </div>
-                         <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
-                            @livewire('chart-instance')
-                         </div>
-                         <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
-                            @livewire('chart-job')
-                         </div>
                       </div>
+                      <div class="mt-4">
+                        <div class="flex flex-wrap">
+                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
+                              @livewire('count-all')
+                           </div>
+                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
+                              @livewire('count30days')
+                           </div>
+                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
+                              @livewire('chart24hour')
+                           </div>
+                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
+                              @livewire('chart30days')
+                           </div>
+                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
+                              @livewire('chart-instance')
+                           </div>
+                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
+                              @livewire('chart-job')
+                           </div>
+                        </div>
                    </div>
                    <div class="mt-15">
                    </div>

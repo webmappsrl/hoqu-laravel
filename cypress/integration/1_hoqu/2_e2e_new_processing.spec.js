@@ -68,41 +68,27 @@ describe('New and Processing', () => {
         // // //ASSERT HOME page 3
         cy.get('#paginationDone > div > nav > div > div:nth-child(2) > span > span:nth-child(4) > button').click()
         cy.url().should('contain', '/todo?page=3')
-        let arrayOfColumnOne = [];
         let arrayOfColumnTwo = [];
 
         cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
-            if (index == 0) {
-                time_prev = 0
-            }
+            cy.get($e)
+                .parent()
+                .find('td:nth-child(5)')
+                .then($statusElement =>{
+                    if(index==0) {
+
+                    }
+                    else if($statusElement.text().includes('new')) {
+                        assert.isBelow(arrayOfColumnTwo[index - 1], arrayOfColumnTwo[index], 'previous date is below actual')
+                    } else if($statusElement.text().includes('processing')){
+                        assert.isAbove(arrayOfColumnTwo[index - 1], arrayOfColumntwo[index], 'previous date is above actual')
+                    }
+                })
+
             time = Math.round(new Date($e.text()).getTime() / 1000)
-            // assert.isBelow(time_prev, time, 'previous date is below actual')
-            time_prev = time
             arrayOfColumnTwo.push(time)
+
         })
-
-        //so I take the value status
-        cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
-            const text = $e.text()
-
-            arrayOfColumnOne.push(text)
-        }).then(() => {
-                for (let i = 1; i < arrayOfColumnOne; i++) {
-                    if (!arrayOfColumnTwo[i]) {
-                        throw new Error('Something is wrong with the array selectors')
-                    }
-                    if (arrayOfColumnOne[i].includes('new') && arrayOfColumnOne[i-1].includes('new')) {
-                        expect(arrayOfColumnOne[i]).to.eq('\n                                                              new\n                                                           ')
-                        assert.isBelow(arrayOfColumnTwo[i - 1], arrayOfColumntwo[i], 'previous date is below actual')
-                    } else if (arrayOfColumnOne[i].includes('processing') && arrayOfColumnOne[i - 1].includes('processing')) {
-                        expect(text).to.eq('\n                                                              processing\n                                                           ')
-                        assert.isBelow(arrayOfColumnTwo[i - 1], arrayOfColumntwo[i], 'previous date is below actual')
-                    } else {
-                        expect(text).to.eq('\n                                                              processing\n                                                           ')
-                        assert.isAbove(arrayOfColumnTwo[i - 1], arrayOfColumntwo[i], 'previous date is below actual')
-                    }
-                }
-            })
 
 
 
