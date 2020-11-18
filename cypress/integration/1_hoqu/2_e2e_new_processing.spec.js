@@ -1,4 +1,3 @@
-
 describe('New and Processing', () => {
     //FASE LOGIN
     const email = 'team@webmapp.it'
@@ -48,7 +47,7 @@ describe('New and Processing', () => {
         //check the data that are in ascending order
 
         cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
-          if (index == 0)time_prev=0
+            if (index == 0) time_prev = 0
             time = Math.round(new Date($e.text()).getTime() / 1000)
             assert.isBelow(time_prev, time, 'previous date is below actual')
             time_prev = time
@@ -69,33 +68,51 @@ describe('New and Processing', () => {
         // // //ASSERT HOME page 3
         cy.get('#paginationDone > div > nav > div > div:nth-child(2) > span > span:nth-child(4) > button').click()
         cy.url().should('contain', '/todo?page=3')
-        //check the data that are in ascending order
+        let arrayOfColumnOne = [];
+        let arrayOfColumnTwo = [];
+
         cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
-            if (index == 0){time_prev=0}
+            if (index == 0) {
+                time_prev = 0
+            }
             time = Math.round(new Date($e.text()).getTime() / 1000)
-            assert.isBelow(time_prev, time, 'previous date is below actual')
+            // assert.isBelow(time_prev, time, 'previous date is below actual')
             time_prev = time
+            arrayOfColumnTwo.push(time)
         })
 
-        //check that the data with status new and processing are present
+        //so I take the value status
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
-            if (text.includes('new')) {
-                assert.strictEqual(text, 'new', 'new ok')
-            }
-            if (text.includes('processing')) {
-                expect(text).to.eq('\n                                                              processing\n                                                           ')
-            }
 
-        })
+            arrayOfColumnOne.push(text)
+        }).then(() => {
+                for (let i = 1; i < arrayOfColumnOne; i++) {
+                    if (!arrayOfColumnTwo[i]) {
+                        throw new Error('Something is wrong with the array selectors')
+                    }
+                    if (arrayOfColumnOne[i].includes('new') && arrayOfColumnOne[i-1].includes('new')) {
+                        expect(arrayOfColumnOne[i]).to.eq('\n                                                              new\n                                                           ')
+                        assert.isBelow(arrayOfColumnTwo[i - 1], arrayOfColumntwo[i], 'previous date is below actual')
+                    } else if (arrayOfColumnOne[i].includes('processing') && arrayOfColumnOne[i - 1].includes('processing')) {
+                        expect(text).to.eq('\n                                                              processing\n                                                           ')
+                        assert.isBelow(arrayOfColumnTwo[i - 1], arrayOfColumntwo[i], 'previous date is below actual')
+                    } else {
+                        expect(text).to.eq('\n                                                              processing\n                                                           ')
+                        assert.isAbove(arrayOfColumnTwo[i - 1], arrayOfColumntwo[i], 'previous date is below actual')
+                    }
+                }
+            })
+
+
 
         //ASSERT HOME page 4
-        cy.get('#paginationDone > div > nav > div > div:nth-child(2) > span > span:nth-child(6) > button > svg').click()
+        cy.get('#paginationDone > div > nav > div > div:nth-child(2) > span > span:nth-child(5) > button').click()
         cy.url().should('contain', '/todo?page=4')
 
         //check the data that are in ascending order
         cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
-            if (index == 0)time_prev=0
+            if (index == 0) time_prev = 0
             time = Math.round(new Date($e.text()).getTime() / 1000)
             assert.isBelow(time_prev, time, 'previous date is below actual')
             time_prev = time
