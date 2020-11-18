@@ -218,6 +218,28 @@ public function testFineFirstElementPullApiHoqu()
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
 
     }
+
+    public function testStressPull()
+    {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['update']
+        );
+
+        $requestSvr1 = [
+            "id_server" => 'webmapp_server_staging_all_nombtiles',
+            "task_available" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
+        ];
+
+        for($i = 0;$i<1000;$i++)
+        {
+            $response = $this->put('/api/pull',$requestSvr1);
+            $response->assertStatus(204);
+        }
+
+
+    }
+
     public function setUp(): void
     {
         parent::setUp();
