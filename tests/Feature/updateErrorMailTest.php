@@ -90,7 +90,7 @@ class updateErrorMailTest extends TestCase
             if($mail->itemHoqu['process_log'] === $order->itemHoqu['process_log']) $count++;
             if($mail->itemHoqu['parameters'] === $order->itemHoqu['parameters']) $count++;
             if(request()->getHost() === 'hoqu-laravel.test') $count++;
-
+            if(request()->getHost() === 'localhost') $count++;
             return 8 === $count;
         });
         Mail::assertSent(sendError::class, 1);
