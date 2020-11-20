@@ -40,7 +40,7 @@ class DeleteErrorDuplicate extends Command
     {
         if(request()->getHost() != 'https://hoqu.webmapp.it')
         {
-            Task::where('process_status','=','error')->delete();
+            Task::whereIn('process_status',['error','done'])->delete();
             DuplicateTask::truncate();
         }
 

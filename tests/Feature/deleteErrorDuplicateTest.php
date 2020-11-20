@@ -19,11 +19,11 @@ class deleteErrorDuplicateTest extends TestCase
     public function testExample()
     {
         $countTask = Task::count();
-        $countErrorTask = Task::where('process_status','error')->count();
+        $countErrorTask = Task::whereIn('process_status',['error','done'])->count();
 
         if(request()->getHost() != 'https://hoqu.webmapp.it')
         {
-            Task::where('process_status','=','error')->delete();
+            Task::whereIn('process_status',['error','done'])->delete();
             DuplicateTask::truncate();
         }
 
