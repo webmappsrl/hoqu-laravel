@@ -82,7 +82,7 @@ describe('New and Processing', () => {
             else if(time_prev > time && init == 0)
             {
             time = Math.round(new Date($e.text()).getTime() / 1000)
-            assert.isMost(time_prev, time, 'previous date is most actual')
+            assert.isAtLeast(time_prev, time, 'previous date is most actual')
             time_prev = time
             init = 1
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Task;
+use App\Models\DuplicateTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -102,13 +103,13 @@ class TasksController extends Controller
                 ->get();
             }
 
+            // dd($request);
             if($taskDuplicate->isEmpty()) $task = Task::create($request);
             else
             {
-                $task = Task::create($request);
-                $wouldLikeUpdate = Task::find($task->id);
-                $wouldLikeUpdate->process_status='duplicate';
-                $wouldLikeUpdate->save();
+                $task = new DuplicateTask();
+                $task->task_id = $taskDuplicate[0]['id'];
+                $task->save();
             }
 
             return response()->json($task, 201);
@@ -229,6 +230,8 @@ class TasksController extends Controller
         }
         else return abort(403,'Unauthorized');
     }
+
+
 
 
 }

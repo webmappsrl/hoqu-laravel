@@ -1,15 +1,13 @@
-import faker from 'faker'
-import { last } from 'lodash'
+// import faker from 'faker'
+// import { last } from 'lodash'
 
 
 describe('Registration', () => {
-  const email = faker.internet.email()
-  const password = faker.internet.password()
-
+  const email = 'nedo@teamwebmapp.it'
+  const password = 'forzanedo'
   it('register', () => {
       cy.visit('/register')
-      const a = faker.name.findName();
-      cy.get('input[name=name]').type(a)
+      cy.get('input[name=name]').type('Nedo')
       cy.get('input[name=email]').type(email)
       cy.get('input[name=password]').type(password)
       cy.get('input[name=password_confirmation]').type(password)

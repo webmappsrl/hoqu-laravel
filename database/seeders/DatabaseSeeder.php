@@ -82,8 +82,15 @@ class DatabaseSeeder extends Seeder
             \App\Models\Task::factory()->count(1)->create_error()->create();
         }
 
-        for ($i=0; $i < 100 ; $i++) {
-            \App\Models\Task::factory()->count(1)->duplicated()->create();
+        // for ($i=0; $i < 100 ; $i++) {
+        //     \App\Models\Task::factory()->count(1)->duplicated()->create();
+        // }
+
+        for ($i=0; $i < 5 ; $i++) {
+            $task_id=rand(1,100);
+            $qta=rand(1,10);
+
+            \App\Models\DuplicateTask::factory($qta)->create(['task_id'=>$task_id]);
         }
 
     }

@@ -74,12 +74,14 @@ class pullApiTest extends TestCase
 
     public function testTaskNoMatchPullApiHoqu()
     {
-        Task::truncate();
+        // DuplicateTask::truncate();
+        // Task::truncate();
+
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
         //add data with api/store
         $data = [
-            "instance" => "https:\/\/montepisanotree.org",
+            "instance" => "https:\/\/molntepisanotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
@@ -117,7 +119,7 @@ public function testFineFirstElementPullApiHoqu()
 
         //add data with api/store
         $data = [
-            "instance" => "https:\/\/montepisanotree.org",
+            "instance" => "https:\/\/montepisqanotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
@@ -180,8 +182,8 @@ public function testFineFirstElementPullApiHoqu()
 
         //add data with api/store
         $data = [
-            "instance" => "https:\/\/montepisanotree.org",
-            "job" => "task1",
+            "instance" => "https:\/\/mdontepisanotree.org",
+            "job" => "task11",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
 
@@ -194,7 +196,7 @@ public function testFineFirstElementPullApiHoqu()
 
         $requestSvr1 = [
             "id_server" => 999,
-            "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "task_available" => ["task11","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
         $this->resetAuth();

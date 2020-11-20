@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Tasks;
 use App\Http\Controllers\ChartJsController;
-
 use App\Http\Controllers\TasksController;
+use App\Http\Controllers\DuplicateTaskController;
+
+
 
 
 
@@ -18,6 +20,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/done', [TasksController::
 Route::middleware(['auth:sanctum', 'verified'])->get('/error', [TasksController::class, 'indexError'])->name('error');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/{task}/show', [Tasks::class, 'show'])->name('task_details');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/{duplicateTask}/show_duplicate', [DuplicateTaskController::class, 'showDuplicate'])->name('duplicate_task_details');
 
 Route::get('/mail',[TasksController::class, 'sendEmail'])->name('mail');
 

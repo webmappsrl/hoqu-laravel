@@ -69,7 +69,7 @@ class updateDoneApiTest extends TestCase
 
     public function testIdServerWrongUD()
     {
-        Task::truncate();
+        // Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
         //add data with api/queues
@@ -120,7 +120,7 @@ class updateDoneApiTest extends TestCase
 
     public function testIdNotExistUpdateDoneApiHoqu()
     {
-        Task::truncate();
+        // Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
         //add data with api/store
         $data = [
@@ -169,7 +169,7 @@ class updateDoneApiTest extends TestCase
 
     public function testCheckValueStatusUpdateDoneApiHoqu()
     {
-        Task::truncate();
+        // Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
         //add data with api/store
@@ -256,7 +256,7 @@ class updateDoneApiTest extends TestCase
 
 public function testCheckPositiveUD()
     {
-        Task::truncate();
+        // Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
         //add data with api/queues
