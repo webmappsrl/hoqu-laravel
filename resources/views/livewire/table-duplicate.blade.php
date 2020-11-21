@@ -80,19 +80,8 @@
                             <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show_duplicate">{{ $task->parameters }}</a></div>
                          </td>
                          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                            @if($task->process_status=='new')
                             <span
                             class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-200 text-gray-900"><a href="/{{$task->id }}/show_duplicate">duplicate</a></span>
-                            @elseif($task->process_status=='processing')
-                            <span
-                               class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-200 text-gray-900"><a href="/{{$task->id }}/show_duplicate">{{ $task->process_status }}</a></span>
-                            @elseif($task->process_status=='done')
-                            <span
-                               class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-200 text-gray-900"><a href="/{{$task->id }}/show_duplicate">{{ $task->process_status }}</a></span>
-                            @elseif($task->process_status=='duplicate')
-                            <span
-                               class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-200 text-gray-900"><a href="/{{$task->id }}/show_duplicate">{{ $task->process_status }}</a></span>
-                            @endif
                          </td>
                          <td
                             class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">

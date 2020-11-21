@@ -37,16 +37,16 @@ use Illuminate\Support\Facades\DB;
             if(!empty($this->instance))
             {
                 $tasks= DB::table('tasks')->join('duplicate_tasks', 'tasks.id', '=', 'duplicate_tasks.task_id')
-                ->select('duplicate_tasks.id','tasks.instance','tasks.job','tasks.parameters','tasks.created_at','duplicate_tasks.task_id','tasks.process_status')
+                ->select('duplicate_tasks.id','tasks.instance','tasks.job','tasks.parameters','duplicate_tasks.created_at','duplicate_tasks.task_id','tasks.process_status')
                 ->where('tasks.instance','like', $this->instance)
-                ->orderBy('tasks.created_at', 'asc')
+                ->orderBy('duplicate_tasks.created_at', 'asc')
                 ->paginate(50);
             }
             else
             {
                 $tasks= DB::table('tasks')->join('duplicate_tasks', 'tasks.id', '=', 'duplicate_tasks.task_id')
-                ->select('duplicate_tasks.id','tasks.instance','tasks.job','tasks.parameters','tasks.created_at','duplicate_tasks.task_id','tasks.process_status')
-                ->orderBy('tasks.created_at', 'asc')
+                ->select('duplicate_tasks.id','tasks.instance','tasks.job','tasks.parameters','duplicate_tasks.created_at','duplicate_tasks.task_id','tasks.process_status')
+                ->orderBy('duplicate_tasks.created_at', 'asc')
                 ->paginate(50);
             }
             $this->countJ=0;
@@ -61,16 +61,16 @@ use Illuminate\Support\Facades\DB;
             if(!empty($this->job))
             {
                 $tasks= DB::table('tasks')->join('duplicate_tasks', 'tasks.id', '=', 'duplicate_tasks.task_id')
-                ->select('duplicate_tasks.id','tasks.instance','tasks.job','tasks.parameters','tasks.created_at','duplicate_tasks.task_id','tasks.process_status')
+                ->select('duplicate_tasks.id','tasks.instance','tasks.job','tasks.parameters','duplicate_tasks.created_at','duplicate_tasks.task_id','tasks.process_status')
                 ->where('tasks.job','like', $this->job)
-                ->orderBy('tasks.created_at', 'asc')
+                ->orderBy('duplicate_tasks.created_at', 'asc')
                 ->paginate(50);
             }
             else
             {
                 $tasks= DB::table('tasks')->join('duplicate_tasks', 'tasks.id', '=', 'duplicate_tasks.task_id')
-                ->select('duplicate_tasks.id','tasks.instance','tasks.job','tasks.parameters','tasks.created_at','duplicate_tasks.task_id','tasks.process_status')
-                ->orderBy('tasks.created_at', 'asc')
+                ->select('duplicate_tasks.id','tasks.instance','tasks.job','tasks.parameters','duplicate_tasks.created_at','duplicate_tasks.task_id','tasks.process_status')
+                ->orderBy('duplicate_tasks.created_at', 'asc')
                 ->paginate(50);
 
             }
@@ -83,9 +83,19 @@ use Illuminate\Support\Facades\DB;
         public function render()
         {
 
-            $this->instances = Task::select('instance')->whereIn('process_status', ['duplicate'])->orderBy('instance', 'asc')->groupBy('instance')->get();
+            $this->instances = DB::table('tasks')->join('duplicate_tasks', 'tasks.id', '=', 'duplicate_tasks.task_id')
+                ->select('tasks.instance')
+                ->orderBy('tasks.instance', 'asc')
+                ->groupBy('tasks.instance')
+                ->get();
 
-            $this->jobs = Task::select('job')->whereIn('process_status', ['duplicate'])->orderBy('job', 'asc')->groupBy('job')->get();
+
+            $this->jobs = DB::table('tasks')->join('duplicate_tasks', 'tasks.id', '=', 'duplicate_tasks.task_id')
+            ->select('tasks.job')
+            ->orderBy('tasks.job', 'asc')
+            ->groupBy('tasks.job')
+            ->get();
+
 
             if($this->countJ == 1 && $this->countI == 0)
             {
