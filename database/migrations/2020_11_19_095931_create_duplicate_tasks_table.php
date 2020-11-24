@@ -20,7 +20,8 @@ class CreateDuplicateTasksTable extends Migration
 
             $table->foreign('task_id')
             ->references('id')
-            ->on('tasks');
+            ->on('tasks')
+            ->onDelete('cascade');
         });
     }
 
