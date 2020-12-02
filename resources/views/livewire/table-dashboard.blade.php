@@ -43,12 +43,11 @@
              </thead>
              <tbody class="bg-white" >
               @foreach ($tasks as $index => $task)
-
+              @if($task->task_id==null)
                 <tr>
                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                       <div class="flex items-center">
                             <div class="text-sm leading-5 text-gray-500"><a href="/{{$task->id }}/show">{{ $task->id }}</a></div>
-
                       </div>
                    </td>
                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -95,6 +94,41 @@
                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
                    </td>
                 </tr>
+                @else
+                <tr>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                       <div class="flex items-center">
+                             <div class="text-sm leading-5 text-gray-500"><a href="/{{$task->id }}/show_duplicate">{{ $task->id }}</a></div>
+                       </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                       <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show_duplicate">{{ $task->instance }}</a></div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                       <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show_duplicate">{{ $task->job }}</a></div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                       <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show_duplicate">{{ $task->parameters }}</a></div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                        <span
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-200 text-gray-900"><a href="/{{$task->id }}/show_duplicate">duplicate</a></span>
+                    </td>
+                    <td
+                       class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                       <a href="/{{$task->id }}/show_duplicate">{{ $task->created_at}}</a>
+                    </td>
+                    <td
+                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                       <a href="/{{$task->id }}/show_duplicate">---</a>
+                    </td>
+                    <td
+                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                    </td>
+                 </tr>
+                @endif
                 @endforeach
 
              </tbody>

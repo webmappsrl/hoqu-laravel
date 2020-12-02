@@ -3,6 +3,7 @@
 use App\Providers\RouteServiceProvider;
 use Laravel\Fortify\Features;
 
+
 return [
 
     /*
@@ -103,7 +104,7 @@ return [
     */
 
     'features' => [
-        // Features::registration(),
+        env('DISABLE_REGISTRATION') ? NULL : Features::registration(),
         Features::resetPasswords(),
         // Features::emailVerification(),
         Features::updateProfileInformation(),

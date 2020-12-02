@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Task;
+use App\Models\DuplicateTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -63,6 +64,10 @@ class TasksController extends Controller
         {
             $request=$request->all();
 
+
+            $request['instance'] = preg_replace('#^https?:/?/?#', '', $request['instance']);
+
+
             if(!empty($request['parameters']))
             {
                 //check string
@@ -102,13 +107,13 @@ class TasksController extends Controller
                 ->get();
             }
 
+            // dd($request);
             if($taskDuplicate->isEmpty()) $task = Task::create($request);
             else
             {
-                $task = Task::create($request);
-                $wouldLikeUpdate = Task::find($task->id);
-                $wouldLikeUpdate->process_status='duplicate';
-                $wouldLikeUpdate->save();
+                $task = new DuplicateTask();
+                $task->task_id = $taskDuplicate[0]['id'];
+                $task->save();
             }
 
             return response()->json($task, 201);
@@ -202,7 +207,6 @@ class TasksController extends Controller
             $requestSvr2 = $requestSvr2->all();
             $requestSvr2['id_server'] = (string) $requestSvr2['id_server'];
 
-
             $validator = Validator::make($requestSvr2, [
                 'id_server' => 'required|string',
                 'log'=>'required',
@@ -230,6 +234,8 @@ class TasksController extends Controller
         }
         else return abort(403,'Unauthorized');
     }
+
+
 
 
 }

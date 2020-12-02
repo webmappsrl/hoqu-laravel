@@ -28,7 +28,6 @@ class TaskFactory extends Factory
         $date = $this->faker->dateTimeBetween($startDate = $n.' day', $endDate = 'now');
 
         return [
-            'id_server'=>$this->faker->numberBetween(1,10),
             'instance' => $this->faker->sentence(1),
             'job' => $this->faker->sentence(1),
             'parameters' => json_encode(["mtpupdate" => $this->faker->numberBetween(1,100)]),

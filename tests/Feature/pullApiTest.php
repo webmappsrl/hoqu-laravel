@@ -74,12 +74,14 @@ class pullApiTest extends TestCase
 
     public function testTaskNoMatchPullApiHoqu()
     {
-        Task::truncate();
+        // DuplicateTask::truncate();
+        // Task::truncate();
+
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
         //add data with api/store
         $data = [
-            "instance" => "https:\/\/montepisanotree.org",
+            "instance" => "https://molntepisanotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
@@ -117,7 +119,7 @@ public function testFineFirstElementPullApiHoqu()
 
         //add data with api/store
         $data = [
-            "instance" => "https:\/\/montepisanotree.org",
+            "instance" => "https://montepisqanotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
@@ -130,7 +132,7 @@ public function testFineFirstElementPullApiHoqu()
         sleep(2);
 
         $data1 = [
-            "instance" => "https:\/\/montelabronicotree.org",
+            "instance" => "https://montelabronicotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
@@ -166,7 +168,7 @@ public function testFineFirstElementPullApiHoqu()
         $this->assertSame('processing',$ja['process_status']);
         //comparison server_id string with that on the DB
         $this->assertSame($requestSvr1['id_server'],$ja['id_server']);
-        $this->assertSame($data['instance'],$ja['instance']);
+        $this->assertSame('montepisqanotree.org',$ja['instance']);
         $this->assertSame($response['instance'],$ja['instance']);
         $this->assertSame($response['id'],$ja["id"]);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
@@ -180,8 +182,8 @@ public function testFineFirstElementPullApiHoqu()
 
         //add data with api/store
         $data = [
-            "instance" => "https:\/\/montepisanotree.org",
-            "job" => "task1",
+            "instance" => "https://mdontepisanotree.org",
+            "job" => "task11",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
 
@@ -194,7 +196,7 @@ public function testFineFirstElementPullApiHoqu()
 
         $requestSvr1 = [
             "id_server" => 999,
-            "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "task_available" => ["task11","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
         ];
 
         $this->resetAuth();
@@ -211,13 +213,35 @@ public function testFineFirstElementPullApiHoqu()
         $this->assertSame('processing',$ja['process_status']);
         //I check that the integer has become a string
         $this->assertSame(((string)$requestSvr1['id_server']),$ja['id_server']);
-        $this->assertSame($data['instance'],$ja['instance']);
+        $this->assertSame('mdontepisanotree.org',$ja['instance']);
         $this->assertSame($response['instance'],$ja['instance']);
         $this->assertSame($response['id'],$ja["id"]);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
 
     }
+
+    public function testStressPull()
+    {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['update']
+        );
+
+        $requestSvr1 = [
+            "id_server" => 'webmapp_server_staging_all_nombtiles',
+            "task_available" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
+        ];
+
+        for($i = 0;$i<1000;$i++)
+        {
+            $response = $this->put('/api/pull',$requestSvr1);
+            $response->assertStatus(204);
+        }
+
+
+    }
+
     public function setUp(): void
     {
         parent::setUp();

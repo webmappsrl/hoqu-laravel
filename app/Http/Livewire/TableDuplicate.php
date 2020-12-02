@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
     use Livewire\WithPagination;
-
+use Illuminate\Support\Facades\DB;
     use App\Models\Task;
     use Livewire\Component;
 
@@ -36,18 +36,18 @@ namespace App\Http\Livewire;
         {
             if(!empty($this->instance))
             {
-                $tasks= Task::whereIn('process_status', ['duplicate'])
-                ->where('instance','like', $this->instance)
-                ->orderBy('created_at', 'asc')
-                ->paginate(50)
-                ;
+                $tasks= DB::table('tasks')->join('duplicate_tasks', 'tasks.id', '=', 'duplicate_tasks.task_id')
+                ->select('duplicate_tasks.id','tasks.instance','tasks.job','tasks.parameters','duplicate_tasks.created_at','duplicate_tasks.task_id','tasks.process_status')
+                ->where('tasks.instance','like', $this->instance)
+                ->orderBy('duplicate_tasks.created_at', 'asc')
+                ->paginate(50);
             }
             else
             {
-                $tasks= Task::whereIn('process_status', ['duplicate'])
-                ->orderBy('created_at', 'asc')
-                ->paginate(50)
-                ;
+                $tasks= DB::table('tasks')->join('duplicate_tasks', 'tasks.id', '=', 'duplicate_tasks.task_id')
+                ->select('duplicate_tasks.id','tasks.instance','tasks.job','tasks.parameters','duplicate_tasks.created_at','duplicate_tasks.task_id','tasks.process_status')
+                ->orderBy('duplicate_tasks.created_at', 'asc')
+                ->paginate(50);
             }
             $this->countJ=0;
             $this->countI=1;
@@ -60,16 +60,19 @@ namespace App\Http\Livewire;
 
             if(!empty($this->job))
             {
-                $tasks = Task::whereIn('process_status', ['duplicate'])
-                ->where('job', 'like', $this->job)
-                ->orderBy('created_at', 'asc')
+                $tasks= DB::table('tasks')->join('duplicate_tasks', 'tasks.id', '=', 'duplicate_tasks.task_id')
+                ->select('duplicate_tasks.id','tasks.instance','tasks.job','tasks.parameters','duplicate_tasks.created_at','duplicate_tasks.task_id','tasks.process_status')
+                ->where('tasks.job','like', $this->job)
+                ->orderBy('duplicate_tasks.created_at', 'asc')
                 ->paginate(50);
             }
             else
             {
-                $tasks = Task::whereIn('process_status', ['duplicate'])
-                ->orderBy('created_at', 'asc')
+                $tasks= DB::table('tasks')->join('duplicate_tasks', 'tasks.id', '=', 'duplicate_tasks.task_id')
+                ->select('duplicate_tasks.id','tasks.instance','tasks.job','tasks.parameters','duplicate_tasks.created_at','duplicate_tasks.task_id','tasks.process_status')
+                ->orderBy('duplicate_tasks.created_at', 'asc')
                 ->paginate(50);
+
             }
             $this->countJ=1;
             $this->countI=0;
@@ -79,9 +82,20 @@ namespace App\Http\Livewire;
 
         public function render()
         {
-            $this->instances = Task::select('instance')->whereIn('process_status', ['duplicate'])->orderBy('instance', 'asc')->groupBy('instance')->get();
 
-            $this->jobs = Task::select('job')->whereIn('process_status', ['duplicate'])->orderBy('job', 'asc')->groupBy('job')->get();
+            $this->instances = DB::table('tasks')->join('duplicate_tasks', 'tasks.id', '=', 'duplicate_tasks.task_id')
+                ->select('tasks.instance')
+                ->orderBy('tasks.instance', 'asc')
+                ->groupBy('tasks.instance')
+                ->get();
+
+
+            $this->jobs = DB::table('tasks')->join('duplicate_tasks', 'tasks.id', '=', 'duplicate_tasks.task_id')
+            ->select('tasks.job')
+            ->orderBy('tasks.job', 'asc')
+            ->groupBy('tasks.job')
+            ->get();
+
 
             if($this->countJ == 1 && $this->countI == 0)
             {
@@ -93,6 +107,7 @@ namespace App\Http\Livewire;
                 $this->countI = 0;
                 $tasks=$this->updatedinstance();
             }
+
 
             return view('livewire.table-duplicate',['tasks' => $tasks]);
         }

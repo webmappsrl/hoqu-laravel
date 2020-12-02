@@ -69,7 +69,7 @@ class updateDoneApiTest extends TestCase
 
     public function testIdServerWrongUD()
     {
-        Task::truncate();
+        // Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
         //add data with api/queues
@@ -120,7 +120,7 @@ class updateDoneApiTest extends TestCase
 
     public function testIdNotExistUpdateDoneApiHoqu()
     {
-        Task::truncate();
+        // Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
         //add data with api/store
         $data = [
@@ -169,12 +169,12 @@ class updateDoneApiTest extends TestCase
 
     public function testCheckValueStatusUpdateDoneApiHoqu()
     {
-        Task::truncate();
+        // Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
         //add data with api/store
         $data = [
-            "instance" => "https:\/\/montepisanotree.org",
+            "instance" => "https://montepisanotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
         ];
@@ -219,7 +219,7 @@ class updateDoneApiTest extends TestCase
         $this->assertSame('done',$ja['process_status']);
         $this->assertSame($requestSvr2['id_server'],$ja['id_server']);
         $this->assertSame(null,$ja['process_log']);
-        $this->assertSame($data['instance'],$ja['instance']);
+        $this->assertSame('montepisanotree.org',$ja['instance']);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
         $this->assertSame($response['id'],$ja["id"]);
@@ -256,12 +256,12 @@ class updateDoneApiTest extends TestCase
 
 public function testCheckPositiveUD()
     {
-        Task::truncate();
+        // Task::truncate();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
         //add data with api/queues
         $data = [
-            "instance" => "https:\/\/montepisanotree.org",
+            "instance" => "https://montepisanotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
         ];
@@ -305,7 +305,7 @@ public function testCheckPositiveUD()
         $this->assertSame('done',$ja['process_status']);
         $this->assertSame($requestSvr2['log'],$ja['process_log']);
         $this->assertSame($requestSvr2['id_server'],$ja['id_server']);
-        $this->assertSame($data['instance'],$ja['instance']);
+        $this->assertSame('montepisanotree.org',$ja['instance']);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
         $this->assertSame($response['id'],$ja["id"]);

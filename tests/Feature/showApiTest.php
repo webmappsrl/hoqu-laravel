@@ -52,7 +52,6 @@ class showApiTest extends TestCase
             ['create']
         );
         $response = $this->json('POST', 'api/store', $data);
-        $response = $this->json('POST', 'api/store', $data);
 
         $response->assertStatus(201);
 
@@ -66,11 +65,11 @@ class showApiTest extends TestCase
         $this->assertSame(null,$t1["id_server"]);
         $this->assertSame($data['instance'],$t1["instance"]);
         $this->assertSame($data['job'],$t1["job"]);
-        $this->assertSame('duplicate',$t1["process_status"]);
+        $this->assertSame('new',$t1["process_status"]);
         $this->assertSame(null,$t1["process_log"]);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($t1['parameters'],TRUE));
 
-        $data = [ "instance" => "X", "job" => "X", "parameters" => ["k"=> "v"] ];
+        $data = [ "instance" => "Xs", "job" => "X", "parameters" => ["k"=> "v"] ];
         Sanctum::actingAs(
             User::factory()->create(),
             ['create']
@@ -88,11 +87,11 @@ class showApiTest extends TestCase
         $this->assertSame(null,$t1["id_server"]);
         $this->assertSame($data['instance'],$t1["instance"]);
         $this->assertSame($data['job'],$t1["job"]);
-        $this->assertSame('duplicate',$t1["process_status"]);
+        $this->assertSame('new',$t1["process_status"]);
         $this->assertSame(null,$t1["process_log"]);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($t1['parameters'],TRUE));
 
-        $data = [ "instance" => "X", "job" => "X", "parameters" => ["k"=> "v"] ];
+        $data = [ "instance" => "Xq", "job" => "X", "parameters" => ["k"=> "v"] ];
         Sanctum::actingAs(
             User::factory()->create(),
             ['create']
@@ -110,11 +109,11 @@ class showApiTest extends TestCase
         $this->assertSame(null,$t1["id_server"]);
         $this->assertSame($data['instance'],$t1["instance"]);
         $this->assertSame($data['job'],$t1["job"]);
-        $this->assertSame('duplicate',$t1["process_status"]);
+        $this->assertSame('new',$t1["process_status"]);
         $this->assertSame(null,$t1["process_log"]);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($t1['parameters'],TRUE));
 
-        $data = [ "instance" => "X", "job" => "X", "parameters" => ["k"=> "v"] ];
+        $data = [ "instance" => "Xda", "job" => "X", "parameters" => ["k"=> "v"] ];
         Sanctum::actingAs(
             User::factory()->create(),
             ['create']
@@ -132,10 +131,10 @@ class showApiTest extends TestCase
         $t1->assertStatus(404);
     }
 
-    // public function setUp(): void
-    // {
-    //     parent::setUp();
-    //     $this->artisan('migrate:fresh --seed');
-    // }
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate:fresh --seed');
+    }
 
 }

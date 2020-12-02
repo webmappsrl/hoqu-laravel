@@ -1,5 +1,5 @@
 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-indigo-100">
-    <div class="container mx-auto px-6 py-8">
+    <div class="container mx-auto w-3/4 px-6 py-8">
         <div class="flex flex-col mt-8 ">
            <div class=" py-2 overflow-x-auto sm:-mx-6 sm:px-2 lg:-mx-20">
 
@@ -56,6 +56,10 @@
                             class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                             Create
                          </th>
+                         <th
+                            class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                            Father
+                         </th>
                       </tr>
                    </thead>
                    <tbody class="bg-white">
@@ -63,36 +67,29 @@
                       <tr>
                          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                             <div class="flex items-center">
-                               <div class="text-sm leading-5 text-gray-500"><a href="/{{$task->id }}/show">{{ $task->id }}</a></div>
+                               <div class="text-sm leading-5 text-gray-500"><a href="/{{$task->id }}/show_duplicate">{{ $task->id }}</a></div>
                             </div>
                          </td>
                          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                            <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->instance }}</a></div>
+                            <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show_duplicate">{{ $task->instance }}</a></div>
                          </td>
                          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                            <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->job }}</a></div>
+                            <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show_duplicate">{{ $task->job }}</a></div>
                          </td>
                          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                            <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->parameters }}</a></div>
+                            <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show_duplicate">{{ $task->parameters }}</a></div>
                          </td>
                          <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                            @if($task->process_status=='new')
                             <span
-                               class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
-                            @elseif($task->process_status=='processing')
-                            <span
-                               class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
-                            @elseif($task->process_status=='done')
-                            <span
-                               class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
-                            @elseif($task->process_status=='duplicate')
-                            <span
-                               class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
-                            @endif
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-200 text-gray-900"><a href="/{{$task->id }}/show_duplicate">duplicate</a></span>
                          </td>
                          <td
                             class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                            <a href="/{{$task->id }}/show">{{ $task->created_at}}</a>
+                            <a href="/{{$task->id }}/show_duplicate">{{ $task->created_at}}</a>
+                         </td>
+                         <td
+                            class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                            <a href="/{{$task->task_id }}/show">{{ $task->task_id}}</a>
                          </td>
                       </tr>
                       @endforeach

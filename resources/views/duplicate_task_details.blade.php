@@ -9,7 +9,7 @@
                 </div>
              </div>
              <nav class="mt-10">
-                <a class="flex items-center mt-4 py-2 px-6 border-l-4 bg-gray-600 bg-opacity-25 text-gray-100 border-gray-100" href="/" >
+                <a class="flex items-center mt-4 py-2 px-6 border-l-4 border-gray-900 text-gray-500 hover:bg-gray-600 hover:bg-opacity-25 hover:text-gray-100" href="/" >
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bar-chart-line-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
                       </svg>
@@ -54,7 +54,6 @@
                       </svg>
                     <span id="link_info" class="mx-4">Info</span>
                  </a>
-
              </nav>
           </div>
           <div class="flex-1 flex flex-col overflow-hidden">
@@ -79,63 +78,65 @@
                          placeholder="Search">
                    </div> --}}
                 </div>
-
                 <div class="flex items-center">
                    <div x-data="{ dropdownOpen: false }" class="relative">
                       @livewire('navigation-dropdown')
                    </div>
                 </div>
-
              </header>
              <main class="flex-1 overflow-x-hidden overflow-y-auto bg-indigo-100">
                 <div class="container mx-auto px-6 py-8">
                    <div class="mt-4">
                       <div class="flex flex-wrap">
-                         <div class="w-full px-6 sm:w-1/2 xl:w-1/5 mb-5">
-                            @livewire('count-new')
-                         </div>
-                         <div class="w-full mt- px-6 sm:w-1/2 xl:w-1/5 sm:mt-0">
-                            @livewire('count-processing')
-                         </div>
-                         <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/5 sm:mt-0">
-                            @livewire('count-error')
-                         </div>
-                         <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/5 sm:mt-0">
-                            @livewire('count-done')
-                         </div>
-                         <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/5 xl:mt-0">
-                            @livewire('count-duplicate')
+                         <div class="grid grid-cols-4 gap-12 mb-12 mt-12">
+                            <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
+                                <h4 class="text-2xl font-semibold text-gray-700">ID:</h4>
+                                <h4 id="idTask"class="text-2xl font-semibold text-gray-700">{{$duplicateTask->id}}</h4>
+                            </div>
+                            <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
+                               <h4 id="idFather"class="text-2xl font-semibold text-gray-700">Father:<a href="/{{$task->id }}/show">{{ $task->id }}</a></h4>
+                            </div>
+                            <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
+                               <h4 id="idInstance" class="text-2xl font-semibold text-gray-700">Instance:  {{$task->instance}}</h4>
+                            </div>
+                            <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
+                               <h4 id="idJob"class="text-2xl font-semibold text-gray-700">Job: <br> {{$task->job}}</h4>
+                            </div>
                          </div>
                       </div>
-                      <div class="mt-4">
-                        <div class="flex flex-wrap">
-                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
-                              @livewire('count-all')
-                           </div>
-                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
-                              @livewire('count30days')
-                           </div>
-                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
-                              @livewire('chart24hour')
-                           </div>
-                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
-                              @livewire('chart30days')
-                           </div>
-                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
-                              @livewire('chart-instance')
-                           </div>
-                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
-                              @livewire('chart-job')
-                           </div>
-                        </div>
+                      <div class="grid grid-cols-2 gap-6 mb-16 mt-2">
+                        <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
+                            <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
+                            <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-yellow-200 rounded-lg" > &nbsp duplicate &nbsp</h4>
+                         </div>
+                         <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
+                            <h4 id="idParameters" class="text-2xl font-semibold text-gray-700">parameters:  {{$task->parameters}}</h4>
+                         </div>
+                      </div>
+                      <div class="grid grid-cols-2 gap-6 mb-16">
+                         <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white " >
+                            <h4 id="idCreated" class="text-2xl font-semibold text-gray-700">create:  {{$task->created_at}}</h4>
+                         </div>
+
+                      </div>
+                      <div class="grid grid-cols-1 gap-6 ">
+                         <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white " >
+                            <h4 class="text-2xl font-semibold text-gray-700">log:  {{$task->process_log}}</h4>
+                         </div>
+                      </div>
                    </div>
-                   <div class="mt-15">
+                   <div class="mt-8">
                    </div>
-                   @livewire('table-dashboard')
+                   <div class="flex flex-col mt-8 ">
+                      <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                      </div>
+                   </div>
+                </div>
+                </div>
                 </div>
              </main>
-          </div>
-       </div>
-    </div>
 
+    </div>
+    </div>
+    </div>
  </x-app-layout>

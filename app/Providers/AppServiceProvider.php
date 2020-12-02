@@ -27,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
         $charts->register([
             \App\Charts\SampleChart::class
         ]);
+
+
     }
 }
