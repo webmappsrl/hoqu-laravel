@@ -19,7 +19,7 @@ namespace App\Http\Livewire;
         public $countZ = 0;
         public $isOpen = 0;
         public $created_at;
-        public $data;
+
 
         public $instance1, $job1,$parameters, $process_status, $process_log, $Task_id;
 
