@@ -15,7 +15,8 @@ namespace App\Http\Livewire;
         public $jobs;
         public $countJ = 0;
         public $countI = 1;
-
+        public $countZ = 0;
+        public $created_at;
         public $parameters,$in,$jo;
 
 
@@ -103,6 +104,7 @@ namespace App\Http\Livewire;
                 ;
             }
             $this->countJ=0;
+            $this->countZ=0;
             $this->countI=1;
             return $tasks;
 
@@ -128,7 +130,31 @@ namespace App\Http\Livewire;
             }
             $this->countJ=1;
             $this->countI=0;
+            $this->countZ=0;
             return $tasks;
+        }
+
+        public function updated()
+        {
+
+            if(!empty($this->created_at))
+            {
+                $tasks = Task::whereIn('process_status', ['new','processing'])
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate(50);
+            }
+            else
+            {
+                $tasks = Task::whereIn('process_status', ['new','processing'])
+                    ->orderBy('created_at', 'asc')
+                    ->paginate(50);
+            }
+
+            $this->countZ=1;
+            $this->countJ=0;
+            $this->countI=0;
+            return $tasks;
+
         }
 
 
@@ -138,15 +164,23 @@ namespace App\Http\Livewire;
 
             $this->jobs = Task::select('job')->whereIn('process_status', ['new','processing'])->orderBy('job', 'asc')->groupBy('job')->get();
 
-            if($this->countJ == 1 && $this->countI == 0)
+            if($this->countI == 0 && $this->countJ == 0 && $this->countZ == 1)
+            {
+                $this->countZ = 0;
+                $tasks = $this->updated();
+            }
+
+            if($this->countJ == 1 && $this->countI == 0 && $this->countZ == 0)
             {
                 $this->countJ = 0;
-                $tasks=$this->updatedjob();
+                $tasks=$this->updatedJob();
+
             }
-            if($this->countI == 1 && $this->countJ == 0)
+            if($this->countI == 1 && $this->countJ == 0 && $this->countZ == 0)
             {
                 $this->countI = 0;
-                $tasks=$this->updatedinstance();
+                $tasks=$this->updatedInstance();
+
             }
 
             return view('livewire.table-todo',['tasks' => $tasks]);

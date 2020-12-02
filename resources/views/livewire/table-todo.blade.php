@@ -28,6 +28,12 @@
                         <option value={{ $job->job}}>{{ $job->job }}</option>
                         @endforeach
                     </select >
+                        <select id="dataAsc" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="created_at" class="border shadow p-2 bg-white" wire:model='created_at'
+                        >
+                            <option value=''>Order Data</option>
+                            <option id="A1" value='asc'>asc</option>
+                            <option id="D1" value='desc'>desc</option>
+                        </select >
 
                     <button
                         wire:click="create()" class="p-0 w-9 h-9 bg-blue-300 rounded-full hover:bg-blue-400 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none mx-4">

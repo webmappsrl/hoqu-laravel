@@ -4,7 +4,7 @@ describe('Button Reschedule in Done', () => {
     const email = 'team@webmapp.it'
     const password = 'webmapp'
 
-    it('e2eErrorAscDesc', () => {
+    it('e2eTodoAscDesc', () => {
         cy.visit('/login')
         const a = 'team';
         cy.get('input[name=email]').type(email)
@@ -14,10 +14,10 @@ describe('Button Reschedule in Done', () => {
         //ASSERT HOME BASE
         cy.url().should('contain', '/')
 
-        cy.get('span#link_error').click()
+        cy.get('span#link_todo').click()
 
         //ASSERT done
-        cy.url().should('contain', '/error')
+        cy.url().should('contain', '/todo')
 
          cy.get('select#dataAsc').select('asc')
         var time_prev = 0
