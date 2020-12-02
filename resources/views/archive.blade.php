@@ -38,7 +38,7 @@
                    </div>
                 </div>
              </header>
-      @livewire('table-done',['instance'=>$tasks['instance'], 'job'=>$tasks['job']])
+      @livewire('table-done',['instance'=>$tasks['instance'], 'job'=>$tasks['job'],'created_at'=>$tasks['created_at']])
     </div>
        </div>
     </div>

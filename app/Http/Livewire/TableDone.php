@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 
     use App\Models\Task;
     use Livewire\Component;
+    use function PHPUnit\Framework\isEmpty;
 
     class TableDone extends Component
     {
@@ -15,7 +16,10 @@ namespace App\Http\Livewire;
         public $jobs;
         public $countJ = 0;
         public $countI = 1;
+        public $countZ = 0;
         public $isOpen = 0;
+        public $created_at;
+        public $data;
 
         public $instance1, $job1,$parameters, $process_status, $process_log, $Task_id;
 
@@ -48,6 +52,7 @@ namespace App\Http\Livewire;
         private function resetInputFields(){
         $this->instance1 = '';
         $this->job1 = '';
+        $this->created_at = '';
         $this->parameters = '';
         $this->process_status = '';
         $this->process_log = '';
@@ -58,21 +63,23 @@ namespace App\Http\Livewire;
             $this->resetPage();
         }
 
-        public function mount($instance,$job)
+        public function mount($instance,$job, $created_at)
         {
             $this->instance=$instance;
+            $this->created_at=$created_at;
             $this->job=$job;
             $this->instances=[];
             $this->jobs=[];
+
         }
 
         public function updatedInstance()
         {
             if(!empty($this->instance))
             {
+
                 $tasks= Task::whereIn('process_status', ['done'])
                 ->where('instance','like', $this->instance)
-                ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                 ->orderBy('created_at', 'asc')
                 ->paginate(50)
                 ;
@@ -80,12 +87,12 @@ namespace App\Http\Livewire;
             else
             {
                 $tasks= Task::whereIn('process_status', ['done'])
-                ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                 ->orderBy('created_at', 'asc')
                 ->paginate(50)
                 ;
             }
             $this->countJ=0;
+            $this->countZ=0;
             $this->countI=1;
             return $tasks;
 
@@ -98,25 +105,46 @@ namespace App\Http\Livewire;
             {
                 $tasks = Task::whereIn('process_status', ['done'])
                 ->where('job', 'like', $this->job)
-                ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                 ->orderBy('created_at', 'asc')
                 ->paginate(50);
             }
             else
             {
                 $tasks = Task::whereIn('process_status', ['done'])
-                ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                 ->orderBy('created_at', 'asc')
                 ->paginate(50);
             }
             $this->countJ=1;
             $this->countI=0;
+            $this->countZ=0;
             return $tasks;
+        }
+
+        public function updated()
+        {
+
+            if(!empty($this->created_at))
+            {
+                $tasks = Task::whereIn('process_status', ['done'])
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate(50);
+            }
+            else
+            {
+                $tasks = Task::whereIn('process_status', ['done'])
+                    ->orderBy('created_at', 'asc')
+                    ->paginate(50);
+            }
+
+            $this->countZ=1;
+            $this->countJ=0;
+            $this->countI=0;
+            return $tasks;
+
         }
 
         public function update()
         {
-
 
             Task::updateOrCreate(['id' => $this->Task_id], [
                 'instance' => $this->instance,
@@ -164,23 +192,30 @@ namespace App\Http\Livewire;
 
         }
 
-
-
         public function render()
         {
             $this->instances = Task::select('instance')->whereIn('process_status', ['done'])->groupBy('instance')->orderBy('instance', 'asc')->get();
 
             $this->jobs = Task::select('job')->whereIn('process_status', ['done'])->groupBy('job')->orderBy('job', 'asc')->get();
 
-            if($this->countJ == 1 && $this->countI == 0)
+
+            if($this->countI == 0 && $this->countJ == 0 && $this->countZ == 1)
+            {
+                $this->countZ = 0;
+                $tasks = $this->updated();
+            }
+
+            if($this->countJ == 1 && $this->countI == 0 && $this->countZ == 0)
             {
                 $this->countJ = 0;
                 $tasks=$this->updatedJob();
+
             }
-            if($this->countI == 1 && $this->countJ == 0)
+            if($this->countI == 1 && $this->countJ == 0 && $this->countZ == 0)
             {
                 $this->countI = 0;
                 $tasks=$this->updatedInstance();
+
             }
 
             return view('livewire.table-done',['tasks' => $tasks]);
