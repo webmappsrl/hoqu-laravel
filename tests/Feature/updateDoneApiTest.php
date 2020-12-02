@@ -174,7 +174,7 @@ class updateDoneApiTest extends TestCase
 
         //add data with api/store
         $data = [
-            "instance" => "https:\/\/montepisanotree.org",
+            "instance" => "https://montepisanotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
         ];
@@ -219,7 +219,7 @@ class updateDoneApiTest extends TestCase
         $this->assertSame('done',$ja['process_status']);
         $this->assertSame($requestSvr2['id_server'],$ja['id_server']);
         $this->assertSame(null,$ja['process_log']);
-        $this->assertSame($data['instance'],$ja['instance']);
+        $this->assertSame('montepisanotree.org',$ja['instance']);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
         $this->assertSame($response['id'],$ja["id"]);
@@ -261,7 +261,7 @@ public function testCheckPositiveUD()
 
         //add data with api/queues
         $data = [
-            "instance" => "https:\/\/montepisanotree.org",
+            "instance" => "https://montepisanotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
         ];
@@ -305,7 +305,7 @@ public function testCheckPositiveUD()
         $this->assertSame('done',$ja['process_status']);
         $this->assertSame($requestSvr2['log'],$ja['process_log']);
         $this->assertSame($requestSvr2['id_server'],$ja['id_server']);
-        $this->assertSame($data['instance'],$ja['instance']);
+        $this->assertSame('montepisanotree.org',$ja['instance']);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
         $this->assertSame($response['id'],$ja["id"]);

@@ -64,6 +64,10 @@ class TasksController extends Controller
         {
             $request=$request->all();
 
+
+            $request['instance'] = preg_replace('#^https?:/?/?#', '', $request['instance']);
+
+
             if(!empty($request['parameters']))
             {
                 //check string

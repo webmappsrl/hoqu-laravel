@@ -81,7 +81,7 @@ class pullApiTest extends TestCase
 
         //add data with api/store
         $data = [
-            "instance" => "https:\/\/molntepisanotree.org",
+            "instance" => "https://molntepisanotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
@@ -119,7 +119,7 @@ public function testFineFirstElementPullApiHoqu()
 
         //add data with api/store
         $data = [
-            "instance" => "https:\/\/montepisqanotree.org",
+            "instance" => "https://montepisqanotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
@@ -132,7 +132,7 @@ public function testFineFirstElementPullApiHoqu()
         sleep(2);
 
         $data1 = [
-            "instance" => "https:\/\/montelabronicotree.org",
+            "instance" => "https://montelabronicotree.org",
             "job" => "task1",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
@@ -168,7 +168,7 @@ public function testFineFirstElementPullApiHoqu()
         $this->assertSame('processing',$ja['process_status']);
         //comparison server_id string with that on the DB
         $this->assertSame($requestSvr1['id_server'],$ja['id_server']);
-        $this->assertSame($data['instance'],$ja['instance']);
+        $this->assertSame('montepisqanotree.org',$ja['instance']);
         $this->assertSame($response['instance'],$ja['instance']);
         $this->assertSame($response['id'],$ja["id"]);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
@@ -182,7 +182,7 @@ public function testFineFirstElementPullApiHoqu()
 
         //add data with api/store
         $data = [
-            "instance" => "https:\/\/mdontepisanotree.org",
+            "instance" => "https://mdontepisanotree.org",
             "job" => "task11",
             "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
         ];
@@ -213,7 +213,7 @@ public function testFineFirstElementPullApiHoqu()
         $this->assertSame('processing',$ja['process_status']);
         //I check that the integer has become a string
         $this->assertSame(((string)$requestSvr1['id_server']),$ja['id_server']);
-        $this->assertSame($data['instance'],$ja['instance']);
+        $this->assertSame('mdontepisanotree.org',$ja['instance']);
         $this->assertSame($response['instance'],$ja['instance']);
         $this->assertSame($response['id'],$ja["id"]);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));

@@ -80,10 +80,10 @@ class storeApiTest extends TestCase
         ])->post('/api/store',$data);
         $response->assertStatus(201);
         $t1 = Task::find($response['id']);
-        $this->assertSame($response['instance'],$t1['instance']);
+        $this->assertSame($response['instance'],'montepisanotreee.org');
         $this->assertSame($response['job'],$t1['job']);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($t1['parameters'],TRUE));
-        $this->assertSame($data['instance'],$t1['instance']);
+        $this->assertSame('montepisanotreee.org',$t1['instance']);
         $this->assertSame($data['job'],$t1['job']);
         $this->assertSame($data['parameters'],json_decode($t1['parameters'],TRUE));
 
@@ -103,7 +103,7 @@ class storeApiTest extends TestCase
         $this->assertSame($response['instance'],$t1['instance']);
         $this->assertSame($response['job'],$t1['job']);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($t1['parameters'],TRUE));
-        $this->assertSame($data['instance'],$t1['instance']);
+        $this->assertSame('montepisanotrte.org',$t1['instance']);
         $this->assertSame($data['job'],$t1['job']);
         $this->assertSame($data['parameters'],json_decode($t1['parameters'],TRUE));
         $data = [
@@ -121,7 +121,7 @@ class storeApiTest extends TestCase
         $this->assertSame($response['instance'],$t1['instance']);
         $this->assertSame($response['job'],$t1['job']);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($t1['parameters'],TRUE));
-        $this->assertSame($data['instance'],$t1['instance']);
+        $this->assertSame('montepisanotrewe.org',$t1['instance']);
         $this->assertSame($data['job'],$t1['job']);
         $this->assertSame($data['parameters'],json_decode($t1['parameters'],TRUE));
 
@@ -216,6 +216,50 @@ class storeApiTest extends TestCase
         $t1 = Task::find($response['task_id']);
         $t1_duplicate = DuplicateTask::find($response['id']);
         $this->assertSame($t1_duplicate['task_id'],$t1['id']);
+
+    }
+
+    public function testNotHttp()
+    {
+        $data = [
+            "instance" => "https://monterumenotree.org",
+            "job" => "mptupdatepoi",
+            "parameters" => ["a"=> "yes", "b"=> "no"]
+        ];
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['create']
+        );
+        //OPERATIONS 1
+        $response = $this->post('/api/store',$data);
+        $response->assertStatus(201);
+        $t1 = Task::find($response['id']);
+        $this->assertSame($response['instance'],'monterumenotree.org');
+
+        $data = [
+            "instance" => "http://montebulgarotree.org",
+            "job" => "mptupdatepoi",
+            "parameters" => ["a"=> "yes", "b"=> "no"]
+        ];
+
+        //OPERATIONS 2
+        $response = $this->post('/api/store',$data);
+        $response->assertStatus(201);
+        $t1 = Task::find($response['id']);
+        $this->assertSame($response['instance'],'montebulgarotree.org');
+
+        $data = [
+            "instance" => "https://montesinti.org",
+            "job" => "mptupdatepoi",
+            "parameters" => ["a"=> "yes", "b"=> "no"]
+        ];
+
+        //OPERATIONS 3
+        $response = $this->post('/api/store',$data);
+        $response->assertStatus(201);
+        $t1 = Task::find($response['id']);
+        $this->assertSame($response['instance'],'montesinti.org');
+
 
     }
     public function setUp(): void
