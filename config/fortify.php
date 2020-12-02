@@ -104,7 +104,6 @@ return [
     */
 
     'features' => [
-
         env('DISABLE_REGISTRATION') ? NULL : Features::registration(),
         Features::resetPasswords(),
         // Features::emailVerification(),
