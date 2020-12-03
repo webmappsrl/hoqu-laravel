@@ -44,11 +44,13 @@ describe('Button Reschedule in Done', () => {
                 cy.log(idA)
                 expect(text1).to.eq('\n                        \n                           '+id+'\n                        \n                     ')
         })
+
+            cy.log(text1)
+
             cy.visit('/'+text1+"/show")
             cy.get('h4#processStatus').each(($e, index, $list) => {
                 const text = $e.text()
                 expect(text).to.contain('new')
-
             })
 
         })

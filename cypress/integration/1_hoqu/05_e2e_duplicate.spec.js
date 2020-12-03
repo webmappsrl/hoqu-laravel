@@ -34,7 +34,7 @@ describe('Page Duplicate', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('duplicate')) {
-                expect(text).to.eq('\n                                                        duplicate\n                                                     ')
+                expect(text).to.eq('\n                            duplicate\n                         ')
             }
 
         })
