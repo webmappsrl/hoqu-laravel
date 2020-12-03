@@ -68,7 +68,7 @@ describe('Page Duplicate Check Father', () => {
                                 })
 
                                 cy.get('#idCreated').invoke('text').then((c) => {
-                                    expect(c).to.contain(date)
+                                     expect(c).to.contain(date)
                                 })
 
                                 cy.get('h4#processStatus').each(($e, index, $list) => {

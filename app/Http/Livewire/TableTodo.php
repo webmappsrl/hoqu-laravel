@@ -17,12 +17,13 @@ namespace App\Http\Livewire;
         public $countI = 1;
         public $countZ = 0;
         public $created_at;
-        public $parameters,$in,$jo;
+        public $instance1, $job1,$parameters, $process_status, $process_log, $Task_id;
 
 
         public $instances;
 
         public $isOpen = 0;
+        public $isModalDelete = 0;
 
         public function create()
         {
@@ -38,6 +39,16 @@ namespace App\Http\Livewire;
         public function closeModal()
         {
             $this->isOpen = false;
+        }
+
+        public function openModalDelete()
+        {
+            $this->isModalDelete = true;
+        }
+
+        public function closeModalDelete()
+        {
+            $this->isModalDelete = false;
         }
 
         private function resetInputFields(){
@@ -109,6 +120,20 @@ namespace App\Http\Livewire;
             return $tasks;
 
         }
+        public function edit(Task $task)
+        {
+            $this->Task_id = $task->id;
+
+            $this->openModalDelete();
+
+        }
+
+        public function delete($id)
+        {
+            Task::find($id)->delete();
+            session()->flash('message', 'Task '.$id.' Deleted Successfully.');
+            $this->closeModalDelete();
+        }
 
         public function updatedjob()
         {
@@ -146,6 +171,7 @@ namespace App\Http\Livewire;
             else
             {
                 $tasks = Task::whereIn('process_status', ['new','processing'])
+                    ->orderByRaw('FIELD(process_status, "new", "processing")asc')
                     ->orderBy('created_at', 'asc')
                     ->paginate(50);
             }
@@ -180,7 +206,6 @@ namespace App\Http\Livewire;
             {
                 $this->countI = 0;
                 $tasks=$this->updatedInstance();
-
             }
 
             return view('livewire.table-todo',['tasks' => $tasks]);

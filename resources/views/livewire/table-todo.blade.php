@@ -46,6 +46,9 @@
                     @if($isOpen)
                     @include('livewire.form-todo')
                     @endif
+                        @if($isModalDelete)
+                            @include('livewire.delete')
+                        @endif
                     </div>
                     <div
                     class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
@@ -84,6 +87,8 @@
                                 class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 Elapsed time
                                 </th>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
+
                             </tr>
                         </thead>
                         <tbody class="bg-white">
@@ -129,6 +134,12 @@
                                 <td
                                 class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
                                 <a href="/{{$task->id }}/show">{{ $task->created_at->floatDiffInSeconds($task->updated_at) }}</a>
+                                </td>
+                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <div class="flex justify-center bg-grey-lighter mb-1 text-sm leading-3 text-gray-900"> <button data-toggle="modal" data-target="#updateModal" wire:click="edit({{$task->id}})" class="bg-white text-gray-800 font-bold rounded border-b-2 border-red-500 hover:border-red-600 hover:bg-red-500  hover:text-white shadow-md py-2 px-6 inline-flex items-center">
+                                            <span class="mr-1">Delete</span>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach

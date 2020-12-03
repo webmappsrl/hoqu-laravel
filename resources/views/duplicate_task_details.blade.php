@@ -115,7 +115,7 @@
                       </div>
                       <div class="grid grid-cols-2 gap-6 mb-16">
                          <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white " >
-                            <h4 id="idCreated" class="text-2xl font-semibold text-gray-700">create:  {{$task->created_at}}</h4>
+                            <h4 id="idCreated" class="text-2xl font-semibold text-gray-700">create:  {{$duplicateTask->created_at}}</h4>
                          </div>
 
                       </div>
