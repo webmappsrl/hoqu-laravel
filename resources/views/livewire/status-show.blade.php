@@ -1,18 +1,18 @@
 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-indigo-100" wire:poll.5s>
     <div class="container mx-auto px-6 py-8">
-        @if (session()->has('message'))
-            <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert">
-                <div class="flex">
-                    <div>
-                        <p class="text-lg">{{ session('message') }}</p>
-                    </div>
-                </div>
-            </div>
-        @endif
-        @if($isOpen)
-            @include('livewire.skip')
-        @endif
        <div class="mt-4">
+           @if (session()->has('message'))
+               <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert">
+                   <div class="flex">
+                       <div>
+                           <p class="text-lg">{{ session('message') }}</p>
+                       </div>
+                   </div>
+               </div>
+           @endif
+           @if($isOpen)
+               @include('livewire.skip')
+           @endif
           <div class="flex flex-wrap">
 
              <div class="grid grid-cols-4 gap-12 mb-12 mt-12">
