@@ -13,83 +13,101 @@
            @if($isOpen)
                @include('livewire.skip')
            @endif
-               @if($task->process_status=='error' || $task->process_status=='done' )
-                   <div class="grid grid-cols-1 gap-6 mb-2">
-                       <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white " >
+               <div class="container m-auto p-8 text-grey-darkest">
+                   @if($task->process_status=='error' || $task->process_status=='done' )
+                   <div class="flex flex-wrap -mx-2 mb-8">
+                       <div class="w-full md:w-2/2 lg:w-4/4 px-2 mb-4 flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white">
+
                            <button id="editShow" data-toggle="modal" data-target="#updateModal" wire:click="edit({{$task}})" class="bg-white text-gray-800 font-bold rounded border-b-2 border-indigo-500 hover:border-indigo-600 hover:bg-indigo-500  hover:text-white shadow-md py-2 px-6 inline-flex items-center">
                                <span class="mr-1">Edit</span>
                            </button>
+
                        </div>
+
                    </div>
-               @endif
-          <div class="flex flex-wrap">
+                   @endif
+                       <div class="flex flex-wrap -mx-2 mb-8">
+                           <div class="w-full sm:1/2 md:w-1/2 lg:w-2/4 px-2 mb-4">
+                               <div class="h-12 text-sm text-grey-dark px-1 mb-1 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                   <h4 class="md:text-lg lg:text-2xl font-semibold text-gray-700">ID:</h4>
+                                   <h4 id="idTask" class="md:text-lg lg:text-2xl font-semibold text-gray-700">{{$task->id}}</h4>
+                               </div>
+                           </div>
+                           <div class="w-full sm:1/2 md:w-1/2 lg:w-2/4 px-2 mb-4">
+                               <div class=" h-12 text-sm text-grey-dark px-1 mb-1 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                   <h4 id="idServer" class="md:text-lg lg:text-2xl font-semibold text-gray-700">ID Server:{{$task->id_server}}</h4>
+                               </div>
+                           </div>
+                           <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                               <div class=" h-12 text-sm text-grey-dark px-1 mb-1 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                   <h4 id="idInstance" class="md:text-lg lg:text-2xl font-semibold text-gray-700">Instance:{{$task->instance}}</h4>
+                               </div>
+                           </div>
+                           <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                               <div class=" h-12 text-sm text-grey-dark px-1 mb-1 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                   <h4 id="idJob" class="md:text-lg lg:text-2xl font-semibold text-gray-700">Job:{{$task->job}}</h4>
+                               </div>
+                           </div>
 
-             <div class="grid grid-cols-4 md:grid-cols-4 gap-12 mb-12 mt-12">
-                <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                    <h4 class="text-2xl font-semibold text-gray-700">ID:</h4>
-                    <h4 id="idTask"class="text-2xl font-semibold text-gray-700">{{$task->id}}</h4>
-                </div>
-                <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                   <h4 id="idServer"class="text-2xl font-semibold text-gray-700">ID Server:  {{$task->id_server}}</h4>
-                </div>
-                <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                   <h4 id="idInstance" class="text-2xl font-semibold text-gray-700">Instance:  {{$task->instance}}</h4>
-                </div>
-                <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                   <h4 id="idJob"class="text-2xl font-semibold text-gray-700">Job: <br> {{$task->job}}</h4>
-                </div>
+                           @if($task->process_status=='new')
+                               <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                                   <div class=" h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">                <h4 class="md:text-lg lg:text-2xl font-semibold text-gray-700">status: &nbsp</h4>
+                                       <h4 id="processStatus" class="md:text-lg lg:text-2xl font-semibold text-gray-700 bg-blue-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
+                                   </div></div>
+                           @elseif($task->process_status=='processing')
+                               <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                                   <div class=" h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">                <h4 class="md:text-lg lg:text-2xl font-semibold text-gray-700">status: &nbsp</h4>
+                                       <h4 id="processStatus" class="md:text-lg lg:text-2xl font-semibold text-gray-700 bg-orange-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
+                                   </div></div>
+                           @elseif($task->process_status=='error')
+                               <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                                   <div class=" h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">                <h4 class="md:text-lg lg:text-2xl font-semibold text-gray-700">status: &nbsp</h4>
+                                       <h4 id="processStatus" class="md:text-lg lg:text-2xl font-semibold text-gray-700 bg-red-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
+                                   </div></div>
+                           @elseif($task->process_status=='done')
+                               <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                                   <div class=" h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">                <h4 class="md:text-lg lg:text-2xl font-semibold text-gray-700">status: &nbsp</h4>
+                                       <h4 id="processStatus" class="md:text-lg lg:text-2xl font-semibold text-gray-700 bg-green-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
+                                   </div></div>
+                           @elseif($task->process_status=='duplicate')
+                               <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                                   <div class=" h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">                <h4 class="md:text-lg lg:text-2xl font-semibold text-gray-700">status: &nbsp</h4>
+                                       <h4 id="processStatus" class="md:text-lg lg:text-2xl font-semibold text-gray-700 bg-yellow-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
+                                   </div></div>
+                           @elseif($task->process_status=='skip')
+                               <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                                   <div class=" h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">                <h4 class="md:text-lg lg:text-2xl font-semibold text-gray-700">status: &nbsp</h4>
+                                       <h4 id="processStatus" class="md:text-lg lg:text-2xl font-semibold text-gray-700 bg-indigo-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
+                                   </div></div>
+                           @endif
+                           <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                               <div class=" h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                   <h4 id="idParameters" class="md:text-lg lg:text-2xl font-semibold text-gray-700">parameters:  {{$task->parameters}}</h4>
+                               </div>
+                           </div>
+                           <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                               <div class=" h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                   <h4 class="md:text-lg lg:text-2xl font-semibold text-gray-700">create:  {{$task->created_at}}</h4>
+                               </div>
+                           </div>
+                           <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                               <div class=" h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                   <h4 class="md:text-lg lg:text-2xl font-semibold text-gray-700">worked:  {{$task->updated_at}}</h4>
+                               </div>
+                           </div>
+                           <div class="w-full md:w-2/2 lg:w-4/4 px-2 mb-4">
+                               <div class="h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                   <h4 class="md:text-md lg:text-2xl font-semibold text-gray-700">log:  {{$task->process_log}}</h4>
+                               </div>
+                           </div>
+                       </div>
 
-             </div>
-          </div>
-          <div class="grid grid-cols-2 gap-6 mb-16 mt-2">
-             @if($task->process_status=='new')
-             <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-blue-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
-             </div>
-             @elseif($task->process_status=='processing')
-             <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-orange-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
-             </div>
-             @elseif($task->process_status=='error')
-             <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-red-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
-             </div>
-             @elseif($task->process_status=='done')
-             <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-green-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
-             </div>
-             @elseif($task->process_status=='duplicate')
-             <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-yellow-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
-             </div>
-             @elseif($task->process_status=='skip')
-             <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-indigo-200 rounded-lg" > &nbsp{{ $task->process_status }}&nbsp</h4>
-             </div>
-             @endif
-             <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                <h4 id="idParameters" class="text-2xl font-semibold text-gray-700">parameters:  {{$task->parameters}}</h4>
-             </div>
-          </div>
-          <div class="grid grid-cols-2 gap-6 mb-16">
-             <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white " >
-                <h4 class="text-2xl font-semibold text-gray-700">create:  {{$task->created_at}}</h4>
-             </div>
-             <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                <h4 class="text-2xl font-semibold text-gray-700">worked:  {{$task->updated_at}}</h4>
-             </div>
-          </div>
-           <div class="grid grid-cols-1 gap-6 ">
-               <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white " >
-                   <h4 class="text-2xl font-semibold text-gray-700">log:  {{$task->process_log}}</h4>
                </div>
-           </div>
+
+
+
+
+
        </div>
        <div class="mt-8">
        </div>
