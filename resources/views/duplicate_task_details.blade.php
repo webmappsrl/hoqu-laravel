@@ -86,52 +86,52 @@
              </header>
              <main class="flex-1 overflow-x-hidden overflow-y-auto bg-indigo-100">
                 <div class="container mx-auto px-6 py-8">
-                   <div class="mt-4">
-                      <div class="flex flex-wrap">
-                         <div class="grid grid-cols-4 gap-12 mb-12 mt-12">
-                            <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                                <h4 class="text-2xl font-semibold text-gray-700">ID:</h4>
-                                <h4 id="idTask"class="text-2xl font-semibold text-gray-700">{{$duplicateTask->id}}</h4>
+                    <div class="flex flex-wrap -mx-2 mb-8">
+                        <div class="w-full sm:1/2 md:w-1/2 lg:w-2/4 px-2 mb-4">
+                            <div class="h-12 text-sm text-grey-dark px-1 mb-1 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                <h4 class="md:text-lg lg:text-2xl font-semibold text-gray-700">ID:</h4>
+                                <h4 id="idTask" class="md:text-lg lg:text-2xl font-semibold text-gray-700">{{$task->id}}</h4>
                             </div>
-                            <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                               <h4 id="idFather"class="text-2xl font-semibold text-gray-700">Father:<a href="/{{$task->id }}/show">{{ $task->id }}</a></h4>
+                        </div>
+                        <div class="w-full sm:1/2 md:w-1/2 lg:w-2/4 px-2 mb-4">
+                            <div class=" h-12 text-sm text-grey-dark px-1 mb-1 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                <h4 id="idFather" class="md:text-lg lg:text-2xl font-semibold text-gray-700">Father:<a href="/{{$task->id }}/show">{{ $task->id }}</a></h4>
                             </div>
-                            <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                               <h4 id="idInstance" class="text-2xl font-semibold text-gray-700">Instance:  {{$task->instance}}</h4>
+                        </div>
+                        <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                            <div class=" h-12 text-sm text-grey-dark px-1 mb-1 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                <h4 id="idInstance" class="md:text-lg lg:text-2xl font-semibold text-gray-700">Instance:{{$task->instance}}</h4>
                             </div>
-                            <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                               <h4 id="idJob"class="text-2xl font-semibold text-gray-700">Job: <br> {{$task->job}}</h4>
+                        </div>
+                        <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                            <div class=" h-12 text-sm text-grey-dark px-1 mb-1 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                <h4 id="idJob" class="md:text-lg lg:text-2xl font-semibold text-gray-700">Job:{{$task->job}}</h4>
                             </div>
-                         </div>
-                      </div>
-                      <div class="grid grid-cols-2 gap-6 mb-16 mt-2">
-                        <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                            <h4 class="text-2xl font-semibold text-gray-700">status: &nbsp</h4>
-                            <h4 id="processStatus" class="text-2xl font-semibold text-gray-700 bg-yellow-200 rounded-lg" > &nbsp duplicate &nbsp</h4>
-                         </div>
-                         <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
-                            <h4 id="idParameters" class="text-2xl font-semibold text-gray-700">parameters:  {{$task->parameters}}</h4>
-                         </div>
-                      </div>
-                      <div class="grid grid-cols-2 gap-6 mb-16">
-                         <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white " >
-                            <h4 id="idCreated" class="text-2xl font-semibold text-gray-700">create:  {{$duplicateTask->created_at}}</h4>
-                         </div>
+                        </div>
 
-                      </div>
-                      <div class="grid grid-cols-1 gap-6 ">
-                         <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white " >
-                            <h4 class="text-2xl font-semibold text-gray-700">log:  {{$task->process_log}}</h4>
-                         </div>
-                      </div>
-                   </div>
-                   <div class="mt-8">
-                   </div>
+                            <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                                <div class=" h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">                <h4 class="md:text-lg lg:text-2xl font-semibold text-gray-700">status: &nbsp</h4>
+                                    <h4 id="processStatus" class="md:text-lg lg:text-2xl font-semibold text-gray-700 bg-yellow-200 rounded-lg" > &nbsp duplicate &nbsp</h4>
+                                </div></div>
+
+                        <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                            <div class=" h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                <h4 id="idParameters" class="md:text-lg lg:text-2xl font-semibold text-gray-700">parameters:  {{$task->parameters}}</h4>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 lg:w-2/4 px-2 mb-4">
+                            <div class=" h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">
+                                <h4 id="idCreated" class="md:text-lg lg:text-2xl font-semibold text-gray-700">create:  {{$duplicateTask->created_at}}</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
                    <div class="flex flex-col mt-8 ">
                       <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                       </div>
                    </div>
-                </div>
+             </main>
                 </div>
                 </div>
              </main>

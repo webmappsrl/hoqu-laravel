@@ -154,6 +154,7 @@ namespace App\Http\Livewire;
 
             $this->closeModal();
             $this->resetInputFields();
+
         }
 
         public function updateSkip()

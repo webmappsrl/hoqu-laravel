@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Livewire;
+use App\Mail\sendTrello;
 use App\Models\Task;
 
 
+
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class StatusShow extends Component
@@ -12,14 +15,36 @@ class StatusShow extends Component
     public $job;
     public $jobs;
     public $isOpen = 0;
+    public $isTrello = 0;
     public $created_at;
 
 
-    public $instance1, $job1,$parameters, $process_status, $process_log, $Task_id;
+    public $instance1, $job1,$parameters, $process_status, $process_log, $Task_id, $trelloMember;
 
     public $instances;
 
     public $task;
+
+    public function openModal()
+    {
+        $this->isOpen = true;
+    }
+
+    public function closeModal()
+    {
+        $this->isOpen = false;
+    }
+
+    public function openModalTrello()
+    {
+        $this->isTrello = true;
+    }
+
+    public function closeModalTrello()
+    {
+        $this->isTrello = false;
+    }
+
 
     public function create()
     {
@@ -27,15 +52,10 @@ class StatusShow extends Component
         $this->openModal();
     }
 
-    public function openModal()
+    public function createTrelloModal()
     {
-        $this->isOpen = true;
-    }
-
-
-    public function closeModal()
-    {
-        $this->isOpen = false;
+        $this->resetInputFields();
+        $this->openModalTrello();
     }
 
     public function mount($id)
@@ -49,11 +69,11 @@ class StatusShow extends Component
         $this->parameters = '';
         $this->process_status = '';
         $this->process_log = '';
+        $this->trelloMember= '';
     }
 
     public function update()
     {
-
 
         Task::updateOrCreate(['id' => $this->Task_id], [
             'instance' => $this->instance,
@@ -97,6 +117,35 @@ class StatusShow extends Component
         $this->job = $task->job;
 
         $this->openModal();
+
+    }
+
+    public function setCardTrello(Task $task)
+    {
+        $this->Task_id = $task->id;
+        $this->instance = $task->instance;
+        $this->job = $task->job;
+
+        $this->openModalTrello();
+
+    }
+
+    public function sendCard(){
+
+        $this->validate([
+            'trelloMember' => 'required'
+        ]);
+
+        $taskError = Task::find($this->Task_id);
+        $dataCard = ['member' => $this->trelloMember, 'error'=>$taskError];
+
+        Mail::to('gianmarcogagliardi1+vdtsjbwisbsmv52v0h8x@boards.trello.com')->send(new sendTrello($dataCard));
+
+        $this->closeModalTrello();
+        $this->resetInputFields();
+
+        session()->flash('message',
+            'you have created a trello card related to the task ' .$this->Task_id . ' assigned to '.$this->trelloMember );
 
     }
 
