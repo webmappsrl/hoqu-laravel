@@ -13,6 +13,15 @@
            @if($isOpen)
                @include('livewire.skip')
            @endif
+               @if($task->process_status=='error' || $task->process_status=='done' )
+                   <div class="grid grid-cols-1 gap-6 mb-2">
+                       <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white " >
+                           <button id="editShow" data-toggle="modal" data-target="#updateModal" wire:click="edit({{$task}})" class="bg-white text-gray-800 font-bold rounded border-b-2 border-indigo-500 hover:border-indigo-600 hover:bg-indigo-500  hover:text-white shadow-md py-2 px-6 inline-flex items-center">
+                               <span class="mr-1">Edit</span>
+                           </button>
+                       </div>
+                   </div>
+               @endif
           <div class="flex flex-wrap">
 
              <div class="grid grid-cols-4 md:grid-cols-4 gap-12 mb-12 mt-12">
@@ -76,15 +85,6 @@
                 <h4 class="text-2xl font-semibold text-gray-700">worked:  {{$task->updated_at}}</h4>
              </div>
           </div>
-           @if($task->process_status=='error' || $task->process_status=='done' )
-           <div class="grid grid-cols-1 gap-6 mb-10">
-               <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white " >
-                   <button id="editShow" data-toggle="modal" data-target="#updateModal" wire:click="edit({{$task}})" class="bg-white text-gray-800 font-bold rounded border-b-2 border-indigo-500 hover:border-indigo-600 hover:bg-indigo-500  hover:text-white shadow-md py-2 px-6 inline-flex items-center">
-                       <span class="mr-1">Edit</span>
-                   </button>
-               </div>
-           </div>
-           @endif
            <div class="grid grid-cols-1 gap-6 ">
                <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white " >
                    <h4 class="text-2xl font-semibold text-gray-700">log:  {{$task->process_log}}</h4>
