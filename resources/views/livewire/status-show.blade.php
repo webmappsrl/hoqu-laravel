@@ -15,7 +15,7 @@
            @endif
           <div class="flex flex-wrap">
 
-             <div class="grid grid-cols-4 gap-12 mb-12 mt-12">
+             <div class="grid grid-cols-4 md:grid-cols-4 gap-12 mb-12 mt-12">
                 <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
                     <h4 class="text-2xl font-semibold text-gray-700">ID:</h4>
                     <h4 id="idTask"class="text-2xl font-semibold text-gray-700">{{$task->id}}</h4>
@@ -29,6 +29,7 @@
                 <div class="flex justify-center items-center px-8 py-6 shadow-sm rounded-md bg-white" >
                    <h4 id="idJob"class="text-2xl font-semibold text-gray-700">Job: <br> {{$task->job}}</h4>
                 </div>
+
              </div>
           </div>
           <div class="grid grid-cols-2 gap-6 mb-16 mt-2">

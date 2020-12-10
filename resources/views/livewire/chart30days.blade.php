@@ -21,13 +21,14 @@
 
         var ctx = document.getElementById("canvas1").getContext("2d");
         window.myBar = new Chart(ctx, {
+            backgroundColor: "#F5DEB3",
             type: 'bar',
             data: barChartData,
             options: {
                 elements: {
                     rectangle: {
                         borderWidth: 2,
-                        borderColor: '#c1c1c1',
+                        borderColor: '#c1c1c2',
                         borderSkipped: 'bottom'
                     }
                 },
