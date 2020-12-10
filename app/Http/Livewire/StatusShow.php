@@ -16,6 +16,7 @@ class StatusShow extends Component
     public $jobs;
     public $isOpen = 0;
     public $isTrello = 0;
+    public $isReschedule = 0;
     public $created_at;
 
 
@@ -44,6 +45,15 @@ class StatusShow extends Component
     {
         $this->isTrello = false;
     }
+    public function openModalRes()
+    {
+        $this->isReschedule = true;
+    }
+
+    public function closeModalRes()
+    {
+        $this->isReschedule = false;
+    }
 
 
     public function create()
@@ -56,6 +66,12 @@ class StatusShow extends Component
     {
         $this->resetInputFields();
         $this->openModalTrello();
+    }
+
+    public function createResModal()
+    {
+        $this->resetInputFields();
+        $this->openModalRes();
     }
 
     public function mount($id)
@@ -85,7 +101,7 @@ class StatusShow extends Component
         session()->flash('message',
             'changed the process status of ' .$this->Task_id . ' in NEW');
 
-        $this->closeModal();
+        $this->closeModalRes();
         $this->resetInputFields();
     }
 
@@ -120,6 +136,7 @@ class StatusShow extends Component
 
     }
 
+
     public function setCardTrello(Task $task)
     {
         $this->Task_id = $task->id;
@@ -127,6 +144,16 @@ class StatusShow extends Component
         $this->job = $task->job;
 
         $this->openModalTrello();
+
+    }
+
+    public function editRes(Task $task)
+    {
+        $this->Task_id = $task->id;
+        $this->instance = $task->instance;
+        $this->job = $task->job;
+
+        $this->openModalRes();
 
     }
 

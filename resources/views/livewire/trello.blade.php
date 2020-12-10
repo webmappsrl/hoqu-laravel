@@ -13,15 +13,16 @@
                     <span class="font-bold text-gray-700 text-lg">Create Card Trello</span>
                 </div>
                 <div>
+                    <button wire:click="closeModalTrello()"><i class="fa fa-times-circle text-red-500 hover:text-red-600 transition duration-150"></i></button>
                 </div>
             </div>
 
             <div class="px-10 py-5 text-gray-600">
-                <label for="exampleFormControlInput1" class="block text-gray-700 text-sm font-bold mb-2 text-center">you are creating a trello card related to the task</label>
-                <p class="text-lg text-center" wire:model="Task_id">{{$Task_id}}</p>
-            </div>
-            <div class="px-10 py-5 text-gray-600">
-                <label for="exampleFormControlInput2" class="block text-center text-gray-700 text-sm font-bold mb-2 ">select a developer.</label>
+                <label  wire:model="Task_id" for="exampleFormControlInput1" class="block text-gray-700 text-sm font-bold mb-2 text-center">you are creating a trello card related to the task {{$Task_id}}</label>
+                <p class="text-lg text-center"></p>
+                <div class="flex flex-col mb-6">
+                    <label for="exampleFormControlInput2" class="block text-center text-gray-700 text-sm font-bold mb-2 ">select a developer.</label>
+
                 <select id="TrelloMember" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="trelloMember" class="border shadow p-2 bg-white" wire:model='trelloMember'>
                     <option value=''>Developer</option>
                     <option id="dvdpzzt" value='@dvdpzzt'>Davide Pizzato</option>
@@ -29,10 +30,11 @@
                     <option id="gianmarcogagliardi1" value='@gianmarcogagliardi1'>Gianmarco Gagliardi</option>
                 </select >
                 @error('TrelloMember') <span class="text-red-500">{{ $message }}</span>@enderror
+                </div>
 
             </div>
-            <div class="px-10 py-5 text-gray-600 w-24 md:w-auto">
-            </div>
+
+
             <div id="buttonChange" class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <button wire:click.prevent="sendCard()" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">
@@ -50,4 +52,5 @@
     </div>
 </div>
 </div>
-<!-- component -->
+
+
