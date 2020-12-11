@@ -1,5 +1,5 @@
 
-describe('Button Reschedule Error', () => {
+describe('Button Skip Error', () => {
     //FASE LOGIN
     const email = 'team@webmapp.it'
     const password = 'webmapp'
@@ -13,6 +13,7 @@ describe('Button Reschedule Error', () => {
 
         //ASSERT HOME BASE
         cy.url().should('contain', '/')
+        cy.get('body > div > main > div > div > div > header > div:nth-child(1) > button').click()
 
         cy.get('span#link_error').click()
 
@@ -34,20 +35,20 @@ describe('Button Reschedule Error', () => {
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
             cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
-            cy.contains('Reschedule').click()
+            cy.contains('Skip').click()
 
             //id via notification
             cy.get('p.text-lg').invoke('text').then((text) => {
                 var id = text.split(' ')[5]
                 var idA = text1.split(' ')[5]
                 cy.log(idA)
-                expect(text1).to.eq('\n                        \n                           '+id+'\n                        \n                     ')
-        })
 
-            cy.visit('/'+text1+"/show")
+                expect(text1).to.eq('\n                        \n                           '+id+'\n                        \n                     ')
+                cy.visit('/'+id+"/show")        })
+
             cy.get('h4#processStatus').each(($e, index, $list) => {
                 const text = $e.text()
-                expect(text).to.contain('new')
+                expect(text).to.contain('skip')
 
             })
         })

@@ -22,6 +22,11 @@
         </div>
         <div id="buttonChange" class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+              <button wire:click.prevent="update()" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                Reschedule
+              </button>
+            </span>
+            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                 <button wire:click.prevent="updateSkip()" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">
                   Skip
                 </button>

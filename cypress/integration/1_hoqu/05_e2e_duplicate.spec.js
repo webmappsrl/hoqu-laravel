@@ -13,6 +13,7 @@ describe('Page Duplicate', () => {
 
         //ASSERT HOME BASE
         cy.url().should('contain', '/')
+        cy.get('body > div > main > div > div > div > header > div:nth-child(1) > button').click()
 
         cy.get('span#link_duplicate').click()
 
@@ -34,7 +35,7 @@ describe('Page Duplicate', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('duplicate')) {
-                expect(text).to.eq('\n                                                        duplicate\n                                                     ')
+                expect(text).to.eq('\n                            duplicate\n                         ')
             }
 
         })

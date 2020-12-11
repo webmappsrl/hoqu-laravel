@@ -24,6 +24,12 @@
                     @endforeach
                 </select >
                 @endif
+                <select id="dataAsc" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="created_at" class="border shadow p-2 bg-white" wire:model='created_at'
+                >
+                    <option value=''>Order Data</option>
+                    <option id="A1" value='asc'>asc</option>
+                    <option id="D1" value='desc'>desc</option>
+                </select >
             </div>
 
             <div
@@ -38,7 +44,7 @@
             </div>
             @endif
             @if($isOpen)
-            @include('livewire.skip')
+            @include('livewire.skipRes')
             @endif
             <table id='hometable' class="min-w-full">
                <thead>

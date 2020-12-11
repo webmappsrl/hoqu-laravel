@@ -235,6 +235,27 @@ class TasksController extends Controller
         else return abort(403,'Unauthorized');
     }
 
+    public function jobsByInstance(Request $request,$instance)
+    {
+        if($request->user()->tokenCan('read'))
+        {
+            if(!empty($instance))
+            {
+                $todo = Task::whereIn('process_status', ['new','processing'])->where('instance','=',$instance)->orderBy('created_at', 'asc')->get();
+                $done = Task::where('process_status','=','done')->where('instance','=',$instance)->orderBy('created_at', 'desc')->limit(100)->get();
+                $error = Task::where('process_status','=','error')->where('instance','=',$instance)->orderBy('created_at', 'asc')->get();
+
+                return response()->json(['todo'=>$todo,'done'=>$done,'error'=>$error],200);
+            }
+            else
+            {
+                return response()->json('the instance has not been inserted',200);
+            }
+
+        }
+        else return abort(403,'Unauthorized');
+    }
+
 
 
 

@@ -13,6 +13,7 @@ describe('Page Duplicate Check Father', () => {
 
         //ASSERT HOME BASE
         cy.url().should('contain', '/')
+        cy.get('body > div > main > div > div > div > header > div:nth-child(1) > button').click()
 
         cy.get('span#link_duplicate').click()
 
@@ -68,7 +69,7 @@ describe('Page Duplicate Check Father', () => {
                                 })
 
                                 cy.get('#idCreated').invoke('text').then((c) => {
-                                    expect(c).to.contain(date)
+                                     expect(c).to.contain(date)
                                 })
 
                                 cy.get('h4#processStatus').each(($e, index, $list) => {

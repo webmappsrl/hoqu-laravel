@@ -12,6 +12,7 @@ describe('New and Processing', () => {
 
         //ASSERT HOME BASE
         cy.url().should('contain', '/')
+        cy.get('body > div > main > div > div > div > header > div:nth-child(1) > button').click()
 
         cy.get('span#link_todo').click()
 
