@@ -90,7 +90,7 @@
                         <div class="w-full sm:1/2 md:w-1/2 lg:w-2/4 px-2 mb-4">
                             <div class="h-12 text-sm text-grey-dark px-1 mb-1 flex items-center justify-center shadow-sm rounded-md bg-white">
                                 <h4 class="md:text-lg lg:text-2xl font-semibold text-gray-700">ID:</h4>
-                                <h4 id="idTask" class="md:text-lg lg:text-2xl font-semibold text-gray-700">{{$task->id}}</h4>
+                                <h4 id="idTask" class="md:text-lg lg:text-2xl font-semibold text-gray-700">{{$duplicateTask->id}}</h4>
                             </div>
                         </div>
                         <div class="w-full sm:1/2 md:w-1/2 lg:w-2/4 px-2 mb-4">

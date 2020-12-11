@@ -90,7 +90,10 @@ class jobsByInstanceApiTest extends TestCase
             {
                 $t1 = strtotime($response['error'][$i]['created_at']);
                 $t2 = strtotime($response['error'][$i+1]['created_at']);
-                if ($t1 <= $t2) $response->assertOk();
+                if ($t1 <= $t2)
+                {
+                    $response->assertOk();
+                }
             }
 
         }

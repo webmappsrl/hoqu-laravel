@@ -14,6 +14,29 @@ describe('Button Reschedule Error', () => {
         //ASSERT HOME BASE
         cy.url().should('contain', '/')
 
+        cy.get('body > div > main > div > div > div > header > div:nth-child(1) > button').click()
+        cy.get('span#link_error').click()
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1) > div > div > a').click()
+        cy.get('button#editRes').click()
+        //check Cancel
+        cy.contains('Cancel').click()
+        cy.get('h4#processStatus').each(($e, index, $list) => {
+            const text = $e.text()
+            expect(text).to.contain('error')
+
+        })
+        //check Reschedule
+        cy.get('button#editRes').click()
+        cy.contains('Reschedule').click()
+        cy.wait(5000)
+        cy.get('h4#processStatus').each(($e, index, $list) => {
+            const text = $e.text()
+            expect(text).to.contain('new')
+
+        })
+
+        //check Skip
+        cy.get('body > div > main > div > div > div > header > div:nth-child(1) > button').click()
         cy.get('span#link_error').click()
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1) > div > div > a').click()
         cy.get('button#editShow').click()
@@ -24,19 +47,6 @@ describe('Button Reschedule Error', () => {
             expect(text).to.contain('error')
 
         })
-        //check Reschedule
-        cy.get('button#editShow').click()
-        cy.contains('Reschedule').click()
-        cy.wait(5000)
-        cy.get('h4#processStatus').each(($e, index, $list) => {
-            const text = $e.text()
-            expect(text).to.contain('new')
-
-        })
-
-        //check Skip
-        cy.get('span#link_error').click()
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1) > div > div > a').click()
         cy.get('button#editShow').click()
         cy.contains('Skip').click()
         cy.wait(5000)

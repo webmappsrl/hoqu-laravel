@@ -166,7 +166,7 @@ class StatusShow extends Component
         $taskError = Task::find($this->Task_id);
         $dataCard = ['member' => $this->trelloMember, 'error'=>$taskError];
 
-        Mail::to('gianmarcogagliardi1+vdtsjbwisbsmv52v0h8x@boards.trello.com')->send(new sendTrello($dataCard));
+        Mail::to('gianmarcogagliardi1+abk5rfgsorj10kmql4px@boards.trello.com')->send(new sendTrello($dataCard));
 
         $this->closeModalTrello();
         $this->resetInputFields();

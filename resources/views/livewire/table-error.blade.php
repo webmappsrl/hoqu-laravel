@@ -44,7 +44,7 @@
             </div>
             @endif
             @if($isOpen)
-            @include('livewire.skip')
+            @include('livewire.skipRes')
             @endif
             <table id='hometable' class="min-w-full">
                <thead>

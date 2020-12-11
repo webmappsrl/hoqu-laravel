@@ -30,7 +30,6 @@ class sendTrello extends Mailable
      */
     public function build()
     {
-//        dd($this->hoquErrorTrello['error']['id']);
-        return $this->from('noreply@webmapp.it')->subject('HOQU['.$this->hoquErrorTrello['error']['id'].']('.$this->hoquErrorTrello['error']['instance'].') '.'#bug')->view('mail.trello',['mail_data'=>$this->hoquErrorTrello]);
+        return $this->from('noreply@webmapp.it')->subject('HOQU['.$this->hoquErrorTrello['error']['id'].']('.$this->hoquErrorTrello['error']['instance'].') '.'#bug'. ' #hoqu')->view('mail.trello',['mail_data'=>$this->hoquErrorTrello]);
     }
 }
