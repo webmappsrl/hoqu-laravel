@@ -20,10 +20,13 @@ namespace App\Http\Livewire;
         public $instance1, $job1,$parameters, $process_status, $process_log, $Task_id;
 
 
+
         public $instances;
 
         public $isOpen = 0;
         public $isModalDelete = 0;
+        public $isModalSkip = 0;
+        public $isModalRes = 0;
 
         public function create()
         {
@@ -41,14 +44,24 @@ namespace App\Http\Livewire;
             $this->isOpen = false;
         }
 
-        public function openModalDelete()
+        public function openModalRes()
         {
-            $this->isModalDelete = true;
+            $this->isModalRes = true;
         }
 
-        public function closeModalDelete()
+        public function closeModalRes()
         {
-            $this->isModalDelete = false;
+            $this->isModalRes = false;
+        }
+
+        public function openModalSkip()
+        {
+            $this->isModalSkip = true;
+        }
+
+        public function closeModalSkip()
+        {
+            $this->isModalSkip = false;
         }
 
         private function resetInputFields(){
@@ -61,8 +74,8 @@ namespace App\Http\Livewire;
     {
         $this->validate([
             'instance' => 'required',
-                'job' => 'required',
-                'parameters' => 'required|json'
+            'job' => 'required',
+            'parameters' => 'required|json'
         ]);
 
 
@@ -120,20 +133,23 @@ namespace App\Http\Livewire;
             return $tasks;
 
         }
-        public function edit(Task $task)
+        public function editRes(Task $task)
         {
             $this->Task_id = $task->id;
 
-            $this->openModalDelete();
+            $this->openModalRes();
 
         }
 
-        public function delete($id)
+        public function editSkip(Task $task)
         {
-            Task::find($id)->delete();
-            session()->flash('message', 'Task '.$id.' Deleted Successfully.');
-            $this->closeModalDelete();
+            $this->Task_id = $task->id;
+
+            $this->openModalSkip();
+
         }
+
+
 
         public function updatedjob()
         {
@@ -181,6 +197,36 @@ namespace App\Http\Livewire;
             $this->countI=0;
             return $tasks;
 
+        }
+
+        public function updateRes()
+        {
+
+            Task::updateOrCreate(['id' => $this->Task_id], [
+                'process_status' => 'new'
+            ]);
+
+            session()->flash('message',
+                'changed the process status of ' .$this->Task_id . ' in NEW');
+
+            $this->closeModalRes();
+            $this->resetInputFields();
+
+        }
+
+        public function updateSkip()
+        {
+
+            Task::updateOrCreate(['id' => $this->Task_id], [
+                'process_status' => 'skip'
+
+            ]);
+
+            session()->flash('message',
+                'changed the process status of ' .$this->Task_id . ' in SKIP');
+
+            $this->closeModalSkip();
+            $this->resetInputFields();
         }
 
 

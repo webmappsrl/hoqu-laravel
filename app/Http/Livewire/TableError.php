@@ -152,14 +152,13 @@ namespace App\Http\Livewire;
             session()->flash('message',
                 'changed the process status of ' .$this->Task_id . ' in NEW');
 
-            $this->closeModal();
+            $this->closeModalRes();
             $this->resetInputFields();
 
         }
 
         public function updateSkip()
         {
-
 
             Task::updateOrCreate(['id' => $this->Task_id], [
                 'instance' => $this->instance,

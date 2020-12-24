@@ -118,9 +118,8 @@
                         <span
                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
                         @elseif($task->process_status=='skip')
-                        @elseif($task->process_status=='skip')
-                        <span
-                           class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indingo-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
+                             <span
+                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
                         @endif
                      </td>
                      <td

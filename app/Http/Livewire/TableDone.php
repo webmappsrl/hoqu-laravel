@@ -78,7 +78,7 @@ namespace App\Http\Livewire;
             if(!empty($this->instance))
             {
 
-                $tasks= Task::whereIn('process_status', ['done'])
+                $tasks= Task::whereIn('process_status', ['done','skip'])
                 ->where('instance','like', $this->instance)
                 ->orderBy('created_at', 'asc')
                 ->paginate(50)
@@ -86,7 +86,7 @@ namespace App\Http\Livewire;
             }
             else
             {
-                $tasks= Task::whereIn('process_status', ['done'])
+                $tasks= Task::whereIn('process_status', ['done','skip'])
                 ->orderBy('created_at', 'asc')
                 ->paginate(50)
                 ;
@@ -103,14 +103,14 @@ namespace App\Http\Livewire;
 
             if(!empty($this->job))
             {
-                $tasks = Task::whereIn('process_status', ['done'])
+                $tasks = Task::whereIn('process_status', ['done','skip'])
                 ->where('job', 'like', $this->job)
                 ->orderBy('created_at', 'asc')
                 ->paginate(50);
             }
             else
             {
-                $tasks = Task::whereIn('process_status', ['done'])
+                $tasks = Task::whereIn('process_status', ['done','skip'])
                 ->orderBy('created_at', 'asc')
                 ->paginate(50);
             }
@@ -125,13 +125,13 @@ namespace App\Http\Livewire;
 
             if(!empty($this->created_at))
             {
-                $tasks = Task::whereIn('process_status', ['done'])
+                $tasks = Task::whereIn('process_status', ['done','skip'])
                     ->orderBy('created_at', $this->created_at)
                     ->paginate(50);
             }
             else
             {
-                $tasks = Task::whereIn('process_status', ['done'])
+                $tasks = Task::whereIn('process_status', ['done','skip'])
                     ->orderBy('created_at', 'asc')
                     ->paginate(50);
             }
@@ -194,9 +194,9 @@ namespace App\Http\Livewire;
 
         public function render()
         {
-            $this->instances = Task::select('instance')->whereIn('process_status', ['done'])->groupBy('instance')->orderBy('instance', 'asc')->get();
+            $this->instances = Task::select('instance')->whereIn('process_status', ['done','skip'])->groupBy('instance')->orderBy('instance', 'asc')->get();
 
-            $this->jobs = Task::select('job')->whereIn('process_status', ['done'])->groupBy('job')->orderBy('job', 'asc')->get();
+            $this->jobs = Task::select('job')->whereIn('process_status', ['done','skip'])->groupBy('job')->orderBy('job', 'asc')->get();
 
 
             if($this->countI == 0 && $this->countJ == 0 && $this->countZ == 1)
