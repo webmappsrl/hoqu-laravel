@@ -371,6 +371,66 @@ class updateErrorApiTest extends TestCase
         $this->assertSame($response['id'],$ja["id"]);
     }
 
+    public function testCheckPositiveUE_with_error_log()
+    {
+        $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
+        Mail::fake();
+
+        //add data with api/store
+        $data = [
+            "instance" => "https://montepisanotree.org",
+            "job" => "task1",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "so and so", "d"=>["poi"=>02,"route"=>2345]],
+        ];
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$user_tokens['instance@webmapp.it']
+        ])->post('/api/store',$data);
+        $response->assertStatus(201);
+
+        //logout user
+        $this->resetAuth();
+
+        //request that sends the "requesting server"
+        $requestSvr1 = [
+            "id_server" => '10',
+            "task_available" => ["task1","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+        ];
+
+        //OPERATIONS 1
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
+        ])->put('/api/pull',$requestSvr1);
+        $response ->assertStatus(200);
+
+        //request that sends the "requesting server 2"
+        $requestSvr2 = [
+            "id_server" => '10',
+            "status" => "VDC",
+            "log" => "log test",
+            "error_log" => "error log test",
+            "id_task" => $response['id'],
+        ];
+        //OPERATIONS 2
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it']
+        ])->put('/api/updateError',$requestSvr2);
+        //get value elaborated by update
+        $response ->assertStatus(200);
+        $ja = Task::find($response['id']);
+        $this->assertSame('error',$ja['process_status']);
+        $this->assertSame($requestSvr2['log'],$ja['process_log']);
+        $this->assertSame($requestSvr2['error_log'],$ja['error_log']);
+        $this->assertSame($requestSvr2['id_server'],$ja['id_server']);
+        $this->assertSame('montepisanotree.org',$ja['instance']);
+        $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
+        $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
+        $this->assertSame($response['id'],$ja["id"]);
+    }
+
     public function setUp(): void
     {
         parent::setUp();
