@@ -6,7 +6,7 @@
           <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div class="mb-8">
                 <label class="inline-block w-32 font-bold">Filter:</label>
-                <select class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="instance" class="border shadow p-2 bg-white" wire:model='instance'
+                <select id="selectInstance"  class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="instance" class="border shadow p-2 bg-white" wire:model='instance'
                 >
                     <option value=''>Choose a Instance</option>
                     @foreach($instances as $instance)
@@ -16,7 +16,7 @@
 
                 @if(count($jobs) > 0)
 
-                <select class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="job" class="border shadow p-2 bg-white" wire:model='job'
+                <select id="selectJob" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="job" class="border shadow p-2 bg-white" wire:model='job'
                 >
                     <option value=''>Choose a job</option>
                     @foreach($jobs as $job)

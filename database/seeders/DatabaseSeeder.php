@@ -82,6 +82,25 @@ class DatabaseSeeder extends Seeder
             \App\Models\Task::factory()->count(1)->create_error()->create();
         }
 
+        for ($i=0; $i < 3 ; $i++) {
+            \App\Models\Task::factory()->count(1)->create_job_done_for_e2e()->create();
+        }
+
+        for ($i=0; $i < 3 ; $i++) {
+            \App\Models\Task::factory()->count(1)->create_job_error_for_e2e()->create();
+        }
+
+        for ($i=0; $i < 3 ; $i++) {
+            \App\Models\Task::factory()->count(1)->create_job_new_for_e2e()->create();
+        }
+
+        for ($i=0; $i < 3 ; $i++) {
+            \App\Models\Task::factory()->count(1)->create_job_processing_for_e2e()->create();
+        }
+
+
+
+
         // for ($i=0; $i < 100 ; $i++) {
         //     \App\Models\Task::factory()->count(1)->duplicated()->create();
         // }

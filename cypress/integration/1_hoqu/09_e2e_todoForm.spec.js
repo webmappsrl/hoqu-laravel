@@ -35,7 +35,7 @@ describe('Todo data entry with form', () => {
         cy.get('#exampleFormControlInput3').type("{{}\"id\":1904}")
         cy.get('#insertButton').contains('Insert').click()
 
-        cy.get('body > div > main > div > div > div > main > div > div > div > div > div> div > div > p').invoke('text').then((text) => {
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > main > div > div > div > div > div.bg-teal-100.border-t-4.border-teal-500.rounded-b.text-teal-900.px-4.py-3.shadow-md.my-3 > div > div > p').invoke('text').then((text) => {
 
             cy.log(text)
             id = text.split(' ')[4]

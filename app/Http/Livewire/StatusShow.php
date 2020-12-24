@@ -32,7 +32,7 @@ class StatusShow extends Component
         $this->isOpen = true;
     }
 
-    public function closeModal()
+    public function closeModalSkip()
     {
         $this->isOpen = false;
     }
@@ -127,7 +127,7 @@ class StatusShow extends Component
         session()->flash('message',
             'changed the process status of ' .$this->Task_id . ' in SKIP');
 
-        $this->closeModal();
+        $this->closeModalSkip();
         $this->resetInputFields();
     }
     /**

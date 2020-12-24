@@ -29,8 +29,6 @@
                 </div>
              </header>
               @livewire('table-todo',['instance'=>$tasks['instance'], 'job'=>$tasks['job'],'created_at'=>$tasks['created_at']])
-
-
           </div>
        </div>
     </div>

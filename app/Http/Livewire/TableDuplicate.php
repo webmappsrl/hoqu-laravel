@@ -108,7 +108,6 @@ use Illuminate\Support\Facades\DB;
                 $tasks=$this->updatedinstance();
             }
 
-
             return view('livewire.table-duplicate',['tasks' => $tasks]);
         }
     }

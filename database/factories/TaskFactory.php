@@ -88,5 +88,64 @@ class TaskFactory extends Factory
         ]);
     }
 
+    public function create_job_done_for_e2e()
+    {
+        $n=rand(-8,-10);
+        $n1 = rand(0,-3);
+        return $this->state([
+            'instance' => 'montepisano.org',
+            'job'=>'Et.',
+            'process_status' => 'done',
+            'process_log' => 'The track 162 is missing the geometry and is unreachable or the poi with id 2725 does not exists',
+            'created_at'=> $this->faker->dateTimeBetween($startDate = $n .' day', $endDate = 'now +1'),
+            'updated_at'=> $this->faker->dateTimeBetween($startDate = $n1 .' day', $endDate = 'now'),
+
+        ]);
+    }
+
+    public function create_job_error_for_e2e()
+    {
+        $n=rand(-8,-10);
+        $n1 = rand(0,-3);
+        return $this->state([
+            'instance' => 'montepisano.org',
+            'job'=>'Et.',
+            'process_status' => 'error',
+            'process_log' => 'The track 162 is missing the geometry and is unreachable or the poi with id 2725 does not exists',
+            'created_at'=> $this->faker->dateTimeBetween($startDate = $n .' day', $endDate = 'now +1'),
+            'updated_at'=> $this->faker->dateTimeBetween($startDate = $n1 .' day', $endDate = 'now'),
+
+        ]);
+    }
+    public function create_job_new_for_e2e()
+    {
+        $n=rand(-8,-10);
+        $n1 = rand(0,-3);
+        return $this->state([
+            'instance' => 'montepisano.org',
+            'job'=>'Et.',
+            'process_status' => 'new',
+            'process_log' => 'The track 162 is missing the geometry and is unreachable or the poi with id 2725 does not exists',
+            'created_at'=> $this->faker->dateTimeBetween($startDate = $n .' day', $endDate = 'now +1'),
+            'updated_at'=> $this->faker->dateTimeBetween($startDate = $n1 .' day', $endDate = 'now'),
+
+        ]);
+    }
+
+    public function create_job_processing_for_e2e()
+    {
+        $n=rand(-8,-10);
+        $n1 = rand(0,-3);
+        return $this->state([
+            'instance' => 'montepisano.org',
+            'job'=>'Et.',
+            'process_status' => 'processing',
+            'process_log' => 'The track 162 is missing the geometry and is unreachable or the poi with id 2725 does not exists',
+            'created_at'=> $this->faker->dateTimeBetween($startDate = $n .' day', $endDate = 'now +1'),
+            'updated_at'=> $this->faker->dateTimeBetween($startDate = $n1 .' day', $endDate = 'now'),
+
+        ]);
+    }
+
 
 }

@@ -61,81 +61,13 @@ namespace App\Http\Livewire;
             $this->resetPage();
         }
 
-        public function mount($instance,$job)
+        public function mount($instance,$job, $created_at)
         {
             $this->instance=$instance;
+            $this->created_at=$created_at;
             $this->job=$job;
             $this->instances=[];
             $this->jobs=[];
-        }
-
-        public function updatedInstance()
-        {
-            if(!empty($this->instance))
-            {
-                $tasks= Task::whereIn('process_status', ['error'])
-                ->where('instance','like', $this->instance)
-                ->orderBy('created_at', 'asc')
-                ->paginate(50)
-                ;
-            }
-            else
-            {
-                $tasks= Task::whereIn('process_status', ['error'])
-                ->orderBy('created_at', 'asc')
-                ->paginate(50)
-                ;
-            }
-            $this->countJ=0;
-            $this->countZ=0;
-            $this->countI=1;
-            return $tasks;
-
-        }
-
-        public function updatedJob()
-        {
-
-            if(!empty($this->job))
-            {
-                $tasks = Task::whereIn('process_status', ['error'])
-                ->where('job', 'like', $this->job)
-                ->orderBy('created_at', 'asc')
-                ->paginate(50);
-            }
-            else
-            {
-                $tasks = Task::whereIn('process_status', ['error'])
-                ->orderBy('created_at', 'asc')
-                ->paginate(50);
-            }
-            $this->countJ=1;
-            $this->countI=0;
-            $this->countZ=0;
-            return $tasks;
-        }
-
-        public function updated()
-        {
-
-            if(!empty($this->created_at))
-            {
-                $tasks = Task::whereIn('process_status', ['error'])
-                    ->orderBy('created_at', $this->created_at)
-                    ->paginate(50);
-            }
-            else
-            {
-                $tasks = Task::whereIn('process_status', ['error'])
-                    ->orderBy('created_at', 'asc')
-                    ->paginate(50);
-            }
-
-            $this->countZ=1;
-            $this->countJ=0;
-            $this->countI=0;
-            return $tasks;
-
         }
 
         public function update()
@@ -143,8 +75,6 @@ namespace App\Http\Livewire;
 
 
             Task::updateOrCreate(['id' => $this->Task_id], [
-                'instance' => $this->instance,
-                'job' => $this->job,
                 'process_status' => 'new'
 
             ]);
@@ -152,7 +82,7 @@ namespace App\Http\Livewire;
             session()->flash('message',
                 'changed the process status of ' .$this->Task_id . ' in NEW');
 
-            $this->closeModalRes();
+            $this->closeModal();
             $this->resetInputFields();
 
         }
@@ -191,30 +121,76 @@ namespace App\Http\Livewire;
 
 
 
-
         public function render()
         {
-            $this->instances = Task::select('instance')->whereIn('process_status', ['error'])->groupBy('instance')->orderBy('instance', 'asc')->get();
-
-            $this->jobs = Task::select('job')->whereIn('process_status', ['error'])->groupBy('job')->orderBy('job', 'asc')->get();
-
-            if($this->countI == 0 && $this->countJ == 0 && $this->countZ == 1)
+            if (!empty($this->job))
             {
-                $this->countZ = 0;
-                $tasks = $this->updated();
+                $this->instances = Task::select('instance')->where('job',$this->job)->whereIn('process_status', ['error'])->groupBy('instance')->orderBy('instance', 'asc')->get();
             }
+            else $this->instances = Task::select('instance')->whereIn('process_status', ['error'])->groupBy('instance')->orderBy('instance', 'asc')->get();
 
-            if($this->countJ == 1 && $this->countI == 0 && $this->countZ == 0)
+            if (!empty($this->instance))
             {
-                $this->countJ = 0;
-                $tasks=$this->updatedJob();
-
+                $this->jobs = Task::select('job')->where('instance',$this->instance)->whereIn('process_status', ['error'])->groupBy('job')->orderBy('job', 'asc')->get();
             }
-            if($this->countI == 1 && $this->countJ == 0 && $this->countZ == 0)
-            {
-                $this->countI = 0;
-                $tasks=$this->updatedInstance();
+            else $this->jobs = Task::select('job')->whereIn('process_status', ['error'])->groupBy('job')->orderBy('job', 'asc')->get();
 
+
+            if(!empty($this->job) && !empty($this->instance) && !empty($this->created_at))
+            {
+                $tasks = Task::whereIn('process_status', ['error'])
+                    ->where('job', 'like', $this->job)
+                    ->where('instance', 'like', $this->instance)
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate(50);
+            }
+            else if(!empty($this->created_at) && empty($this->job) && !empty($this->instance))
+            {
+                $tasks = Task::whereIn('process_status', ['error'])
+                    ->where('instance', 'like', $this->instance)
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate(50);
+            }
+            else if(!empty($this->created_at) && !empty($this->job) && empty($this->instance))
+            {
+                $tasks = Task::whereIn('process_status', ['error'])
+                    ->where('job', 'like', $this->job)
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate(50);
+            }
+            else if(!empty($this->created_at) && empty($this->job) && empty($this->instance))
+            {
+                $tasks = Task::whereIn('process_status', ['error'])
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate(50);
+            }
+            else if(empty($this->created_at) && !empty($this->job) && !empty($this->instance))
+            {
+                $tasks = Task::whereIn('process_status', ['error'])
+                    ->where('job', 'like', $this->job)
+                    ->where('instance', 'like', $this->instance)
+                    ->orderBy('created_at', 'asc')
+                    ->paginate(50);
+            }
+            else if(empty($this->created_at) && empty($this->job) && !empty($this->instance))
+            {
+                $tasks = Task::whereIn('process_status', ['error'])
+                    ->where('instance', 'like', $this->instance)
+                    ->orderBy('created_at', 'asc')
+                    ->paginate(50);
+            }
+            else if(empty($this->created_at) && !empty($this->job) && empty($this->instance))
+            {
+                $tasks = Task::whereIn('process_status', ['error'])
+                    ->where('job', 'like', $this->job)
+                    ->orderBy('created_at', 'asc')
+                    ->paginate(50);
+            }
+            else
+            {
+                $tasks = Task::whereIn('process_status', ['error'])
+                    ->orderBy('created_at', 'asc')
+                    ->paginate(50);
             }
 
             return view('livewire.table-error',['tasks' => $tasks]);

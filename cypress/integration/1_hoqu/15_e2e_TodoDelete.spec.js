@@ -23,7 +23,7 @@ describe('Button Reschedule in Done', () => {
         //Check Cancel Button
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
+            cy.get('button#buttonTodoRes').click()
             cy.contains('Cancel').click()
 
             cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {

@@ -13,7 +13,7 @@
                     <span class="font-bold text-gray-700 text-lg">Warning</span>
                 </div>
                 <div>
-                    <button wire:click="closeModalRes()"><i class="fa fa-times-circle text-red-500 hover:text-red-600 transition duration-150"></i></button>
+                    <button wire:click="closeModal"><i class="fa fa-times-circle text-red-500 hover:text-red-600 transition duration-150"></i></button>
                 </div>
             </div>
             <div class="px-10 py-5 text-gray-600">
@@ -26,7 +26,7 @@
             </button>
             </span>
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                <button id="buttonCancel" wire:click="closeModalRes()" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                <button id="buttonCancel" wire:click="closeModal" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
                     Cancel
                 </button>
                 </span>
