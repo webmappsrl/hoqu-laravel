@@ -38,7 +38,7 @@
                    </div>
                 </div>
              </header>
-              @livewire('table-error',['instance'=>$tasks['instance'], 'job'=>$tasks['job'],'created_at'=>$tasks['created_at']])
+              @livewire('table-error',['instance'=>$tasks['instance'], 'job'=>$tasks['job'],'created_at'=>$tasks['created_at'],'num_page'=>$tasks['num_page']])
 
     </div>
        </div>

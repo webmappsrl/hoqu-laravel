@@ -38,8 +38,9 @@
                    </div>
                 </div>
              </header>
-      @livewire('table-duplicate',['instance'=>$tasks['instance'], 'job'=>$tasks['job']])
-    </div>
+      @livewire('table-duplicate',['instance'=>$tasks['instance'], 'job'=>$tasks['job'],'created_at'=>$tasks['created_at'],'num_page'=>$tasks['num_page']])
+
+          </div>
        </div>
     </div>
  </x-app-layout>

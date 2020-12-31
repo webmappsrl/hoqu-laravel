@@ -20,10 +20,10 @@ describe('Button Reschedule in Done', () => {
         //ASSERT todo
         cy.url().should('contain', '/todo')
 
-        //Check Cancel Button
+        //Check Cancel Button Res
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
-            cy.get('button#buttonTodoRes').click()
+            cy.get('button#buttonTodoRes0').click()
             cy.contains('Cancel').click()
 
             cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
@@ -31,26 +31,37 @@ describe('Button Reschedule in Done', () => {
             })
         })
 
-        //Check Reschedule Button Skip
+        //Check Cancel Button Skip
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
-            cy.get('#delB').click()
-            // cy.log(text1)
+            cy.get('button#buttonTodoSkip0').click()
+            cy.contains('Cancel').click()
+
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
+                expect(text1).to.eq(text2)
+            })
+        })
+
+        // Check Reschedule Button Skip
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
+
+            cy.get('button#buttonTodoSkip0').click()
+            cy.contains('Skip').click()
+            cy.log(text1)
             // cy.wait(5000)
 
 
             //id via notification
             cy.get('body > div > main > div > div > div > main > div > div > div > div > div> div > div > p').invoke('text').then((text) => {
-                cy.log(text)
+                // cy.log(text)
 
 
-                var id = text.split(' ')[1]
+                var id = text.split(' ')[5]
 
-                  expect(text1).to.eq('\n                                \n                                    '+id+'\n                                \n                                ')
+                cy.log(id)
+                  expect(text1).to.eq('\n                                        \n                                            '+id+'\n                                        \n                                    ')
 
                 cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text2) => {
-
 
                     cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text3) => {
                         expect(text1).to.not.eq(text3)

@@ -23,7 +23,7 @@ describe('Button Skip Error', () => {
         //Check Cancel Button
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
-            cy.get('#buttonTodoSkip').click()
+            cy.get('#buttonTodoSkip0').click()
             cy.contains('Cancel').click()
 
             cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
@@ -34,7 +34,7 @@ describe('Button Skip Error', () => {
         //Check Reschedule Button Skip
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
-            cy.get('#buttonTodoSkip').click()
+            cy.get('#buttonTodoSkip0').click()
             cy.contains('Skip').click()
 
             //id via notification
@@ -59,7 +59,7 @@ describe('Button Skip Error', () => {
         //Check Cancel Button
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
-            cy.get('#buttonTodoRes').click()
+            cy.get('#buttonTodoRes0').click()
             cy.contains('Cancel').click()
 
             cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
@@ -70,7 +70,7 @@ describe('Button Skip Error', () => {
         //Check Reschedule Button Skip
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
-            cy.get('#buttonTodoRes').click()
+            cy.get('#buttonTodoRes0').click()
             cy.contains('Reschedule').click()
 
             //id via notification

@@ -78,7 +78,7 @@ class DatabaseSeeder extends Seeder
          	\App\Models\Task::factory()->count(1)->create_done()->create();
          }
 
-        for ($i=0; $i < 100 ; $i++) {
+        for ($i=0; $i < 102 ; $i++) {
             \App\Models\Task::factory()->count(1)->create_error()->create();
         }
 

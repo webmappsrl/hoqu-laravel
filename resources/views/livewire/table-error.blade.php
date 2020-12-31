@@ -30,6 +30,14 @@
                     <option id="A1" value='asc'>asc</option>
                     <option id="D1" value='desc'>desc</option>
                 </select >
+                <select id="pageNumber" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="num_page" class="border shadow p-2 bg-white" wire:model='num_page'
+                >
+                    <option value=''>#Page</option>
+                    <option id="p10" value='10'>10</option>
+                    <option id="p25" value='25'>25</option>
+                    <option id="p50" value='50'>50</option>
+                    <option id="p100" value='100'>100</option>
+                </select >
             </div>
 
             <div
