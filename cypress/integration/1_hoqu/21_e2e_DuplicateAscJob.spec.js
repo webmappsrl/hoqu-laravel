@@ -1,10 +1,10 @@
 
-describe('Filter in Error', () => {
+describe('Filter Duplicate', () => {
     //FASE LOGIN
     const email = 'team@webmapp.it'
     const password = 'webmapp'
 
-    it('Filter in Error', () => {
+    it('Filter Duplicate', () => {
         cy.visit('/login')
         const a = 'team';
         cy.get('input[name=email]').type(email)
@@ -15,10 +15,11 @@ describe('Filter in Error', () => {
         cy.url().should('contain', '/')
         cy.get('body > div > main > div > div > div > header > div:nth-child(1) > button').click()
 
-        cy.get('span#link_error').click()
+        cy.get('span#link_duplicate').click()
 
         //ASSERT done
-        cy.url().should('contain', '/error')
+        cy.url().should('contain', '/duplicate')
+
 
         cy.get('#paginationDone > div > nav > div.hidden.sm\\:flex-1.sm\\:flex.sm\\:items-center.sm\\:justify-between > div:nth-child(1) > p > span:nth-child(4)').invoke('text').then((d_id) => {
             expect(d_id).to.contain(50)
@@ -121,14 +122,14 @@ describe('Filter in Error', () => {
         cy.get('select#selectInstance').select('Choose a Instance')
         cy.get('select#selectJob').select('Choose a job')
 
+
+
         cy.get('#p100').invoke('text').then((d_id) => {
             cy.wait(1000)
             cy.get('#paginationDone > div > nav > div.hidden.sm\\:flex-1.sm\\:flex.sm\\:items-center.sm\\:justify-between > div:nth-child(1) > p > span:nth-child(4)').invoke('text').then((num) => {
                 expect(num).to.contain(d_id)
             })
         })
-
-
 
 
 

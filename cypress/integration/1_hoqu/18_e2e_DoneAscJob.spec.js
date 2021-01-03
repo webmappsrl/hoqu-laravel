@@ -1,10 +1,10 @@
 
-describe('Button Reschedule in Done', () => {
+describe('Filter Done', () => {
     //FASE LOGIN
     const email = 'team@webmapp.it'
     const password = 'webmapp'
 
-    it('e2eRescheduleDone', () => {
+    it('Filter Done', () => {
         cy.visit('/login')
         const a = 'team';
         cy.get('input[name=email]').type(email)

@@ -1,5 +1,5 @@
 
-describe('Button Reschedule in Done', () => {
+describe('Filter in Done', () => {
     //FASE LOGIN
     const email = 'team@webmapp.it'
     const password = 'webmapp'

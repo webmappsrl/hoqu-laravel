@@ -52,6 +52,7 @@ describe('Button Skip Error', () => {
 
             })
         })
+        cy.get('body > div > main > div > div > div > header > div:nth-child(1) > button').click()
         cy.get('span#link_todo').click()
 
         //ASSERT error
