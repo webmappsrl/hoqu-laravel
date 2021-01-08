@@ -1,5 +1,5 @@
 
-describe('Filter in Done', () => {
+describe('Filter in Todo', () => {
     //FASE LOGIN
     const email = 'team@webmapp.it'
     const password = 'webmapp'
@@ -131,6 +131,23 @@ describe('Filter in Done', () => {
             })
         })
 
+        cy.get('select#selectProcessStatus').select('processing')
+        cy.wait(1000)
+        cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
+            const text = $e.text()
+
+                expect(text).to.eq('\n                                                                                    processing\n                                                                            ')
+
+        })
+
+        cy.get('select#selectProcessStatus').select('new')
+        cy.wait(1000)
+        cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
+            const text = $e.text()
+
+            expect(text).to.eq('\n                                                                                    new\n                                                                            ')
+
+        })
 
 
     })

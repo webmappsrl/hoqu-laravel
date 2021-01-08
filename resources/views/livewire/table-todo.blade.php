@@ -15,6 +15,12 @@
                     @endif
                     <div class="mb-8">
                         <label class="inline-block w-32 font-bold">Filter:</label>
+                        <select id="selectProcessStatus" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="select_process_status" class="border shadow p-2 bg-white" wire:model='select_process_status'
+                        >
+                            <option value=''>All PR</option>
+                            <option id="A1" value='new'>new</option>
+                            <option id="D1" value='processing'>processing</option>
+                        </select >
                         <select id="selectInstance" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"name="instance" class="border shadow p-2 bg-white" wire:model='instance'
                         >
                             <option value=''>Choose a Instance</option>
@@ -39,6 +45,7 @@
                             <option id="A1" value='asc'>asc</option>
                             <option id="D1" value='desc'>desc</option>
                         </select >
+
                         <select id="pageNumber" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="num_page" class="border shadow p-2 bg-white" wire:model='num_page'
                         >
                             <option value=''>#Page</option>
