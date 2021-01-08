@@ -18,6 +18,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/done', [TasksController::
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/processing',[TasksController::class, 'indexProcessing'])->name('processing');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/server',[TasksController::class, 'indexServer'])->name('server');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/error', [TasksController::class, 'indexError'])->name('error');
 

@@ -46,6 +46,12 @@ class TasksController extends Controller
         return view('processing',['tasks'=>$task]);
     }
 
+    public function indexServer()
+    {
+        $task = Task::orwhere('process_status', '=', 'processing')->orderBy('created_at', 'asc')->paginate(50);
+        return view('server',['tasks'=>$task]);
+    }
+
     public function indexDone()
     {
         $task = Task::orwhere('process_status', '=', 'done')->orwhere('process_status', '=', 'skip')->orderByRaw('FIELD(process_status, "done", "skip")asc')->orderBy('created_at', 'asc')->paginate(50);
