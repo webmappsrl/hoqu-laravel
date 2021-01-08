@@ -41,10 +41,13 @@ class TaskFactory extends Factory
     public function suspended()
     {
         $n=rand(-8,-10);
+        $nServer = rand(1,4);
         $n1 = rand(0,-2);
         return $this->state([
             'instance' => 'test.cyclando.com',
             'process_status' => 'processing',
+            'id_server' => "server_all_{$nServer}",
+            'ip_server' => '113.243.184.2',
             'created_at'=> $this->faker->dateTimeBetween($startDate = $n .' day', $endDate = 'now'),
             'updated_at'=> $this->faker->dateTimeBetween($startDate = $n1 .' day', $endDate = 'now'),
         ]);
@@ -140,6 +143,8 @@ class TaskFactory extends Factory
             'instance' => 'montepisano.org',
             'job'=>'Et.',
             'process_status' => 'processing',
+            'id_server' => "server_all_1",
+            'ip_server' => '143.216.584.1',
             'process_log' => 'The track 162 is missing the geometry and is unreachable or the poi with id 2725 does not exists',
             'created_at'=> $this->faker->dateTimeBetween($startDate = $n .' day', $endDate = 'now +1'),
             'updated_at'=> $this->faker->dateTimeBetween($startDate = $n1 .' day', $endDate = 'now'),

@@ -5,5 +5,4 @@
   "chromeWebSecurity": false,
   "parseSpecialCharSequences":false,
     "retries": 2
-
 }

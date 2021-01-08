@@ -16,6 +16,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/todo', [TasksController::
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/done', [TasksController::class, 'indexDone'])->name('archive');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/processing',[TasksController::class, 'indexProcessing'])->name('processing');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/error', [TasksController::class, 'indexError'])->name('error');
 

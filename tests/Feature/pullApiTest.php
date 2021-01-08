@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Task;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\Sanctum;
+use Request;
+
 
 use Tests\TestCase;
 
@@ -129,6 +131,8 @@ public function testFineFirstElementPullApiHoqu()
             'Authorization' => 'Bearer '.$user_tokens['instance@webmapp.it'],
         ])->post('/api/store',$data);
         $response->assertStatus(201);
+
+
         sleep(2);
 
         $data1 = [
@@ -197,6 +201,7 @@ public function testFineFirstElementPullApiHoqu()
         $requestSvr1 = [
             "id_server" => 999,
             "task_available" => ["task11","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            'SERVER_ADDR' => '111.1111.111'
         ];
 
         $this->resetAuth();
@@ -213,13 +218,15 @@ public function testFineFirstElementPullApiHoqu()
         $this->assertSame('processing',$ja['process_status']);
         //I check that the integer has become a string
         $this->assertSame(((string)$requestSvr1['id_server']),$ja['id_server']);
+//        $this->assertSame($response->server('SERVER_ADDR'),$ja['ip_server']);
         $this->assertSame('mdontepisanotree.org',$ja['instance']);
         $this->assertSame($response['instance'],$ja['instance']);
         $this->assertSame($response['id'],$ja["id"]);
         $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
-
     }
+
+
 
     public function testStressPull()
     {
@@ -238,7 +245,6 @@ public function testFineFirstElementPullApiHoqu()
             $response = $this->put('/api/pull',$requestSvr1);
             $response->assertStatus(204);
         }
-
 
     }
 

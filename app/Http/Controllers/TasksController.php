@@ -40,6 +40,12 @@ class TasksController extends Controller
         return view('todo',['tasks'=>$task]);
     }
 
+    public function indexProcessing()
+    {
+        $task = Task::orwhere('process_status', '=', 'processing')->orderBy('created_at', 'asc')->paginate(50);
+        return view('processing',['tasks'=>$task]);
+    }
+
     public function indexDone()
     {
         $task = Task::orwhere('process_status', '=', 'done')->orwhere('process_status', '=', 'skip')->orderByRaw('FIELD(process_status, "done", "skip")asc')->orderBy('created_at', 'asc')->paginate(50);
@@ -132,6 +138,7 @@ class TasksController extends Controller
             $requestSvr->all();
             $requestSvr['id_server'] = (string) $requestSvr['id_server'];
 
+
             $validatedData = $requestSvr->validate([
                 'id_server' => 'required|string',
                 'task_available' => 'required|array'
@@ -143,6 +150,10 @@ class TasksController extends Controller
             {
                 $task->process_status = 'processing';
                 $task->id_server = $requestSvr['id_server'];
+                if(!empty($requestSvr->server('SERVER_ADDR')))
+                {
+                    $task->ip_server = (string) $requestSvr->server('SERVER_ADDR');
+                }
 
                 $task->save();
 
