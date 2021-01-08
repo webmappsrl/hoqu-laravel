@@ -136,6 +136,7 @@ class TasksController extends Controller
         if($requestSvr->user()->tokenCan('update'))
         {
             $requestSvr->all();
+
             $requestSvr['id_server'] = (string) $requestSvr['id_server'];
 
 
@@ -150,9 +151,9 @@ class TasksController extends Controller
             {
                 $task->process_status = 'processing';
                 $task->id_server = $requestSvr['id_server'];
-                if(!empty($requestSvr->server('SERVER_ADDR')))
+                if(!empty($requestSvr->ip()))
                 {
-                    $task->ip_server = (string) $requestSvr->server('SERVER_ADDR');
+                    $task->ip_server = (string) $requestSvr->ip();
                 }
 
                 $task->save();

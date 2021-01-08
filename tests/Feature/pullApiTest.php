@@ -201,7 +201,7 @@ public function testFineFirstElementPullApiHoqu()
         $requestSvr1 = [
             "id_server" => 999,
             "task_available" => ["task11","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
-            'SERVER_ADDR' => '111.1111.111'
+            'ip_server' => '111.1111.111'
         ];
 
         $this->resetAuth();
@@ -218,7 +218,7 @@ public function testFineFirstElementPullApiHoqu()
         $this->assertSame('processing',$ja['process_status']);
         //I check that the integer has become a string
         $this->assertSame(((string)$requestSvr1['id_server']),$ja['id_server']);
-//        $this->assertSame($response->server('SERVER_ADDR'),$ja['ip_server']);
+        $this->assertSame('127.0.0.1',$ja['ip_server']);
         $this->assertSame('mdontepisanotree.org',$ja['instance']);
         $this->assertSame($response['instance'],$ja['instance']);
         $this->assertSame($response['id'],$ja["id"]);
