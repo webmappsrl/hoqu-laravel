@@ -33,7 +33,7 @@ describe('New and Processing', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('new')) {
-                expect(text).to.eq('\n                                                                new\n                                                                ')
+                expect(text).to.eq('\n                                                                                    new\n                                                                            ')
             }
             if (text.includes('processing')) {
                 expect(text).to.eq('\n                                                processing\n                                             ')
@@ -58,7 +58,7 @@ describe('New and Processing', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('new')) {
-                expect(text).to.eq('\n                                                                new\n                                                                ')
+                expect(text).to.eq('\n                                                                                    new\n                                                                            ')
             }
             if (text.includes('processing')) {
                 assert.strictEqual(text, 'processing', 'processing ok ')
@@ -95,10 +95,10 @@ describe('New and Processing', () => {
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('new')) {
-                expect(text).to.eq('\n                                                                new\n                                                                ')
+                expect(text).to.eq('\n                                                                                    new\n                                                                            ')
             }
             if (text.includes('processing')) {
-                expect(text).to.eq('\n                                                                processing\n                                                                ')
+                expect(text).to.eq('\n                                                                                    processing\n                                                                            ')
             }
 
         })
@@ -115,19 +115,32 @@ describe('New and Processing', () => {
         //check the data that are in ascending order
         cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
             if (index == 0) time_prev = 0
-            time = Math.round(new Date($e.text()).getTime() / 1000)
-            assert.isBelow(time_prev, time, 'previous date is below actual')
-            time_prev = time
+            if(time_prev < time)
+            {
+                time = Math.round(new Date($e.text()).getTime() / 1000)
+                assert.isBelow(time_prev, time, 'previous date is below actual')
+                time_prev = time
+
+            }
+            else if(time_prev > time && init == 0)
+            {
+                time = Math.round(new Date($e.text()).getTime() / 1000)
+                assert.isAtLeast(time_prev, time, 'previous date is most actual')
+                time_prev = time
+                init = 1
+
+            }
+
         })
 
         //check that the data with status new and processing are present
         cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('new')) {
-                assert.strictEqual(text, 'new', 'new ok')
+                assert.strictEqual(text, '\n                                                                                    new\n                                                                            ', 'new ok')
             }
             if (text.includes('processing')) {
-                expect(text).to.eq('\n                                                                processing\n                                                                ')
+                expect(text).to.eq('\n                                                                                    processing\n                                                                            ')
             }
 
         })

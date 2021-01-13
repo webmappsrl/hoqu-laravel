@@ -38,6 +38,8 @@ describe('Button Reschedule in Done', () => {
             assert.isAbove(time, time_prev, 'previous date is above actual')
             time_prev = time
         })
+        cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
+        cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
 
 
 

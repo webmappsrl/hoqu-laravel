@@ -78,19 +78,40 @@ class DatabaseSeeder extends Seeder
          	\App\Models\Task::factory()->count(1)->create_done()->create();
          }
 
-        for ($i=0; $i < 100 ; $i++) {
+        for ($i=0; $i < 104 ; $i++) {
             \App\Models\Task::factory()->count(1)->create_error()->create();
         }
+
+        for ($i=0; $i < 3 ; $i++) {
+            \App\Models\Task::factory()->count(1)->create_job_done_for_e2e()->create();
+        }
+
+        for ($i=0; $i < 3 ; $i++) {
+           $id =  \App\Models\Task::factory()->count(1)->create_job_error_for_e2e()->create();
+            for ($i=0; $i < 3 ; $i++) {
+
+                \App\Models\DuplicateTask::factory()->count(1)->create(['task_id'=>$id[0]['id']]);
+            }
+        }
+
+        for ($i=0; $i < 3 ; $i++) {
+            \App\Models\Task::factory()->count(1)->create_job_new_for_e2e()->create();
+        }
+
+        for ($i=0; $i < 3 ; $i++) {
+            \App\Models\Task::factory()->count(1)->create_job_processing_for_e2e()->create();
+        }
+
+
+
 
         // for ($i=0; $i < 100 ; $i++) {
         //     \App\Models\Task::factory()->count(1)->duplicated()->create();
         // }
 
-        for ($i=0; $i < 5 ; $i++) {
-            $task_id=rand(1,100);
-            $qta=rand(1,10);
+        for ($i=0; $i < 100 ; $i++) {
 
-            \App\Models\DuplicateTask::factory($qta)->create(['task_id'=>$task_id]);
+            \App\Models\DuplicateTask::factory()->count(1)->create();
         }
 
     }

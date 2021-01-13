@@ -12,13 +12,12 @@ namespace App\Http\Livewire;
         use WithPagination;
 
         public $instance;
-        public $job;
+        public $job,$created_at, $num_page;
         public $jobs;
         public $countJ = 0;
         public $countI = 1;
         public $countZ = 0;
         public $isOpen = 0;
-        public $created_at;
 
 
         public $instance1, $job1,$parameters, $process_status, $process_log, $Task_id;
@@ -63,84 +62,14 @@ namespace App\Http\Livewire;
             $this->resetPage();
         }
 
-        public function mount($instance,$job, $created_at)
+        public function mount($instance,$job,$created_at,$num_page)
         {
             $this->instance=$instance;
-            $this->created_at=$created_at;
             $this->job=$job;
+            $this->created_at=$created_at;
+            $this->num_page=$num_page;
             $this->instances=[];
             $this->jobs=[];
-
-        }
-
-        public function updatedInstance()
-        {
-            if(!empty($this->instance))
-            {
-
-                $tasks= Task::whereIn('process_status', ['done'])
-                ->where('instance','like', $this->instance)
-                ->orderBy('created_at', 'asc')
-                ->paginate(50)
-                ;
-            }
-            else
-            {
-                $tasks= Task::whereIn('process_status', ['done'])
-                ->orderBy('created_at', 'asc')
-                ->paginate(50)
-                ;
-            }
-            $this->countJ=0;
-            $this->countZ=0;
-            $this->countI=1;
-            return $tasks;
-
-        }
-
-        public function updatedJob()
-        {
-
-            if(!empty($this->job))
-            {
-                $tasks = Task::whereIn('process_status', ['done'])
-                ->where('job', 'like', $this->job)
-                ->orderBy('created_at', 'asc')
-                ->paginate(50);
-            }
-            else
-            {
-                $tasks = Task::whereIn('process_status', ['done'])
-                ->orderBy('created_at', 'asc')
-                ->paginate(50);
-            }
-            $this->countJ=1;
-            $this->countI=0;
-            $this->countZ=0;
-            return $tasks;
-        }
-
-        public function updated()
-        {
-
-            if(!empty($this->created_at))
-            {
-                $tasks = Task::whereIn('process_status', ['done'])
-                    ->orderBy('created_at', $this->created_at)
-                    ->paginate(50);
-            }
-            else
-            {
-                $tasks = Task::whereIn('process_status', ['done'])
-                    ->orderBy('created_at', 'asc')
-                    ->paginate(50);
-            }
-
-            $this->countZ=1;
-            $this->countJ=0;
-            $this->countI=0;
-            return $tasks;
-
         }
 
         public function update()
@@ -194,29 +123,141 @@ namespace App\Http\Livewire;
 
         public function render()
         {
-            $this->instances = Task::select('instance')->whereIn('process_status', ['done'])->groupBy('instance')->orderBy('instance', 'asc')->get();
-
-            $this->jobs = Task::select('job')->whereIn('process_status', ['done'])->groupBy('job')->orderBy('job', 'asc')->get();
-
-
-            if($this->countI == 0 && $this->countJ == 0 && $this->countZ == 1)
+            if (!empty($this->job))
             {
-                $this->countZ = 0;
-                $tasks = $this->updated();
+                $this->instances = Task::select('instance')->where('job',$this->job)->whereIn('process_status', ['done','skip'])->groupBy('instance')->orderBy('instance', 'asc')->get();
+            }
+            else $this->instances = Task::select('instance')->whereIn('process_status', ['done','skip'])->groupBy('instance')->orderBy('instance', 'asc')->get();
+
+            if (!empty($this->instance))
+            {
+                $this->jobs = Task::select('job')->where('instance',$this->instance)->whereIn('process_status', ['done','skip'])->groupBy('job')->orderBy('job', 'asc')->get();
+            }
+            else $this->jobs = Task::select('job')->whereIn('process_status', ['done','skip'])->groupBy('job')->orderBy('job', 'asc')->get();
+
+
+            if(!empty($this->job) && !empty($this->instance) && !empty($this->created_at) && !empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('job', 'like', $this->job)
+                    ->where('instance', 'like', $this->instance)
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate($this->num_page);
+            }
+            else if(!empty($this->created_at) && empty($this->job) && !empty($this->instance) && !empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('instance', 'like', $this->instance)
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate($this->num_page);
+            }
+            else if(!empty($this->created_at) && !empty($this->job) && empty($this->instance) && !empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('job', 'like', $this->job)
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate($this->num_page);
+            }
+            else if(!empty($this->created_at) && !empty($this->job) && empty($this->instance) && empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('job', 'like', $this->job)
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate(50);
+            }
+            else if(!empty($this->created_at) && !empty($this->job) && !empty($this->instance) && empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('instance', 'like', $this->instance)
+                    ->where('job', 'like', $this->job)
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate(50);
+            }
+            else if(empty($this->created_at) && !empty($this->job) && !empty($this->instance) && !empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('job', 'like', $this->job)
+                    ->where('instance', 'like', $this->instance)
+                    ->orderBy('created_at', 'asc')
+                    ->paginate($this->num_page);
+            }
+            else if(empty($this->created_at) && !empty($this->job) && !empty($this->instance) && empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('job', 'like', $this->job)
+                    ->where('instance', 'like', $this->instance)
+                    ->orderBy('created_at', 'asc')
+                    ->paginate(50);
+            }
+            else if(!empty($this->created_at) && empty($this->job) && !empty($this->instance) && !empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('instance', 'like', $this->instance)
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate($this->num_page);
+            }
+            else if(empty($this->created_at) && empty($this->job) && !empty($this->instance) && !empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('instance', 'like', $this->instance)
+                    ->orderBy('created_at', 'asc')
+                    ->paginate($this->num_page);
+            }
+            else if(empty($this->created_at) && empty($this->job) && !empty($this->instance) && empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('instance', 'like', $this->instance)
+                    ->orderBy('created_at', 'asc')
+                    ->paginate(50);
+            }
+            else if(!empty($this->created_at) && !empty($this->job) && empty($this->instance) && !empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('job', 'like', $this->job)
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate($this->num_page);
+            }
+            else if(empty($this->created_at) && !empty($this->job) && empty($this->instance) && !empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('job', 'like', $this->job)
+                    ->orderBy('created_at', 'asc')
+                    ->paginate($this->num_page);
+            }
+            else if(empty($this->created_at) && !empty($this->job) && empty($this->instance) && empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->where('job', 'like', $this->job)
+                    ->orderBy('created_at', 'asc')
+                    ->paginate(50);
+            }
+            else if(!empty($this->created_at) && empty($this->job) && empty($this->instance) && !empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate($this->num_page);
+            }
+            else if(empty($this->created_at) && empty($this->job) && empty($this->instance) && !empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->orderBy('created_at', 'asc')
+                    ->paginate($this->num_page);
+            }
+            else if(!empty($this->created_at) && empty($this->job) && empty($this->instance) && empty($this->num_page))
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate(50);
+            }
+            else
+            {
+                $tasks = Task::whereIn('process_status', ['done','skip'])
+                    ->orderByRaw('FIELD(process_status, "done", "skip")asc')
+                    ->orderBy('created_at', 'asc')
+                    ->paginate(50);
             }
 
-            if($this->countJ == 1 && $this->countI == 0 && $this->countZ == 0)
-            {
-                $this->countJ = 0;
-                $tasks=$this->updatedJob();
 
-            }
-            if($this->countI == 1 && $this->countJ == 0 && $this->countZ == 0)
-            {
-                $this->countI = 0;
-                $tasks=$this->updatedInstance();
-
-            }
 
             return view('livewire.table-done',['tasks' => $tasks]);
         }

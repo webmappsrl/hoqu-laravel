@@ -16,6 +16,7 @@ class StatusShow extends Component
     public $jobs;
     public $isOpen = 0;
     public $isTrello = 0;
+    public $isTrelloBug = 0;
     public $isReschedule = 0;
     public $created_at;
 
@@ -31,7 +32,7 @@ class StatusShow extends Component
         $this->isOpen = true;
     }
 
-    public function closeModal()
+    public function closeModalSkip()
     {
         $this->isOpen = false;
     }
@@ -45,6 +46,15 @@ class StatusShow extends Component
     {
         $this->isTrello = false;
     }
+    public function openModalTrelloBug()
+    {
+        $this->isTrelloBug = true;
+    }
+
+    public function closeModalTrelloBug()
+    {
+        $this->isTrelloBug = false;
+    }
     public function openModalRes()
     {
         $this->isReschedule = true;
@@ -54,7 +64,6 @@ class StatusShow extends Component
     {
         $this->isReschedule = false;
     }
-
 
     public function create()
     {
@@ -118,7 +127,7 @@ class StatusShow extends Component
         session()->flash('message',
             'changed the process status of ' .$this->Task_id . ' in SKIP');
 
-        $this->closeModal();
+        $this->closeModalSkip();
         $this->resetInputFields();
     }
     /**
@@ -147,6 +156,16 @@ class StatusShow extends Component
 
     }
 
+    public function setCardTrelloBug(Task $task)
+    {
+        $this->Task_id = $task->id;
+        $this->instance = $task->instance;
+        $this->job = $task->job;
+
+        $this->openModalTrelloBug();
+
+    }
+
     public function editRes(Task $task)
     {
         $this->Task_id = $task->id;
@@ -169,6 +188,25 @@ class StatusShow extends Component
         Mail::to('gianmarcogagliardi1+abk5rfgsorj10kmql4px@boards.trello.com')->send(new sendTrello($dataCard));
 
         $this->closeModalTrello();
+        $this->resetInputFields();
+
+        session()->flash('message',
+            'you have created a trello card related to the task ' .$this->Task_id . ' assigned to '.$this->trelloMember );
+
+    }
+
+    public function sendCardBackLog(){
+
+        $this->validate([
+            'trelloMember' => 'required'
+        ]);
+
+        $taskError = Task::find($this->Task_id);
+        $dataCard = ['member' => $this->trelloMember, 'error'=>$taskError];
+
+        Mail::to('gianmarcogagliardi1+vdtsjbwisbsmv52v0h8x@boards.trello.com')->send(new sendTrello($dataCard));
+
+        $this->closeModalTrelloBug();
         $this->resetInputFields();
 
         session()->flash('message',

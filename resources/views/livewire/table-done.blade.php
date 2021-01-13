@@ -6,21 +6,21 @@
           <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div class="mb-8">
                 <label class="inline-block w-32 font-bold">Filter:</label>
-                <select class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="instance" class="border shadow p-2 bg-white" wire:model='instance'
+                <select id="selectInstance"  class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="instance" class="border shadow p-2 bg-white" wire:model='instance'
                 >
                     <option value=''>Choose a Instance</option>
                     @foreach($instances as $instance)
-                        <option value={{ $instance->instance }}>{{ $instance->instance }}</option>
+                        <option value="{{$instance->instance}}">{{ $instance->instance }}</option>
                     @endforeach
                 </select >
 
                 @if(count($jobs) > 0)
 
-                <select class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="job" class="border shadow p-2 bg-white" wire:model='job'
+                <select id="selectJob" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="job" class="border shadow p-2 bg-white" wire:model='job'
                 >
                     <option value=''>Choose a job</option>
                     @foreach($jobs as $job)
-                        <option value={{ $job->job}}>{{ $job->job }}</option>
+                        <option value="{{ $job->job}}">{{ $job->job }}</option>
                     @endforeach
                 </select >
                 @endif
@@ -29,6 +29,14 @@
                     <option value=''>Order Data</option>
                         <option id="A1" value='asc'>asc</option>
                         <option id="D1" value='desc'>desc</option>
+                </select >
+                <select id="pageNumber" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="num_page" class="border shadow p-2 bg-white" wire:model='num_page'
+                >
+                    <option value=''>#Page</option>
+                    <option id="p10" value='10'>10</option>
+                    <option id="p25" value='25'>25</option>
+                    <option id="p50" value='50'>50</option>
+                    <option id="p100" value='100'>100</option>
                 </select >
 
             </div>
@@ -118,9 +126,8 @@
                         <span
                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
                         @elseif($task->process_status=='skip')
-                        @elseif($task->process_status=='skip')
-                        <span
-                           class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indingo-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
+                             <span
+                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
                         @endif
                      </td>
                      <td

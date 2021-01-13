@@ -32,6 +32,13 @@
                          placeholder="Search">
                    </div> --}}
                 </div>
+                 <div class="flex items-center justify-between">
+                     <div class="flex items-center justify-center">
+                         <div class="flex items-center justify-center text-3xl font-bold text-true-gray-800">
+                             DASHBOARD
+                         </div>
+                     </div>
+                 </div>
 
                 <div class="flex items-center">
                    <div x-data="{ dropdownOpen: false }" class="relative">

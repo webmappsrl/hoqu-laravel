@@ -24,9 +24,10 @@ class DuplicateTaskFactory extends Factory
     public function definition()
     {
         $n=rand(-1,-10);
+        $id = rand(1,100);
         $date = $this->faker->dateTimeBetween($startDate = $n.' day', $endDate = 'now');
         return [
-                'task_id' => Task::factory()->create(),
+                'task_id' => $id,
                 'created_at'=> $date,
                 'updated_at'=>$date
         ];

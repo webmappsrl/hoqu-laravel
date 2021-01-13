@@ -40,6 +40,18 @@ class TasksController extends Controller
         return view('todo',['tasks'=>$task]);
     }
 
+    public function indexProcessing()
+    {
+        $task = Task::orwhere('process_status', '=', 'processing')->orderBy('created_at', 'asc')->paginate(50);
+        return view('processing',['tasks'=>$task]);
+    }
+
+    public function indexServer()
+    {
+        $task = Task::orwhere('process_status', '=', 'processing')->orderBy('created_at', 'asc')->paginate(50);
+        return view('server',['tasks'=>$task]);
+    }
+
     public function indexDone()
     {
         $task = Task::orwhere('process_status', '=', 'done')->orwhere('process_status', '=', 'skip')->orderByRaw('FIELD(process_status, "done", "skip")asc')->orderBy('created_at', 'asc')->paginate(50);
@@ -130,7 +142,9 @@ class TasksController extends Controller
         if($requestSvr->user()->tokenCan('update'))
         {
             $requestSvr->all();
+
             $requestSvr['id_server'] = (string) $requestSvr['id_server'];
+
 
             $validatedData = $requestSvr->validate([
                 'id_server' => 'required|string',
@@ -143,6 +157,10 @@ class TasksController extends Controller
             {
                 $task->process_status = 'processing';
                 $task->id_server = $requestSvr['id_server'];
+                if(!empty($requestSvr->ip()))
+                {
+                    $task->ip_server = (string) $requestSvr->ip();
+                }
 
                 $task->save();
 
@@ -209,7 +227,8 @@ class TasksController extends Controller
 
             $validator = Validator::make($requestSvr2, [
                 'id_server' => 'required|string',
-                'log'=>'required',
+//                'log'=>'required',
+//                'error_log'=>'required',
                 'id_task'=>'required|integer'
             ]);
 
@@ -223,7 +242,16 @@ class TasksController extends Controller
                 if($requestSvr2['id_server']==$wouldLikeUpdate->id_server && ('processing'==$wouldLikeUpdate->process_status))
                 {
                     $wouldLikeUpdate->process_status = 'error';
-                    $wouldLikeUpdate->process_log = $requestSvr2['log'];
+                    if(!empty($requestSvr2['log']))
+                    {
+                        $wouldLikeUpdate->process_log = $requestSvr2['log'];
+                    }
+                    if(!empty($requestSvr2['error_log']))
+                    {
+                        $wouldLikeUpdate->error_log = $requestSvr2['error_log'];
+                    }
+//                    $wouldLikeUpdate->process_log = $requestSvr2['log'];
+//                    $wouldLikeUpdate->error_log = $requestSvr2['error_log'];
                     $wouldLikeUpdate->save();
                     Mail::to('team@webmapp.it')->send(new sendError($wouldLikeUpdate));
                     return response()->json($wouldLikeUpdate, 200);

@@ -19,7 +19,7 @@ describe('Button Reschedule Error', () => {
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1) > div > div > a').click()
         cy.get('button#editRes').click()
         //check Cancel
-        cy.contains('Cancel').click()
+        cy.get('button#buttonCancel').click()
         cy.get('h4#processStatus').each(($e, index, $list) => {
             const text = $e.text()
             expect(text).to.contain('error')
@@ -41,7 +41,7 @@ describe('Button Reschedule Error', () => {
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1) > div > div > a').click()
         cy.get('button#editShow').click()
         //check Cancel
-        cy.contains('Cancel').click()
+        cy.get('button#buttonCancel').click()
         cy.get('h4#processStatus').each(($e, index, $list) => {
             const text = $e.text()
             expect(text).to.contain('error')

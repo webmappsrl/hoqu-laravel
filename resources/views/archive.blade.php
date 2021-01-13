@@ -32,13 +32,21 @@
                          placeholder="Search">
                    </div> --}}
                 </div>
+                 <div class="flex items-center justify-between">
+                     <div class="flex items-center justify-center">
+                         <div class="flex items-center justify-center text-3xl font-bold text-true-gray-800">
+                             DONE
+                         </div>
+                     </div>
+                 </div>
                 <div class="flex items-center">
                    <div x-data="{ dropdownOpen: false }" class="relative">
                       @livewire('navigation-dropdown')
                    </div>
                 </div>
              </header>
-      @livewire('table-done',['instance'=>$tasks['instance'], 'job'=>$tasks['job'],'created_at'=>$tasks['created_at']])
+              @livewire('table-done',['instance'=>$tasks['instance'], 'job'=>$tasks['job'],'created_at'=>$tasks['created_at'],'num_page'=>$tasks['num_page']])
+
     </div>
        </div>
     </div>
