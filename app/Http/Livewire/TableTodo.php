@@ -233,6 +233,22 @@ namespace App\Http\Livewire;
                     ->orderBy('created_at', 'asc')
                     ->paginate($this->num_page);
             }
+            else if(empty($this->created_at) && !empty($this->job) && !empty($this->instance) && empty($this->num_page) && !empty($this->select_process_status))
+            {
+                $tasks = Task::whereIn('process_status', [$this->select_process_status])
+                    ->where('instance', 'like', $this->instance)
+                    ->where('job', 'like', $this->job)
+                    ->orderBy('created_at', 'asc')
+                    ->paginate($this->num_page);
+            }
+            else if(!empty($this->created_at) && !empty($this->job) && !empty($this->instance) && empty($this->num_page) && !empty($this->select_process_status))
+            {
+                $tasks = Task::whereIn('process_status', [$this->select_process_status])
+                    ->where('instance', 'like', $this->instance)
+                    ->where('job', 'like', $this->job)
+                    ->orderBy('created_at', $this->created_at)
+                    ->paginate($this->num_page);
+            }
             else if(!empty($this->created_at) && !empty($this->job) && !empty($this->instance) && !empty($this->num_page) && !empty($this->select_process_status))
             {
                 $tasks = Task::whereIn('process_status', [$this->select_process_status])
