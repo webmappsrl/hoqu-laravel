@@ -73,49 +73,7 @@ class pullApiTest extends TestCase
         ])->put('/api/pull',$requestSvr1);
         $response->assertStatus(403);
     }
-
-    public function testTaskNoMatchPullApiHoqu()
-    {
-        // DuplicateTask::truncate();
-        // Task::truncate();
-
-        $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
-
-        //add data with api/store
-        $data = [
-            "instance" => "https://molntepisanotree.org",
-            "job" => "task1",
-            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
-        ];
-
-        $response = $this->withHeaders([
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$user_tokens['instance@webmapp.it'],
-        ])->post('/api/store',$data);
-
-        $response->assertStatus(201);
-
-        $this->resetAuth();
-
-        //request that sends the "requesting server"
-        $requestSvr1 = [
-            "id_server" => 'webmapp_server_staging_all_nombtiles',
-            "task_available" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
-        ];
-
-        //OPERATIONS
-        // Check that instance@webmapp.it access to api/
-        $response = $this->withHeaders([
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it'],
-        ])->put('/api/pull',$requestSvr1);
-        $response->assertStatus(204);
-        $response ->assertNoContent($status = 204);
-    }
-
-
-
-public function testFineFirstElementPullApiHoqu()
+    public function testFineFirstElementPullApiHoqu()
     {
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
@@ -179,6 +137,48 @@ public function testFineFirstElementPullApiHoqu()
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
 
     }
+
+    public function testTaskNoMatchPullApiHoqu()
+    {
+        // DuplicateTask::truncate();
+        // Task::truncate();
+
+        $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
+
+        //add data with api/store
+        $data = [
+            "instance" => "https://molntepisanotree.org",
+            "job" => "task1",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
+        ];
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$user_tokens['instance@webmapp.it'],
+        ])->post('/api/store',$data);
+
+        $response->assertStatus(201);
+
+        $this->resetAuth();
+
+        //request that sends the "requesting server"
+        $requestSvr1 = [
+            "id_server" => 'webmapp_server_staging_all_nombtiles',
+            "task_available" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
+        ];
+
+        //OPERATIONS
+        // Check that instance@webmapp.it access to api/
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it'],
+        ])->put('/api/pull',$requestSvr1);
+        $response->assertStatus(204);
+        $response ->assertNoContent($status = 204);
+    }
+
+
+
 
     public function testFineFirstElementPullIntegerApiHoqu()
     {
@@ -435,7 +435,6 @@ public function testFineFirstElementPullApiHoqu()
     }
 
 
-
     public function testStressPull()
     {
         Sanctum::actingAs(
@@ -456,10 +455,10 @@ public function testFineFirstElementPullApiHoqu()
 
     }
 
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->artisan('migrate:fresh --seed');
-    }
+//    public function setUp(): void
+//    {
+//        parent::setUp();
+//        $this->artisan('migrate:fresh --seed');
+//    }
 
 }
