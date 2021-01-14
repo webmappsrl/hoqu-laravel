@@ -455,10 +455,10 @@ class pullApiTest extends TestCase
 
     }
 
-//    public function setUp(): void
-//    {
-//        parent::setUp();
-//        $this->artisan('migrate:fresh --seed');
-//    }
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate:fresh --seed');
+    }
 
 }

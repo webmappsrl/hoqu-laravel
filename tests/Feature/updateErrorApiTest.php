@@ -166,7 +166,7 @@ class updateErrorApiTest extends TestCase
         $response->assertStatus(400);
     }
 
-    public function testCheckValueStatusupdateErrorApiHoqu()
+    public function testCheckValueStatus_updateErrorApiHoqu()
     {
         Mail::fake();
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);

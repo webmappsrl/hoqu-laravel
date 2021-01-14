@@ -27,6 +27,7 @@ trait TaskTrait {
         {
             $server->updated_at = now();
             $server->save();
+
         }
 
     }

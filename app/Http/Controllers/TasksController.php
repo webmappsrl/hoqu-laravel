@@ -78,6 +78,7 @@ class TasksController extends Controller
     {
         if($request->user()->tokenCan('create'))
         {
+
             $request=$request->all();
 
 
@@ -145,7 +146,9 @@ class TasksController extends Controller
         // echo(json_encode($requestSvr->user()) . "\n\n");
         if($requestSvr->user()->tokenCan('update'))
         {
+
             $requestSvr->all();
+
 
             $requestSvr['id_server'] = (string) $requestSvr['id_server'];
 
@@ -190,8 +193,8 @@ class TasksController extends Controller
             }
 
 
-//            $this->storeServer($requestSvr->ip(),$requestSvr['id_server']);
-//            $this->updateServer($requestSvr->ip(),$requestSvr['id_server']);
+            $this->storeServer($requestSvr->ip(),$requestSvr['id_server']);
+            $this->updateServer($requestSvr->ip(),$requestSvr['id_server']);
 
             if(!empty($task))
             {
@@ -221,10 +224,11 @@ class TasksController extends Controller
     {
         if($requestSvr2->user()->tokenCan('update'))
         {
-            //get all data
-            $requestSvr2 = $requestSvr2->all();
-            $requestSvr2['id_server'] = (string) $requestSvr2['id_server'];
+            $this->updateServer($requestSvr2->ip(),$requestSvr2['id_server']);
 
+            $requestSvr2 = $requestSvr2->all();
+
+            $requestSvr2['id_server'] = (string) $requestSvr2['id_server'];
 
             $validator = Validator::make($requestSvr2, [
                 'id_server' => 'required|string',
@@ -236,9 +240,6 @@ class TasksController extends Controller
             }
 
             $wouldLikeUpdate = Task::find($requestSvr2['id_task']);
-
-//            $this->storeServer($requestSvr2->ip(),$requestSvr2['id_server']);
-//            $this->updateServer($requestSvr2->ip(),$requestSvr2['id_server']);
 
             if(!empty($wouldLikeUpdate))
             {
@@ -265,7 +266,10 @@ class TasksController extends Controller
         if($requestSvr2->user()->tokenCan('update'))
         {
             //get all data
+            $this->updateServer($requestSvr2->ip(),$requestSvr2['id_server']);
+
             $requestSvr2 = $requestSvr2->all();
+
             $requestSvr2['id_server'] = (string) $requestSvr2['id_server'];
 
             $validator = Validator::make($requestSvr2, [
@@ -278,8 +282,6 @@ class TasksController extends Controller
             if($validator->fails()){
                 return response(['error' => $validator->errors(), 'Validation Error'],400);
             }
-
-//            $this->updateServer($requestSvr2->ip(),$requestSvr2['id_server']);
 
             $wouldLikeUpdate = Task::find($requestSvr2['id_task']);
             if(!empty($wouldLikeUpdate))
