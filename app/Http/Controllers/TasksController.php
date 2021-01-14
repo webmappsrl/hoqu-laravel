@@ -152,10 +152,43 @@ class TasksController extends Controller
 
             $validatedData = $requestSvr->validate([
                 'id_server' => 'required|string',
-                'task_available' => 'required|array'
+                'task_available' => 'required|array',
+                'accept_instances'=> 'array',
+                'exclude_instances' =>'array'
             ]);
 
-            $task = Task::whereIn('job', $requestSvr['task_available'])->where('process_status','=','new')->orderBy('created_at', 'asc')->first();
+//            dd(isset($requestSvr['accept_instances']));
+
+            if (isset($requestSvr['accept_instances']) && isset($requestSvr['exclude_instances']))
+            {
+                $task = Task::whereIn('job', $requestSvr['task_available'])
+                    ->whereNotIn('instance', $requestSvr['exclude_instances'])
+                    ->whereIn('instance', $requestSvr['accept_instances'])
+                    ->where('process_status','=','new')
+                    ->orderBy('created_at', 'asc')
+                    ->first();
+            }
+            elseif (isset($requestSvr['accept_instances']) && !isset($requestSvr['exclude_instances']))
+            {
+                $task = Task::whereIn('job', $requestSvr['task_available'])
+                    ->WhereIn('instance', $requestSvr['accept_instances'])
+                    ->where('process_status','=','new')
+                    ->orderBy('created_at', 'asc')
+                    ->first();
+            }
+            elseif (!isset($requestSvr['accept_instances']) && isset($requestSvr['exclude_instances']))
+            {
+                $task = Task::whereIn('job', $requestSvr['task_available'])
+                    ->whereNotIn('instance', $requestSvr['exclude_instances'])
+                    ->where('process_status','=','new')
+                    ->orderBy('created_at', 'asc')
+                    ->first();
+            }
+            else
+            {
+                $task = Task::whereIn('job', $requestSvr['task_available'])->where('process_status','=','new')->orderBy('created_at', 'asc')->first();
+            }
+
 
 //            $this->storeServer($requestSvr->ip(),$requestSvr['id_server']);
 //            $this->updateServer($requestSvr->ip(),$requestSvr['id_server']);
