@@ -6,11 +6,15 @@ use App\Models\DuplicateTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use App\Http\Traits\TaskTrait;
 
 use App\Mail\sendError;
 
 class TasksController extends Controller
 {
+    use TaskTrait;
+
     public function sendEmail()
     {
         $wouldLikeUpdate = Task::where('process_status','=','error')->first();
@@ -105,18 +109,18 @@ class TasksController extends Controller
             if(isset($request['parameters']))
             {
                 $taskDuplicate = Task::where('instance','=',$request['instance'])
-                ->where('job','=',$request['job'])
-                ->where('process_status','=','new')
-                ->whereJsonContains('parameters',json_decode($request['parameters'],TRUE))
-                ->get();
+                    ->where('job','=',$request['job'])
+                    ->where('process_status','=','new')
+                    ->whereJsonContains('parameters',json_decode($request['parameters'],TRUE))
+                    ->get();
             }
             else
             {
                 $taskDuplicate = Task::where('instance','=',$request['instance'])
-                ->where('job','=',$request['job'])
-                ->where('process_status','=','new')
-                ->whereNull('parameters')
-                ->get();
+                    ->where('job','=',$request['job'])
+                    ->where('process_status','=','new')
+                    ->whereNull('parameters')
+                    ->get();
             }
 
             // dd($request);
@@ -152,6 +156,9 @@ class TasksController extends Controller
             ]);
 
             $task = Task::whereIn('job', $requestSvr['task_available'])->where('process_status','=','new')->orderBy('created_at', 'asc')->first();
+
+//            $this->storeServer($requestSvr->ip(),$requestSvr['id_server']);
+//            $this->updateServer($requestSvr->ip(),$requestSvr['id_server']);
 
             if(!empty($task))
             {
@@ -197,6 +204,9 @@ class TasksController extends Controller
 
             $wouldLikeUpdate = Task::find($requestSvr2['id_task']);
 
+//            $this->storeServer($requestSvr2->ip(),$requestSvr2['id_server']);
+//            $this->updateServer($requestSvr2->ip(),$requestSvr2['id_server']);
+
             if(!empty($wouldLikeUpdate))
             {
                 if($requestSvr2['id_server']==$wouldLikeUpdate->id_server && ('processing'==$wouldLikeUpdate->process_status))
@@ -236,6 +246,8 @@ class TasksController extends Controller
                 return response(['error' => $validator->errors(), 'Validation Error'],400);
             }
 
+//            $this->updateServer($requestSvr2->ip(),$requestSvr2['id_server']);
+
             $wouldLikeUpdate = Task::find($requestSvr2['id_task']);
             if(!empty($wouldLikeUpdate))
             {
@@ -269,9 +281,9 @@ class TasksController extends Controller
         {
             if(!empty($instance))
             {
-                $todo = Task::whereIn('process_status', ['new','processing'])->where('instance','=',$instance)->orderBy('created_at', 'asc')->get();
+                $todo = Task::whereIn('process_status', ['new','processing'])->where('instance','=',$instance)->orderBy('created_at', 'desc')->get();
                 $done = Task::where('process_status','=','done')->where('instance','=',$instance)->orderBy('created_at', 'desc')->limit(100)->get();
-                $error = Task::where('process_status','=','error')->where('instance','=',$instance)->orderBy('created_at', 'asc')->get();
+                $error = Task::where('process_status','=','error')->where('instance','=',$instance)->orderBy('created_at', 'desc')->get();
 
                 return response()->json(['todo'=>$todo,'done'=>$done,'error'=>$error],200);
             }
