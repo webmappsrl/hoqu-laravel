@@ -53,7 +53,5 @@ class traitTest extends TestCase
 
         //check updateServer
         $this->assertGreaterThan( $time,$timeAfterUpdate );
-
-
     }
 }
