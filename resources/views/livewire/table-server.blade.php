@@ -26,7 +26,7 @@
                                             <td class="px-2 py-2">{{$server->server_ip}}</td>
                                         </tr>
                                         <tr>
-                                            <td class="px-2 py-2 text-gray-500 font-semibold">{{now()->floatDiffInMinutes($server->updated_at)}}</td>
+                                            <td class="px-2 py-2 text-gray-500 font-semibold">Last Call</td>
                                             <td class="px-2 py-2">{{$server->updated_at }}</td>
                                         </tr>
                                         @if(now()->floatDiffInMinutes($server->updated_at) < 5 && ($tasks->where('id_server',$server->server_id)->count()) > 0)
