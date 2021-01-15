@@ -26,26 +26,26 @@
                                             <td class="px-2 py-2">{{$server->server_ip}}</td>
                                         </tr>
                                         <tr>
-                                            <td class="px-2 py-2 text-gray-500 font-semibold">Last Call</td>
+                                            <td class="px-2 py-2 text-gray-500 font-semibold">{{now()->addHour()->floatDiffInMinutes($server->updated_at)}}</td>
                                             <td class="px-2 py-2">{{$server->updated_at }}</td>
                                         </tr>
-                                        @if(round(now()->subHour()->floatDiffInSeconds($server->updated_at) ) < 3000 && ($tasks->where('id_server',$server->server_id)->count()) > 0)
+                                        @if(now()->addHour()->floatDiffInMinutes($server->updated_at) < 5 && ($tasks->where('id_server',$server->server_id)->count()) > 0)
 
                                         <tr>
                                             <td class="px-2 py-2 text-gray-800 text-xl font-bold">Status</td>
                                             <td class="text-center px-2 py-2 rounded bg-green-800 rounded-full text-2xl font-bold">Active</td>
                                         </tr>
-                                        @elseif(round(now()->subHour()->floatDiffInSeconds($server->updated_at)) < 3000 && ($tasks->where('id_server',$server->server_id)->count()) == 0)
+                                        @elseif(now()->addHour()->floatDiffInMinutes($server->updated_at) < 5 && ($tasks->where('id_server',$server->server_id)->count()) == 0)
                                             <tr>
                                                 <td class="px-2 py-2 text-gray-800 text-xl font-bold">Status</td>
                                                 <td class="text-center px-2 py-2 rounded bg-green-200 rounded-full text-2xl font-bold">Idle</td>
                                             </tr>
-                                            @elseif(round(now()->subHour()->floatDiffInSeconds($server->updated_at)) >= 3000 && ($tasks->where('id_server',$server->server_id)->count()) == 0)
+                                            @elseif(now()->addHour()->floatDiffInMinutes($server->updated_at) >= 5 && ($tasks->where('id_server',$server->server_id)->count()) == 0)
                                         <tr>
                                             <td class="px-2 py-2 text-gray-800 text-xl font-bold">Status</td>
                                             <td class="text-center px-2 py-2 rounded bg-red-800 rounded-full text-2xl font-bold">Turned off</td>
                                         </tr>
-                                        @elseif(round(now()->subHour()->floatDiffInSeconds($server->updated_at)) >= 3000 && ($tasks->where('id_server',$server->server_id)->count()) > 0)
+                                        @elseif(now()->addHour()->floatDiffInMinutes($server->updated_at) >= 5 && ($tasks->where('id_server',$server->server_id)->count()) > 0)
                                             <tr>
                                                 <td class="px-2 py-2 text-gray-800 text-xl font-bold">Status</td>
                                                 <td class="text-center px-2 py-2 rounded bg-red-300 rounded-full text-2xl font-bold">Warning</td>
