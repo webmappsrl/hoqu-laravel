@@ -17,6 +17,7 @@ class serverTest extends TestCase
 {
     public function test_add_server_in_table_update_done()
     {
+        Wm_Server::truncate();
         Mail::fake();
 
         $data = [
@@ -103,6 +104,8 @@ class serverTest extends TestCase
 
     public function test_add_server_in_table_update_error()
     {
+        Wm_Server::truncate();
+
         Mail::fake();
 
         $data = [
