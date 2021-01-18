@@ -165,13 +165,13 @@
                         </div>
                     </div>
                     <div class="w-full md:w-2/2 lg:w-4/4 px-2 mb-4">
-                        <div class="h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">
-                            <h4 class="md:text-md lg:text-lg font-semibold text-gray-700">process log:  {{$task->process_log}}</h4>
+                        <div class="h-auto text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white py-3">
+                            <h4 class="md:text-md lg:text-lg font-semibold text-gray-700">error log:  {{$task->error_log}}</h4>
                         </div>
                     </div>
                     <div class="w-full md:w-2/2 lg:w-4/4 px-2 mb-4">
-                        <div class="h-12 text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white">
-                            <h4 class="md:text-md lg:text-lg font-semibold text-gray-700">error log:  {{$task->error_log}}</h4>
+                        <div class="relative break-all h-auto text-sm text-grey-dark px-2 mb-2 flex items-center justify-center shadow-sm rounded-md bg-white py-6">
+                            <h4 class="md:text-md lg:text-lg font-semibold text-gray-700">process log: {!! nl2br($task->process_log) !!}</h4>
                         </div>
                     </div>
                 </div>

@@ -6,11 +6,15 @@ use App\Models\DuplicateTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use App\Http\Traits\TaskTrait;
 
 use App\Mail\sendError;
 
 class TasksController extends Controller
 {
+    use TaskTrait;
+
     public function sendEmail()
     {
         $wouldLikeUpdate = Task::where('process_status','=','error')->first();
@@ -74,6 +78,7 @@ class TasksController extends Controller
     {
         if($request->user()->tokenCan('create'))
         {
+
             $request=$request->all();
 
 
@@ -105,18 +110,18 @@ class TasksController extends Controller
             if(isset($request['parameters']))
             {
                 $taskDuplicate = Task::where('instance','=',$request['instance'])
-                ->where('job','=',$request['job'])
-                ->where('process_status','=','new')
-                ->whereJsonContains('parameters',json_decode($request['parameters'],TRUE))
-                ->get();
+                    ->where('job','=',$request['job'])
+                    ->where('process_status','=','new')
+                    ->whereJsonContains('parameters',json_decode($request['parameters'],TRUE))
+                    ->get();
             }
             else
             {
                 $taskDuplicate = Task::where('instance','=',$request['instance'])
-                ->where('job','=',$request['job'])
-                ->where('process_status','=','new')
-                ->whereNull('parameters')
-                ->get();
+                    ->where('job','=',$request['job'])
+                    ->where('process_status','=','new')
+                    ->whereNull('parameters')
+                    ->get();
             }
 
             // dd($request);
@@ -141,17 +146,55 @@ class TasksController extends Controller
         // echo(json_encode($requestSvr->user()) . "\n\n");
         if($requestSvr->user()->tokenCan('update'))
         {
+
             $requestSvr->all();
+
 
             $requestSvr['id_server'] = (string) $requestSvr['id_server'];
 
 
             $validatedData = $requestSvr->validate([
                 'id_server' => 'required|string',
-                'task_available' => 'required|array'
+                'task_available' => 'required|array',
+                'accept_instances'=> 'array',
+                'exclude_instances' =>'array'
             ]);
 
-            $task = Task::whereIn('job', $requestSvr['task_available'])->where('process_status','=','new')->orderBy('created_at', 'asc')->first();
+//            dd(isset($requestSvr['accept_instances']));
+
+            if (isset($requestSvr['accept_instances']) && isset($requestSvr['exclude_instances']))
+            {
+                $task = Task::whereIn('job', $requestSvr['task_available'])
+                    ->whereNotIn('instance', $requestSvr['exclude_instances'])
+                    ->whereIn('instance', $requestSvr['accept_instances'])
+                    ->where('process_status','=','new')
+                    ->orderBy('created_at', 'asc')
+                    ->first();
+            }
+            elseif (isset($requestSvr['accept_instances']) && !isset($requestSvr['exclude_instances']))
+            {
+                $task = Task::whereIn('job', $requestSvr['task_available'])
+                    ->WhereIn('instance', $requestSvr['accept_instances'])
+                    ->where('process_status','=','new')
+                    ->orderBy('created_at', 'asc')
+                    ->first();
+            }
+            elseif (!isset($requestSvr['accept_instances']) && isset($requestSvr['exclude_instances']))
+            {
+                $task = Task::whereIn('job', $requestSvr['task_available'])
+                    ->whereNotIn('instance', $requestSvr['exclude_instances'])
+                    ->where('process_status','=','new')
+                    ->orderBy('created_at', 'asc')
+                    ->first();
+            }
+            else
+            {
+                $task = Task::whereIn('job', $requestSvr['task_available'])->where('process_status','=','new')->orderBy('created_at', 'asc')->first();
+            }
+
+
+            $this->storeServer($requestSvr->ip(),$requestSvr['id_server']);
+            $this->updateServer($requestSvr->ip(),$requestSvr['id_server']);
 
             if(!empty($task))
             {
@@ -181,10 +224,11 @@ class TasksController extends Controller
     {
         if($requestSvr2->user()->tokenCan('update'))
         {
-            //get all data
-            $requestSvr2 = $requestSvr2->all();
-            $requestSvr2['id_server'] = (string) $requestSvr2['id_server'];
+            $this->updateServer($requestSvr2->ip(),$requestSvr2['id_server']);
 
+            $requestSvr2 = $requestSvr2->all();
+
+            $requestSvr2['id_server'] = (string) $requestSvr2['id_server'];
 
             $validator = Validator::make($requestSvr2, [
                 'id_server' => 'required|string',
@@ -222,7 +266,10 @@ class TasksController extends Controller
         if($requestSvr2->user()->tokenCan('update'))
         {
             //get all data
+            $this->updateServer($requestSvr2->ip(),$requestSvr2['id_server']);
+
             $requestSvr2 = $requestSvr2->all();
+
             $requestSvr2['id_server'] = (string) $requestSvr2['id_server'];
 
             $validator = Validator::make($requestSvr2, [
@@ -269,9 +316,9 @@ class TasksController extends Controller
         {
             if(!empty($instance))
             {
-                $todo = Task::whereIn('process_status', ['new','processing'])->where('instance','=',$instance)->orderBy('created_at', 'asc')->get();
+                $todo = Task::whereIn('process_status', ['new','processing'])->where('instance','=',$instance)->orderBy('created_at', 'desc')->get();
                 $done = Task::where('process_status','=','done')->where('instance','=',$instance)->orderBy('created_at', 'desc')->limit(100)->get();
-                $error = Task::where('process_status','=','error')->where('instance','=',$instance)->orderBy('created_at', 'asc')->get();
+                $error = Task::where('process_status','=','error')->where('instance','=',$instance)->orderBy('created_at', 'desc')->get();
 
                 return response()->json(['todo'=>$todo,'done'=>$done,'error'=>$error],200);
             }

@@ -73,49 +73,7 @@ class pullApiTest extends TestCase
         ])->put('/api/pull',$requestSvr1);
         $response->assertStatus(403);
     }
-
-    public function testTaskNoMatchPullApiHoqu()
-    {
-        // DuplicateTask::truncate();
-        // Task::truncate();
-
-        $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
-
-        //add data with api/store
-        $data = [
-            "instance" => "https://molntepisanotree.org",
-            "job" => "task1",
-            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
-        ];
-
-        $response = $this->withHeaders([
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$user_tokens['instance@webmapp.it'],
-        ])->post('/api/store',$data);
-
-        $response->assertStatus(201);
-
-        $this->resetAuth();
-
-        //request that sends the "requesting server"
-        $requestSvr1 = [
-            "id_server" => 'webmapp_server_staging_all_nombtiles',
-            "task_available" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
-        ];
-
-        //OPERATIONS
-        // Check that instance@webmapp.it access to api/
-        $response = $this->withHeaders([
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it'],
-        ])->put('/api/pull',$requestSvr1);
-        $response->assertStatus(204);
-        $response ->assertNoContent($status = 204);
-    }
-
-
-
-public function testFineFirstElementPullApiHoqu()
+    public function testFineFirstElementPullApiHoqu()
     {
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
 
@@ -180,6 +138,48 @@ public function testFineFirstElementPullApiHoqu()
 
     }
 
+    public function testTaskNoMatchPullApiHoqu()
+    {
+        // DuplicateTask::truncate();
+        // Task::truncate();
+
+        $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
+
+        //add data with api/store
+        $data = [
+            "instance" => "https://molntepisanotree.org",
+            "job" => "task1",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
+        ];
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$user_tokens['instance@webmapp.it'],
+        ])->post('/api/store',$data);
+
+        $response->assertStatus(201);
+
+        $this->resetAuth();
+
+        //request that sends the "requesting server"
+        $requestSvr1 = [
+            "id_server" => 'webmapp_server_staging_all_nombtiles',
+            "task_available" => ["mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"]
+        ];
+
+        //OPERATIONS
+        // Check that instance@webmapp.it access to api/
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer '.$user_tokens['server@webmapp.it'],
+        ])->put('/api/pull',$requestSvr1);
+        $response->assertStatus(204);
+        $response ->assertNoContent($status = 204);
+    }
+
+
+
+
     public function testFineFirstElementPullIntegerApiHoqu()
     {
         $user_tokens = json_decode(Storage::get('test_data/tokens_users.json'),TRUE);
@@ -201,7 +201,6 @@ public function testFineFirstElementPullApiHoqu()
         $requestSvr1 = [
             "id_server" => 999,
             "task_available" => ["task11","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
-            'ip_server' => '111.1111.111'
         ];
 
         $this->resetAuth();
@@ -226,6 +225,214 @@ public function testFineFirstElementPullApiHoqu()
         $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
     }
 
+    public function test_pull_filter_accept_instances()
+    {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['create']
+        );
+
+        //add data with api/store
+        $data = [
+            "instance" => "https://mdontepisanotree.org",
+            "job" => "task11",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
+        ];
+
+        $response = $this->post('/api/store',$data);
+
+        $response->assertStatus(201);
+
+        sleep(2);
+
+        $data1 = [
+            "instance" => "https://romagnatree.org",
+            "job" => "task11",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
+        ];
+
+        $response = $this->post('/api/store',$data1);
+
+        $response->assertStatus(201);
+
+        sleep(2);
+
+        $requestSvr1 = [
+            "id_server" => 999,
+            "task_available" => ["task11","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "accept_instances" => ["mdontepisanotree.org","romagnatree.org"]
+        ];
+
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['update']
+        );
+
+        //OPERATIONS
+        // Check that server@webmapp.it access to api/
+        $response = $this->put('/api/pull',$requestSvr1);
+
+        $response->assertStatus(200);
+        //get value elaborate by pull
+        $ja = Task::find($response['id']);
+        $this->assertSame('processing',$ja['process_status']);
+        //I check that the integer has become a string
+        $this->assertSame(((string)$requestSvr1['id_server']),$ja['id_server']);
+        $this->assertSame('127.0.0.1',$ja['ip_server']);
+        $this->assertSame('mdontepisanotree.org',$ja['instance']);
+        $this->assertSame($response['instance'],$ja['instance']);
+        $this->assertSame($response['id'],$ja["id"]);
+        $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
+        $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
+
+        $response = $this->put('/api/pull',$requestSvr1);
+
+        $response->assertStatus(200);
+        //get value elaborate by pull
+        $ja = Task::find($response['id']);
+        $this->assertSame('processing',$ja['process_status']);
+        //I check that the integer has become a string
+        $this->assertSame(((string)$requestSvr1['id_server']),$ja['id_server']);
+        $this->assertSame('127.0.0.1',$ja['ip_server']);
+        $this->assertSame('romagnatree.org',$ja['instance']);
+        $this->assertSame($response['instance'],$ja['instance']);
+        $this->assertSame($response['id'],$ja["id"]);
+        $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
+        $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
+    }
+
+    public function test_pull_filter_exclude_instances()
+    {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['create']
+        );
+
+        //add data with api/store
+        $data = [
+            "instance" => "https://mdontepisanotree.org",
+            "job" => "task11",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
+        ];
+
+        $response = $this->post('/api/store',$data);
+
+        $response->assertStatus(201);
+
+        sleep(2);
+
+        $data1 = [
+            "instance" => "https://romagnatree.org",
+            "job" => "task11",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
+        ];
+
+        $response = $this->post('/api/store',$data1);
+
+        $response->assertStatus(201);
+
+        sleep(2);
+
+        $requestSvr1 = [
+            "id_server" => 999,
+            "task_available" => ["task11","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "exclude_instances" => ["romagnatree.org"]
+        ];
+
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['update']
+        );
+
+        //OPERATIONS
+        // Check that server@webmapp.it access to api/
+        $response = $this->put('/api/pull',$requestSvr1);
+
+        $response->assertStatus(200);
+        //get value elaborate by pull
+        $ja = Task::find($response['id']);
+        $this->assertSame('processing',$ja['process_status']);
+        //I check that the integer has become a string
+        $this->assertSame(((string)$requestSvr1['id_server']),$ja['id_server']);
+        $this->assertSame('127.0.0.1',$ja['ip_server']);
+        $this->assertSame('mdontepisanotree.org',$ja['instance']);
+        $this->assertSame($response['instance'],$ja['instance']);
+        $this->assertSame($response['id'],$ja["id"]);
+        $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
+        $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
+
+        $response = $this->put('/api/pull',$requestSvr1);
+
+        $response->assertStatus(204);
+
+    }
+
+    public function test_pull_filter_exclude_instances_and_accept_instances()
+    {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['create']
+        );
+
+        //add data with api/store
+        $data = [
+            "instance" => "https://mdontepisanotree.org",
+            "job" => "task11",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
+        ];
+
+        $response = $this->post('/api/store',$data);
+
+        $response->assertStatus(201);
+
+        sleep(2);
+
+        $data1 = [
+            "instance" => "https://romagnatree.org",
+            "job" => "task11",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
+        ];
+
+        $response = $this->post('/api/store',$data1);
+
+        $response->assertStatus(201);
+
+        sleep(2);
+
+        $requestSvr1 = [
+            "id_server" => 999,
+            "task_available" => ["task11","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "exclude_instances" => ["romagnatree.org"],
+            "accept_instances" => ["mdontepisanotree.org"]
+        ];
+
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['update']
+        );
+
+        //OPERATIONS
+        // Check that server@webmapp.it access to api/
+        $response = $this->put('/api/pull',$requestSvr1);
+
+        $response->assertStatus(200);
+        //get value elaborate by pull
+        $ja = Task::find($response['id']);
+        $this->assertSame('processing',$ja['process_status']);
+        //I check that the integer has become a string
+        $this->assertSame(((string)$requestSvr1['id_server']),$ja['id_server']);
+        $this->assertSame('127.0.0.1',$ja['ip_server']);
+        $this->assertSame('mdontepisanotree.org',$ja['instance']);
+        $this->assertSame($response['instance'],$ja['instance']);
+        $this->assertSame($response['id'],$ja["id"]);
+        $this->assertSame(json_decode($response['parameters'],TRUE),json_decode($ja['parameters'],TRUE));
+        $this->assertSame($data['parameters'],json_decode($ja['parameters'],TRUE));
+
+        $response = $this->put('/api/pull',$requestSvr1);
+
+        $response->assertStatus(204);
+
+    }
 
 
     public function testStressPull()

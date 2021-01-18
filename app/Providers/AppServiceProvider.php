@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use ConsoleTVs\Charts\Registrar as Charts;
 
@@ -27,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
         $charts->register([
             \App\Charts\SampleChart::class
         ]);
+
+//        Blade::directive('br2nl', function ($string) {
+/*            return "<?php echo nl2br ($string); ?>";*/
+//        });
 
 
     }
