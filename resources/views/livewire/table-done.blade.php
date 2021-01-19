@@ -4,8 +4,8 @@
            <div class=" py-2 overflow-x-auto sm:-mx-6 sm:px-2 lg:-mx-20">
 
           <div class="my-2 py-2 overflow-x-auto">
-            <div class="mb-8">
-                <label class="inline-block w-32 font-bold">Filter:</label>
+              <div class="mb-8 ml-4 flex flex-wrap mx-2 mb-4">
+              <label class="inline-block w-32 font-bold">Filter:</label>
                 <select id="selectInstance"  class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="instance" class="border shadow p-2 bg-white" wire:model='instance'
                 >
                     <option value=''>Choose a Instance</option>
@@ -42,7 +42,7 @@
             </div>
               @if(count($selectedErrors) > 0 && count(array_keys($selectedErrors, false)) != count($selectedErrors))
                   <div class="mb-2 flex flex-wrap mx-2 mb-4">
-                      <label class="sm:1/4 md:w-1/4 lg:w-1/4 px-2 mb-4 inline-block w-32 font-bold">Action:</label>
+                      <label class="sm:1/4 md:w-1/4 lg:w-1/4 px-2 mb-4 inline-block w-32 font-bold">Bulk Action:</label>
                       <button id="bulkRes" wire:click="editAllRes()" data-toggle="modal" data-target="#updateModalAllRes" class="w-full sm:1/4 md:w-1/4 lg:w-1/4 px-2 mb-4 mr-3 bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500  hover:text-white shadow-md py-2 px-6 inline-flex items-center text-center">
                           <span class="mr-1">Reschedule</span>
                       </button>
