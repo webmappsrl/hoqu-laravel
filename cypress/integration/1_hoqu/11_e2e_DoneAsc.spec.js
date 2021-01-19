@@ -23,7 +23,7 @@ describe('Button Reschedule in Done', () => {
          cy.get('select#dataAsc').select('asc')
         var time_prev = 0
         var time = 0
-        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
             if (index == 0)time_prev=0
             time = Math.round(new Date($e.text()).getTime() / 1000)
             assert.isBelow(time_prev, time, 'previous date is below actual')
@@ -32,7 +32,7 @@ describe('Button Reschedule in Done', () => {
 
         cy.get('select#dataAsc').select('desc')
 
-        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
             if (index == 0)time_prev=0
             time = Math.round(new Date($e.text()).getTime() / 1000)
             assert.isAbove(time, time_prev, 'previous date is above actual')
