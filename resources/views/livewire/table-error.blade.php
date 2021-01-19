@@ -2,7 +2,7 @@
     <div class="container mx-auto w-3/4 px-6 py-8">
         <div class="flex flex-col mt-8 ">
             <div class=" py-2 overflow-x-auto sm:-mx-6 sm:px-2 lg:-mx-20">
-                <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                <div class="my-2 py-2 overflow-x-auto">
                     <div class="mb-8">
                         <label class="inline-block w-32 font-bold">Filter:</label>
                         <select id="selectInstance" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"name="instance" class="border shadow p-2 bg-white" wire:model='instance'
