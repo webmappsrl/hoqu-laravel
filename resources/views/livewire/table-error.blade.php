@@ -37,7 +37,7 @@
                         </select >
                     </div>
                     @if(count($selectedErrors) > 0 && count(array_keys($selectedErrors, false)) != count($selectedErrors))
-                    <div class="mb-8 flex flex-wrap -mx-2 mb-4">
+                    <div class="mb-2 flex flex-wrap mx-2 mb-4">
                         <label class="sm:1/4 md:w-1/4 lg:w-1/4 px-2 mb-4 inline-block w-32 font-bold">Action:</label>
                         <button id="bulkRes" wire:click="editAllRes()" data-toggle="modal" data-target="#updateModalAllRes" class="w-full sm:1/4 md:w-1/4 lg:w-1/4 px-2 mb-4 mr-3 bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500  hover:text-white shadow-md py-2 px-6 inline-flex items-center text-center">
                             <span class="mr-1">Reschedule</span>
