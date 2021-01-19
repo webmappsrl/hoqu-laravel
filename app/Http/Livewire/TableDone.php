@@ -150,6 +150,9 @@ namespace App\Http\Livewire;
          */
         public function edit(Task $task)
         {
+            $this->Task_id = $task->id;
+            $this->instance = $task->instance;
+            $this->job = $task->job;
 
             $this->openModal();
 

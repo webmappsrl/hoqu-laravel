@@ -22,7 +22,7 @@ describe('Button Reschedule in Done', () => {
         //Check Cancel Button
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(10) > div > button > span').click()
             cy.contains('Cancel').click()
 
             cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
@@ -33,7 +33,7 @@ describe('Button Reschedule in Done', () => {
         //Check Reschedule Button Skip
         cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(10) > div > button > span').click()
             cy.contains('Reschedule').click()
             cy.log(text1)
 
