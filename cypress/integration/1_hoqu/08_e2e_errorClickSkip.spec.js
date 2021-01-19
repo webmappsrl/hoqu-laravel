@@ -21,20 +21,20 @@ describe('Button Skip Error', () => {
         cy.url().should('contain', '/error')
 
         //Check Cancel Button
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').then((text1) => {
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(10) > div > button > span').click()
             cy.contains('Cancel').click()
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').should((text2) => {
               expect(text1).to.eq(text2)
             })
         })
 
         //Check Reschedule Button Skip
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').then((text1) => {
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(10) > div > button > span').click()
             cy.contains('Skip').click()
 
             //id via notification
@@ -43,7 +43,7 @@ describe('Button Skip Error', () => {
                 var idA = text1.split(' ')[5]
                 cy.log(idA)
 
-                expect(text1).to.eq('\n                        \n                           '+id+'\n                        \n                     ')
+                expect(text1).to.eq('\n                                        \n                                            '+id+'\n                                        \n                                    ')
                 cy.visit('/'+id+"/show")        })
 
             cy.get('h4#processStatus').each(($e, index, $list) => {

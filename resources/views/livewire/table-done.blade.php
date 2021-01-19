@@ -40,6 +40,17 @@
                 </select >
 
             </div>
+              @if(count($selectedErrors) > 0 && count(array_keys($selectedErrors, false)) != count($selectedErrors))
+                  <div class="mb-8 flex flex-wrap -mx-2 mb-4">
+                      <label class="sm:1/4 md:w-1/4 lg:w-1/4 px-2 mb-4 inline-block w-32 font-bold">Action:</label>
+                      <button id="bulkRes" wire:click="editAllRes()" data-toggle="modal" data-target="#updateModalAllRes" class="w-full sm:1/4 md:w-1/4 lg:w-1/4 px-2 mb-4 mr-3 bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500  hover:text-white shadow-md py-2 px-6 inline-flex items-center text-center">
+                          <span class="mr-1">Reschedule</span>
+                      </button>
+                      <button id="bulkSkip" wire:click="editAllSkip()" data-toggle="modal" data-target="#updateModalAllSkip" class="w-full sm:1/4 md:w-1/4 lg:w-1/4 px-2 mb-4 bg-white text-gray-800 font-bold rounded border-b-2 border-blue-500 hover:border-blue-600 hover:bg-blue-500  hover:text-white shadow-md py-2 px-6 inline-flex items-center text-center">
+                          <span class="mr-1">Skip</span>
+                      </button>
+                  </div>
+              @endif
 
             <div
             class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
@@ -47,7 +58,7 @@
             <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert">
                <div class="flex">
                   <div>
-                     <p class="text-lg">{{ session('message') }}</p>
+                     <p class="text-lg">{!!session('message') !!}</p>
                   </div>
                </div>
             </div>
@@ -55,13 +66,20 @@
             @if($isOpen)
             @include('livewire.done-new')
             @endif
-            <table id='hometable' class="min-w-full">
+                @if($isOpenResAll)
+                    @include('livewire.skipBulkRes')
+                @endif
+                @if($isOpenSkipAll)
+                    @include('livewire.skipBulkSkip')
+                @endif
+                <table id='hometable' class="min-w-full" wire:poll.5s>
                <thead>
                   <tr>
-                     <th
-                        class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                        Id
-                     </th>
+                      <th class="px-2 py-3 border-b border-gray-200 bg-gray-50"></th>
+                      <th
+                          class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                          Id
+                      </th>
                      <th
                         class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         Instance
@@ -98,11 +116,16 @@
                <tbody class="bg-white">
                   @foreach ($tasks as $index => $task)
                   <tr>
-                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                        <div class="flex items-center">
-                           <div class="text-sm leading-5 text-gray-500"><a href="/{{$task->id }}/show">{{ $task->id }}</a></div>
-                        </div>
-                     </td>
+                      <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                          <label class="inline-flex items-center mt-3">
+                              <input type="checkbox" class="form-checkbox h-5 w-5 text-green-600" value="{{$task->id }}" wire:model="selectedErrors.{{$task->id }}" >
+                          </label>
+                      </td>
+                      <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
+                          <div class="flex items-center">
+                              <div class="text-sm leading-5 text-gray-500"><a href="/{{$task->id }}/show">{{ $task->id }}</a></div>
+                          </div>
+                      </td>
                      <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                         <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->instance }}</a></div>
                      </td>
