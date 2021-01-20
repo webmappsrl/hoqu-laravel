@@ -555,6 +555,96 @@ class pullApiTest extends TestCase
         $response->assertStatus(400);
     }
 
+    public function test_no_array_accept_instances_and_exclude_instances_pull()
+    {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['create']
+        );
+
+        //add data with api/store
+        $data = [
+            "instance" => "https://mdontepisanotree.org",
+            "job" => "task11",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
+        ];
+
+        $response = $this->post('/api/store',$data);
+
+        $response->assertStatus(201);
+
+        sleep(2);
+
+        $data1 = [
+            "instance" => "https://romagnatree.org",
+            "job" => "task11",
+            "parameters" => ["a"=> "yes", "b"=> "no", "c" => "boh"],
+        ];
+
+        $response = $this->post('/api/store',$data1);
+
+        $response->assertStatus(201);
+
+        sleep(2);
+
+        $requestSvr1 = [
+            "id_server" => 999,
+            "task_available" => ["task11","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "exclude_instances" => ["romagnatree.org"],
+            "accept_instances" => 1
+        ];
+
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['update']
+        );
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+        ])->put('/api/pull',$requestSvr1);
+
+        $response->assertStatus(400);
+
+        $requestSvr1 = [
+            "id_server" => 999,
+            "task_available" => ["task11","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "exclude_instances" => 1,
+            "accept_instances" => ["romagnatree.org"]
+        ];
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+        ])->put('/api/pull',$requestSvr1);
+
+        $response->assertStatus(400);
+
+        $requestSvr1 = [
+            "id_server" => 999,
+            "task_available" => ["task11","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "exclude_instances" => 'nedo',
+            "accept_instances" => ["romagnatree.org"]
+        ];
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+        ])->put('/api/pull',$requestSvr1);
+
+        $response->assertStatus(400);
+
+        $requestSvr1 = [
+            "id_server" => 999,
+            "task_available" => ["task11","mptupdatepoi", "mptupdatetrack", "mptupdateroute", "mptdeleteroute","mptdeletepoi"],
+            "exclude_instances" => ["romagnatree.org"],
+            "accept_instances" => 'imstring'
+        ];
+
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+        ])->put('/api/pull',$requestSvr1);
+
+        $response->assertStatus(400);
+    }
+
     public function setUp(): void
     {
         parent::setUp();
