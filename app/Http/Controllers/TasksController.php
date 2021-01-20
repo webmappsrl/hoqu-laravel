@@ -143,6 +143,8 @@ class TasksController extends Controller
 
     public function pull(Request $requestSvr)
     {
+        if($requestSvr->user()->tokenCan('update'))
+        {
         // echo(json_encode($requestSvr->user()) . "\n\n");
         $id_server = $requestSvr['id_server'];
         if (!isset($id_server))
@@ -151,8 +153,7 @@ class TasksController extends Controller
         }
         $requestSvr['id_server'] = (string) $requestSvr['id_server'];
 
-        if($requestSvr->user()->tokenCan('update'))
-        {
+
 
             $validator = Validator::make($requestSvr->only(['id_server', 'task_available','accept_instances','exclude_instances']), [
             'id_server' => 'required|string',
