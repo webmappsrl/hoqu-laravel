@@ -39,10 +39,11 @@ class PruneTaskHoqu extends Command
     public function handle()
     {
 
-        $i = $this->argument('instance') ?: $this->ask('sssss');
-        $j = $this->argument('job')?: $this->ask('ssssxxxxxs');;
-        $p = $this->argument('process_status')?: $this->ask('ssssdssssssppps');;
-        Task::where('instance','i')->where('job','j')->where('process_status','p')->delete();
+        $i = $this->argument('instance') ?: $this->ask('miss instance');
+        $j = $this->argument('job')?: $this->ask('miss job');;
+        $p = $this->argument('process_status')?: $this->ask('miss process_status');;
+
+        Task::where('instance',$i)->where('job',$j)->where('process_status',$p)->delete();
         $this->info('the commands have been entered correctly');
     }
 }
