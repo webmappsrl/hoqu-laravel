@@ -52,7 +52,7 @@ describe('Filter in Error', () => {
             cy.get('select#dataAsc').select('asc')
             var time_prev = 0
             var time = 0
-            cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+            cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
                 if (index == 0)time_prev=0
                 time = Math.round(new Date($e.text()).getTime() / 1000)
                 assert.isBelow(time_prev, time, 'previous date is below actual')
@@ -61,7 +61,7 @@ describe('Filter in Error', () => {
 
             cy.get('select#dataAsc').select('desc')
 
-            cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+            cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
                 if (index == 0)time_prev=0
                 time = Math.round(new Date($e.text()).getTime() / 1000)
                 assert.isAbove(time, time_prev, 'previous date is above actual')
@@ -70,10 +70,10 @@ describe('Filter in Error', () => {
 
             cy.get('select#selectJob').select('Et.')
             cy.wait(1000)
-            cy.get('#hometable > tbody > tr > td:nth-child(3)').each(($e, index, $list) => {
+            cy.get('#hometable > tbody > tr > td:nth-child(4)').each(($e, index, $list) => {
                 expect($e.text()).to.contain('Et.')
             })
-            cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+            cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
                 if (index == 0){time_prev=0}
                 expect(Cypress.moment($e.text()).isAfter(Cypress.moment(time_prev))).to.be.true;
                 time_prev = time
@@ -82,10 +82,10 @@ describe('Filter in Error', () => {
 
             cy.get('select#dataAsc').select('asc')
             cy.wait(1000)
-            cy.get('#hometable > tbody > tr > td:nth-child(3)').each(($e, index, $list) => {
+            cy.get('#hometable > tbody > tr > td:nth-child(4)').each(($e, index, $list) => {
                 expect($e.text()).to.contain('Et.')
             })
-            cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+            cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
                 if (index == 0)time_prev=0
                 time = Math.round(new Date($e.text()).getTime() / 1000)
                 assert.isBelow(time_prev, time, 'previous date is below actual')
@@ -94,13 +94,13 @@ describe('Filter in Error', () => {
 
             cy.get('select#selectInstance').select('montepisano.org')
             cy.wait(1000)
-            cy.get('#hometable > tbody > tr > td:nth-child(2)').each(($e, index, $list) => {
+            cy.get('#hometable > tbody > tr > td:nth-child(3)').each(($e, index, $list) => {
                 expect($e.text()).to.contain('montepisano.org')
             })
-            cy.get('#hometable > tbody > tr > td:nth-child(3)').each(($e, index, $list) => {
+            cy.get('#hometable > tbody > tr > td:nth-child(4)').each(($e, index, $list) => {
                 expect($e.text()).to.contain('Et.')
             })
-            cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+            cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
                 if (index == 0)time_prev=0
                 time = Math.round(new Date($e.text()).getTime() / 1000)
                 assert.isBelow(time_prev, time, 'previous date is below actual')
@@ -109,7 +109,7 @@ describe('Filter in Error', () => {
             cy.get('select#dataAsc').select('desc')
             cy.wait(1000)
 
-            cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+            cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
                 if (index == 0){time_prev=0}
                 expect(Cypress.moment($e.text()).isAfter(Cypress.moment(time_prev))).to.be.true;
                 time_prev = time
@@ -128,7 +128,8 @@ describe('Filter in Error', () => {
             })
         })
 
-
+        cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
+        cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
 
 
 

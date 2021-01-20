@@ -131,7 +131,8 @@ describe('Filter Duplicate', () => {
             })
         })
 
-
+        cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
+        cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
 
     })
 })

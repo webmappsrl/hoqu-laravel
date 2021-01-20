@@ -21,18 +21,18 @@ describe('Button Skip Error', () => {
         cy.url().should('contain', '/todo')
 
         //Check Cancel Button
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').then((text1) => {
 
             cy.get('#buttonTodoSkip0').click()
             cy.contains('Cancel').click()
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').should((text2) => {
                 expect(text1).to.eq(text2)
             })
         })
 
         //Check Reschedule Button Skip
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').then((text1) => {
 
             cy.get('#buttonTodoSkip0').click()
             cy.contains('Skip').click()
@@ -58,18 +58,18 @@ describe('Button Skip Error', () => {
         //ASSERT error
         cy.url().should('contain', '/todo')
         //Check Cancel Button
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').then((text1) => {
 
             cy.get('#buttonTodoRes0').click()
             cy.contains('Cancel').click()
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').should((text2) => {
                 expect(text1).to.eq(text2)
             })
         })
 
         //Check Reschedule Button Skip
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').then((text1) => {
 
             cy.get('#buttonTodoRes0').click()
             cy.contains('Reschedule').click()
@@ -90,6 +90,8 @@ describe('Button Skip Error', () => {
             })
         })
 
+        cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
+        cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
     })
 
 

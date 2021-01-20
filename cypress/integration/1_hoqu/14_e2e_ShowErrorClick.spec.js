@@ -16,7 +16,7 @@ describe('Button Reschedule Error', () => {
 
         cy.get('body > div > main > div > div > div > header > div:nth-child(1) > button').click()
         cy.get('span#link_error').click()
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1) > div > div > a').click()
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2) > div > div > a').click()
         cy.get('button#editRes').click()
         //check Cancel
         cy.get('button#buttonCancel').click()
@@ -38,7 +38,7 @@ describe('Button Reschedule Error', () => {
         //check Skip
         cy.get('body > div > main > div > div > div > header > div:nth-child(1) > button').click()
         cy.get('span#link_error').click()
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1) > div > div > a').click()
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2) > div > div > a').click()
         cy.get('button#editShow').click()
         //check Cancel
         cy.get('button#buttonCancel').click()
