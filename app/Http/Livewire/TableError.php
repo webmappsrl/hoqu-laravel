@@ -17,6 +17,11 @@ namespace App\Http\Livewire;
         public $countI = 1;
         public $countZ = 0;
         public $isOpen = 0;
+        public $isOpenResAll = 0;
+        public $isOpenSkipAll = 0;
+
+        public $selectedErrors = [];
+
 
 
         public $instance1, $job1,$parameters, $process_status, $process_log, $Task_id;
@@ -40,6 +45,37 @@ namespace App\Http\Livewire;
             $this->isOpen = false;
         }
 
+        public function openModalAllRes()
+        {
+            $this->isOpenResAll = true;
+        }
+
+
+        public function closeModalAllRes()
+        {
+            $this->isOpenResAll = false;
+        }
+
+        public function openModalAllSkip()
+        {
+            $this->isOpenSkipAll = true;
+        }
+
+
+        public function closeModalAllSkip()
+        {
+            $this->isOpenSkipAll = false;
+        }
+
+        public function editAllRes()
+        {
+            $this->openModalAllRes();
+
+        }
+        public function editAllSkip()
+        {
+            $this->openModalAllSkip();
+        }
 
 
     /**
@@ -72,8 +108,6 @@ namespace App\Http\Livewire;
 
         public function update()
         {
-
-
             Task::updateOrCreate(['id' => $this->Task_id], [
                 'process_status' => 'new'
 
@@ -85,6 +119,26 @@ namespace App\Http\Livewire;
             $this->closeModal();
             $this->resetInputFields();
 
+        }
+
+        public function bulkUpdateRes()
+        {
+            Task::whereIn('id', $this->selectedErrors)->update(['process_status' => 'new']);
+            $this->closeModalAllRes();
+
+            $mex='';
+
+            foreach ($this->selectedErrors as $selectedError)
+            {
+                if ($selectedError!=false)
+                {
+                    $mex = $mex . 'changed the process status of ' . $selectedError . ' in NEW <br>';
+                }
+            }
+            session()->flash('message',
+                $mex );
+
+            $this->selectedErrors = [];
         }
 
         public function updateSkip()
@@ -103,11 +157,27 @@ namespace App\Http\Livewire;
             $this->closeModal();
             $this->resetInputFields();
         }
-        /**
-         * The attributes that are mass assignable.
-         *
-         * @var array
-         */
+
+        public function bulkUpdateSkip()
+        {
+            Task::whereIn('id', $this->selectedErrors)->update(['process_status' => 'skip']);
+            $this->closeModalAllSkip();
+
+            $mex='';
+
+            foreach ($this->selectedErrors as $selectedError)
+            {
+                if ($selectedError!=false)
+                {
+                    $mex =$mex. 'changed the process status of ' .$selectedError . ' in SKIP <br>';
+                }
+            }
+            session()->flash('message',
+                $mex );
+
+            $this->selectedErrors = [];
+        }
+
         public function edit(Task $task)
         {
             $this->Task_id = $task->id;
@@ -120,9 +190,10 @@ namespace App\Http\Livewire;
 
 
 
-
         public function render()
         {
+//            dd(in_array( false ,$this->selectedErrors)==false);
+//            dd($this->selectedErrors);
             if (!empty($this->job))
             {
                 $this->instances = Task::select('instance')->where('job',$this->job)->whereIn('process_status', ['error'])->groupBy('instance')->orderBy('instance', 'asc')->get();

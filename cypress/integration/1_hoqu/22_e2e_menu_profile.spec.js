@@ -14,7 +14,7 @@ describe('Menu Profile and API', () => {
         //ASSERT HOME BASE
         cy.url().should('contain', '/')
 
-        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(2) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(3) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
         cy.contains('Profile').click()
         cy.url().should('contain', '/user/profile')
         cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(1) > button > svg').should('exist')
@@ -23,35 +23,35 @@ describe('Menu Profile and API', () => {
         cy.contains('Dashboard').click()
         cy.url().should('contain', '/')
 
-        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(2) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(3) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
         cy.contains('Profile').click()
         cy.url().should('contain', '/user/profile')
         cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(1) > button > svg').click()
         cy.contains('Todo').click()
         cy.url().should('contain', '/todo')
 
-        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(2) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(3) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
         cy.contains('Profile').click()
         cy.url().should('contain', '/user/profile')
         cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(1) > button > svg').click()
         cy.contains('Done').click()
         cy.url().should('contain', '/done')
 
-        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(2) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(3) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
         cy.contains('Profile').click()
         cy.url().should('contain', '/user/profile')
         cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(1) > button > svg').click()
         cy.contains('Error').click()
         cy.url().should('contain', '/error')
 
-        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(2) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(3) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
         cy.contains('Profile').click()
         cy.url().should('contain', '/user/profile')
         cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(1) > button > svg').click()
         cy.contains('Duplicate').click()
         cy.url().should('contain', '/duplicate')
 
-        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(2) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(3) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
         cy.contains('Profile').click()
         cy.url().should('contain', '/user/profile')
         cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(1) > button > svg').click()
@@ -60,7 +60,7 @@ describe('Menu Profile and API', () => {
 
 
         //API tokens
-        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(2) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(3) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
         cy.contains('API Tokens').click()
         cy.url().should('contain', '/user/api-tokens')
         cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(1) > button > svg').should('exist')
@@ -69,40 +69,42 @@ describe('Menu Profile and API', () => {
         cy.contains('Dashboard').click()
         cy.url().should('contain', '/')
 
-        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(2) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(3) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
         cy.contains('API Tokens').click()
         cy.url().should('contain', '/user/api-tokens')
         cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(1) > button > svg').click()
         cy.contains('Todo').click()
         cy.url().should('contain', '/todo')
 
-        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(2) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(3) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
         cy.contains('API Tokens').click()
         cy.url().should('contain', '/user/api-tokens')
         cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(1) > button > svg').click()
         cy.contains('Done').click()
         cy.url().should('contain', '/done')
 
-        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(2) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(3) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
         cy.contains('API Tokens').click()
         cy.url().should('contain', '/user/api-tokens')
         cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(1) > button > svg').click()
         cy.contains('Error').click()
         cy.url().should('contain', '/error')
 
-        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(2) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(3) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
         cy.contains('API Tokens').click()
         cy.url().should('contain', '/user/api-tokens')
         cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(1) > button > svg').click()
         cy.contains('Duplicate').click()
         cy.url().should('contain', '/duplicate')
 
-        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(2) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
+        cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(3) > div > nav > div.max-w-7xl.mx-auto.px-4.sm\\:px-6.lg\\:px-8 > div > div.hidden.sm\\:flex.sm\\:items-center.sm\\:ml-6 > div > div:nth-child(1) > button').click()
         cy.contains('API Tokens').click()
         cy.url().should('contain', '/user/api-tokens')
         cy.get('body > div > main > div > div > div.flex-1.flex.flex-col.overflow-hidden > header > div:nth-child(1) > button > svg').click()
         cy.contains('Info').click()
         cy.url().should('contain', '/info')
-
+        cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
+        cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
     })
+
 })

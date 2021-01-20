@@ -21,29 +21,29 @@ describe('Button Reschedule in Done', () => {
         cy.url().should('contain', '/todo')
 
         //Check Cancel Button Res
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').then((text1) => {
 
             cy.get('button#buttonTodoRes0').click()
             cy.contains('Cancel').click()
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').should((text2) => {
               expect(text1).to.eq(text2)
             })
         })
 
         //Check Cancel Button Skip
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').then((text1) => {
 
             cy.get('button#buttonTodoSkip0').click()
             cy.contains('Cancel').click()
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').should((text2) => {
                 expect(text1).to.eq(text2)
             })
         })
 
         // Check Reschedule Button Skip
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').then((text1) => {
 
             cy.get('button#buttonTodoSkip0').click()
             cy.contains('Skip').click()
@@ -53,7 +53,7 @@ describe('Button Reschedule in Done', () => {
 
             //id via notification
             cy.get('body > div > main > div > div > div > main > div > div > div > div > div> div > div > p').invoke('text').then((text) => {
-                // cy.log(text)
+                 cy.log(text)
 
 
                 var id = text.split(' ')[5]

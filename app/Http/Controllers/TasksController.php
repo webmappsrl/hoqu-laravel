@@ -143,22 +143,32 @@ class TasksController extends Controller
 
     public function pull(Request $requestSvr)
     {
-        // echo(json_encode($requestSvr->user()) . "\n\n");
         if($requestSvr->user()->tokenCan('update'))
         {
+        // echo(json_encode($requestSvr->user()) . "\n\n");
+        $id_server = $requestSvr['id_server'];
+        if (!isset($id_server))
+        {
+            return response(['error' => 'Validation Error id server'],400);
+        }
+        $requestSvr['id_server'] = (string) $requestSvr['id_server'];
 
-            $requestSvr->all();
 
+
+            $validator = Validator::make($requestSvr->only(['id_server', 'task_available','accept_instances','exclude_instances']), [
+            'id_server' => 'required|string',
+            'task_available' => 'required|array',
+            'accept_instances'=> 'array',
+            'exclude_instances' =>'array'
+            ]);
+
+
+            if($validator->fails()){
+                return response(['error' => $validator->errors(), 'Validation Error'],400);
+            }
 
             $requestSvr['id_server'] = (string) $requestSvr['id_server'];
 
-
-            $validatedData = $requestSvr->validate([
-                'id_server' => 'required|string',
-                'task_available' => 'required|array',
-                'accept_instances'=> 'array',
-                'exclude_instances' =>'array'
-            ]);
 
 //            dd(isset($requestSvr['accept_instances']));
 

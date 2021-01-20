@@ -3,7 +3,7 @@
         <div class="flex flex-col mt-8 ">
             <div class=" py-2 overflow-x-auto sm:-mx-6 sm:px-2 lg:-mx-20">
 
-                <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8" wire:poll.5s>
+                <div class="my-2 py-2 overflow-x-auto" wire:poll.5s>
 
                     <!-- component -->
                     <div
@@ -29,23 +29,27 @@
                                             <td class="px-2 py-2 text-gray-500 font-semibold">Last Call</td>
                                             <td class="px-2 py-2">{{$server->updated_at }}</td>
                                         </tr>
-                                        @if(now()->floatDiffInMinutes($server->updated_at) < 5 && ($tasks->where('id_server',$server->server_id)->count()) > 0)
+                                        <tr>
+                                            <td class="px-2 py-2 text-gray-500 font-semibold">Processing</td>
+                                            <td class="px-2 py-2">{{$tasks->where('id_server',$server->server_id)->count() }}</td>
+                                        </tr>
+                                        @if(now()->floatDiffInMinutes($server->updated_at) < 5 && $tasks->where('id_server',$server->server_id)->count() > 0)
 
                                         <tr>
                                             <td class="px-2 py-2 text-gray-800 text-xl font-bold">Status</td>
-                                            <td class="text-center px-2 py-2 rounded bg-green-800 rounded-full text-2xl font-bold">Active</td>
+                                            <td class="text-center px-2 py-2 rounded bg-green-600 rounded-full text-2xl font-bold">Active</td>
                                         </tr>
-                                        @elseif(now()->floatDiffInMinutes($server->updated_at) < 5 && ($tasks->where('id_server',$server->server_id)->count()) == 0)
+                                        @elseif(now()->floatDiffInMinutes($server->updated_at) < 5 && $tasks->where('id_server',$server->server_id)->count() == 0)
                                             <tr>
                                                 <td class="px-2 py-2 text-gray-800 text-xl font-bold">Status</td>
                                                 <td class="text-center px-2 py-2 rounded bg-green-200 rounded-full text-2xl font-bold">Idle</td>
                                             </tr>
-                                            @elseif(now()->floatDiffInMinutes($server->updated_at) >= 5 && ($tasks->where('id_server',$server->server_id)->count()) == 0)
+                                            @elseif(now()->floatDiffInMinutes($server->updated_at) >= 5 && $tasks->where('id_server',$server->server_id)->count() == 0)
                                         <tr>
                                             <td class="px-2 py-2 text-gray-800 text-xl font-bold">Status</td>
-                                            <td class="text-center px-2 py-2 rounded bg-red-800 rounded-full text-2xl font-bold">Turned off</td>
+                                            <td class="text-center px-2 py-2 rounded bg-red-600 rounded-full text-2xl font-bold">Turned off</td>
                                         </tr>
-                                        @elseif(now()->floatDiffInMinutes($server->updated_at) >= 5 && ($tasks->where('id_server',$server->server_id)->count()) > 0)
+                                        @elseif(now()->floatDiffInMinutes($server->updated_at) >= 5 && $tasks->where('id_server',$server->server_id)->count() > 0)
                                             <tr>
                                                 <td class="px-2 py-2 text-gray-800 text-xl font-bold">Status</td>
                                                 <td class="text-center px-2 py-2 rounded bg-red-300 rounded-full text-2xl font-bold">Warning</td>

@@ -22,7 +22,7 @@ describe('New and Processing', () => {
         //check the data that are in ascending order
         var time_prev = 0
         var time = 0
-        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
 
             time = Math.round(new Date($e.text()).getTime() / 1000)
             assert.isBelow(time_prev, time, 'previous date is below actual')
@@ -30,7 +30,7 @@ describe('New and Processing', () => {
         })
 
         //check that the data with status new and processing are present
-        cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('new')) {
                 expect(text).to.eq('\n                                                                                    new\n                                                                            ')
@@ -47,7 +47,7 @@ describe('New and Processing', () => {
 
         //check the data that are in ascending order
 
-        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
             if (index == 0) time_prev = 0
             time = Math.round(new Date($e.text()).getTime() / 1000)
             assert.isBelow(time_prev, time, 'previous date is below actual')
@@ -55,7 +55,7 @@ describe('New and Processing', () => {
         })
 
         //check that the data with status new and processing are present
-        cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('new')) {
                 expect(text).to.eq('\n                                                                                    new\n                                                                            ')
@@ -71,7 +71,7 @@ describe('New and Processing', () => {
         cy.url().should('contain', '/todo?page=3')
 
         var init = 0
-        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
             if (index == 0) time_prev = 0
             if(time_prev < time)
             {
@@ -92,7 +92,7 @@ describe('New and Processing', () => {
         })
 
         //check that the data with status new and processing are present
-        cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('new')) {
                 expect(text).to.eq('\n                                                                                    new\n                                                                            ')
@@ -113,7 +113,7 @@ describe('New and Processing', () => {
         cy.url().should('contain', '/todo?page=4')
 
         //check the data that are in ascending order
-        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
             if (index == 0) time_prev = 0
             if(time_prev < time)
             {
@@ -134,7 +134,7 @@ describe('New and Processing', () => {
         })
 
         //check that the data with status new and processing are present
-        cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('new')) {
                 assert.strictEqual(text, '\n                                                                                    new\n                                                                            ', 'new ok')

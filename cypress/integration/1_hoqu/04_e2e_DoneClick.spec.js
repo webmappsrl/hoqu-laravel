@@ -20,20 +20,20 @@ describe('Button Reschedule in Done', () => {
         cy.url().should('contain', '/done')
 
         //Check Cancel Button
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').then((text1) => {
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(10) > div > button > span').click()
             cy.contains('Cancel').click()
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').should((text2) => {
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').should((text2) => {
               expect(text1).to.eq(text2)
             })
         })
 
         //Check Reschedule Button Skip
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1)').invoke('text').then((text1) => {
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2)').invoke('text').then((text1) => {
 
-            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(9) > div > button > span').click()
+            cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(10) > div > button > span').click()
             cy.contains('Reschedule').click()
             cy.log(text1)
 
@@ -42,7 +42,7 @@ describe('Button Reschedule in Done', () => {
                 var id = text.split(' ')[5]
                 var idA = text1.split(' ')[5]
                 cy.log(idA)
-                expect(text1).to.eq('\n                        \n                           '+id+'\n                        \n                     ')
+                expect(text1).to.eq(                '\n                          \n                              '+id+'\n                          \n                      ')
                 cy.visit('/'+id+"/show")
         })
 

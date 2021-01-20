@@ -24,7 +24,7 @@ describe('Page Error', () => {
         //check the data that are in ascending order
         var time_prev = 0
         var time = 0
-        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
 
             time = Math.round(new Date($e.text()).getTime() / 1000)
             assert.isBelow(time_prev, time, 'previous date is below actual')
@@ -32,10 +32,10 @@ describe('Page Error', () => {
         })
 
         //check that the data with status new and processing are present
-        cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('error')) {
-                expect(text).to.eq('\n                                                error\n                                             ')
+                expect(text).to.eq('\n                                                                                    error\n                                                                            ')
             }
 
         })
@@ -46,7 +46,7 @@ describe('Page Error', () => {
 
         //check the data that are in ascending order
 
-        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
           if (index == 0)time_prev=0
             time = Math.round(new Date($e.text()).getTime() / 1000)
             assert.isBelow(time_prev, time, 'previous date is below actual')
@@ -54,10 +54,10 @@ describe('Page Error', () => {
         })
 
         //check that the data with status new and processing are present
-        cy.get('#hometable > tbody > tr > td:nth-child(5)').each(($e, index, $list) => {
+        cy.get('#hometable > tbody > tr > td:nth-child(6)').each(($e, index, $list) => {
             const text = $e.text()
             if (text.includes('error')) {
-                expect(text).to.eq('\n                                                error\n                                             ')
+                expect(text).to.eq('\n                                                                                    error\n                                                                            ')
             }
         })
 

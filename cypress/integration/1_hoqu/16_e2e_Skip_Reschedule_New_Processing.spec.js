@@ -19,12 +19,12 @@ describe('Button Reschedule in Done', () => {
 
         //ASSERT todo
         cy.url().should('contain', '/todo')
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2) > div > a\n').click()
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(3) > div > a\n').click()
 
         //check Skip
         cy.get('body > div > main > div > div > div > header > div:nth-child(1) > button').click()
         cy.get('span#link_todo').click()
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(1) > div > div > a').click()
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2) > div > div > a').click()
         cy.get('button#editShow').click()
         //check Cancel
         cy.get('button#buttonCancel').click()
@@ -46,7 +46,7 @@ describe('Button Reschedule in Done', () => {
         cy.url().should('contain', '/todo')
         cy.get('#paginationDone > div > nav > div > div:nth-child(2) > span > span:nth-child(5) > button').click()
         cy.url().should('contain', '/todo?page=4')
-        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(2) > div > a\n').click()
+        cy.get('#hometable > tbody > tr:nth-child(1) > td:nth-child(3) > div > a\n').click()
 
 
         //check Reschedule
@@ -58,6 +58,9 @@ describe('Button Reschedule in Done', () => {
             expect(text).to.contain('new')
 
         })
+        cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
+        cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
     })
+
 
 })
