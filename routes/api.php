@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->put('/updateDone',[TasksController::class, 'u
 Route::middleware('auth:sanctum')->put('/updateError',[TasksController::class, 'updateError']);
 Route::middleware('auth:sanctum')->get('/show/{task}',[TasksController::class, 'show']);
 Route::middleware('auth:sanctum')->get('/jobsByInstance/{instance}',[TasksController::class, 'jobsByInstance']);
-Route::middleware('auth:sanctum')->get('/getServer',[WmServerController::class, 'get_server']);
+//Route::middleware('auth:sanctum')->get('/getServer',[WmServerController::class, 'get_server']);
 Route::middleware('auth:sanctum')->get('/getServer/{server_id}',[WmServerController::class, 'get_single_server']);
 
 

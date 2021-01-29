@@ -10,23 +10,23 @@ use Illuminate\Support\Facades\Validator;
 
 class WmServerController extends Controller
 {
-    public function get_server(Request $request)
-    {
-        if($request->user()->tokenCan('read'))
-        {
-            $servers = Wm_Server::all()->map->toArray();
-            $all_servers = [];
-            foreach ($servers as $index => $server)
-            {
-                $task_processing = Task::where('id_server',$server['server_id'])->count();
-                $all_servers[] = array_merge($server,['processing'=>$task_processing]);
-            }
-
-            return response()->json($all_servers,200);
-
-        }
-        else return abort(403,'Unauthorized');
-    }
+//    public function get_server(Request $request)
+//    {
+//        if($request->user()->tokenCan('read'))
+//        {
+//            $servers = Wm_Server::all()->map->toArray();
+//            $all_servers = [];
+//            foreach ($servers as $index => $server)
+//            {
+//                $task_processing = Task::where('id_server',$server['server_id'])->count();
+//                $all_servers[] = array_merge($server,['processing'=>$task_processing]);
+//            }
+//
+//            return response()->json($all_servers,200);
+//
+//        }
+//        else return abort(403,'Unauthorized');
+//    }
 
     public function get_single_server(Request $request, $server_id)
     {
