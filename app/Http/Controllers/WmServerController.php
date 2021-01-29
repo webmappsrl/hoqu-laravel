@@ -33,29 +33,38 @@ class WmServerController extends Controller
         if($request->user()->tokenCan('read'))
         {
             $server = Wm_Server::where('server_id',$server_id)->get()->toArray();
-
-            $task_processing = Task::where('id_server',$server[0]['server_id'])->count();
-            $single_server = [];
-
-            if (now()->floatDiffInMinutes($server[0]['updated_at']) < 5 && $task_processing > 0)
+            if($server!=[])
             {
-                $single_server = array_merge($server,['status'=>'Idle']);
+                $task_processing = Task::where('id_server',$server[0]['server_id'])->count();
+                $single_server = [];
+
+                if (now()->floatDiffInMinutes($server[0]['updated_at']) < 5 && $task_processing > 0)
+                {
+                    $single_server = array_merge($server[0],['status'=>'Idle']);
+                }
+                elseif (now()->floatDiffInMinutes($server[0]['updated_at']) >= 5 && $task_processing == 0)
+                {
+                    $single_server = array_merge($server[0],['status'=>'Turned off']);
+                }
+                elseif (now()->floatDiffInMinutes($server[0]['updated_at']) >= 5 && $task_processing > 0)
+                {
+                    $single_server = array_merge($server[0],['status'=>'Warning']);
+                }
+                elseif (now()->floatDiffInMinutes($server[0]['updated_at']) < 5 && $task_processing > 0)
+                {
+                    $single_server = array_merge($server[0],['status'=>'Active']);
+                }
+
+
+                return response()->json($single_server,200);
+
             }
-            elseif (now()->floatDiffInMinutes($server[0]['updated_at']) >= 5 && $task_processing == 0)
+            else
             {
-                $single_server = array_merge($server,['status'=>'Turned off']);
-            }
-            elseif (now()->floatDiffInMinutes($server[0]['updated_at']) >= 5 && $task_processing > 0)
-            {
-                $single_server = array_merge($server,['status'=>'Warning']);
-            }
-            elseif (now()->floatDiffInMinutes($server[0]['updated_at']) < 5 && $task_processing > 0)
-            {
-                $single_server = array_merge($server,['status'=>'Active']);
+                return response()->json('server not found',404);
             }
 
 
-            return response()->json($single_server,200);
 
         }
         else return abort(403,'Unauthorized');
