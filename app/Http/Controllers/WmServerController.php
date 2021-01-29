@@ -37,7 +37,7 @@ class WmServerController extends Controller
             {
                 $task_processing = Task::where('id_server',$server[0]['server_id'])->count();
 
-                if (now()->floatDiffInMinutes($server[0]['updated_at']) < 5 && $task_processing > 0)
+                if (now()->floatDiffInMinutes($server[0]['updated_at']) < 5 && $task_processing == 0)
                 {
                     $single_server = array_merge($server[0],['status'=>'Idle']);
                 }
@@ -54,7 +54,7 @@ class WmServerController extends Controller
                     $single_server = array_merge($server[0],['status'=>'Active']);
                 }
 
-                return response()->json($server,200);
+                return response()->json($single_server,200);
 
             }
             else
