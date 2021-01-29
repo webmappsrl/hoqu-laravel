@@ -54,7 +54,7 @@ class WmServerController extends Controller
                     $single_server = array_merge($server[0],['status'=>'Active']);
                 }
 
-                return response()->json($single_server,200);
+                return response()->json($server,200);
 
             }
             else
