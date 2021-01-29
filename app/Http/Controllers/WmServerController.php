@@ -14,19 +14,18 @@ class WmServerController extends Controller
         if($request->user()->tokenCan('read'))
         {
             $servers = Wm_Server::all()->map->toArray();
-            $d = [];
-            $dr = [];
-            foreach ($servers as $server)
+            $single_server = [];
+            $all_servers = [];
+            foreach ($servers as $index => $server)
             {
                 $task_processing = Task::where('id_server',$server['server_id'])->count();
-                $a = ['processing'=>$task_processing];
-                $d  += array_merge($server,$a);
-                $dr += $d;
+                $single_server  = array_merge($server,['processing'=>$task_processing]);
+                $all_servers[] = $single_server;
             }
 
 
 
-            return response()->json($dr,200);
+            return response()->json($all_servers,200);
 
         }
         else return abort(403,'Unauthorized');
