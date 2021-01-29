@@ -81,42 +81,42 @@
                           Id
                       </th>
                      <th
-                        class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         Instance
                      </th>
                      <th
-                        class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         Job
                      </th>
                      <th
-                        class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         Parameters
                      </th>
                      <th
-                        class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         Status
                      </th>
                      <th
-                        class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         Create
                      </th>
                      <th
 
-                        class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         Worked
                      </th
                          >
                      <th
-                        class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                         Elapsed time
                      </th>
-                     <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
+                     <th class="px-2 py-3 border-b border-gray-200 bg-gray-50"></th>
                   </tr>
                </thead>
                <tbody class="bg-white">
                   @foreach ($tasks as $index => $task)
                   <tr>
-                      <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                      <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                           <label class="inline-flex items-center mt-3">
                               <input type="checkbox" class="form-checkbox h-5 w-5 text-green-600" value="{{$task->id }}" wire:model="selectedErrors.{{$task->id }}" >
                           </label>
@@ -126,16 +126,16 @@
                               <div class="text-sm leading-5 text-gray-500"><a href="/{{$task->id }}/show">{{ $task->id }}</a></div>
                           </div>
                       </td>
-                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                     <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                         <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->instance }}</a></div>
                      </td>
-                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                     <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                         <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->job }}</a></div>
                      </td>
-                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                     <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                         <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->parameters }}</a></div>
                      </td>
-                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                     <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                         @if($task->process_status=='new')
                         <span
                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
@@ -154,18 +154,18 @@
                         @endif
                      </td>
                      <td
-                        class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                        class="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
                         <a href="/{{$task->id }}/show">{{ $task->created_at}}</a>
                      </td>
                      <td
-                        class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                        class="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
                         <a href="/{{$task->id }}/show">{{ $task->updated_at}}</a>
                      </td>
                      <td
-                        class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                        class="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
                         <a href="/{{$task->id }}/show">{{ $task->created_at->floatDiffInSeconds($task->updated_at) }}</a>
                      </td>
-                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                     <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                         <div class="flex justify-center bg-grey-lighter mb-1 text-sm leading-3 text-gray-900"> <button data-toggle="modal" data-target="#updateModal" wire:click="edit({{$task}})" class="bg-white text-gray-800 font-bold rounded border-b-2 border-indigo-500 hover:border-indigo-600 hover:bg-indigo-500  hover:text-white shadow-md py-2 px-6 inline-flex items-center">
                            <span class="mr-1">Edit</span>
                            </button>

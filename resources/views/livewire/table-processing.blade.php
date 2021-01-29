@@ -61,11 +61,11 @@
                             <thead>
                             <tr>
                                 <th
-                                    class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Id
                                 </th>
                                 <th
-                                    class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-small text-gray-500 uppercase tracking-wider">
+                                    class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-small text-gray-500 uppercase tracking-wider">
                                     Instance
                                 </th>
                                 <th
@@ -77,7 +77,7 @@
                                     Parameters
                                 </th>
                                 <th
-                                    class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Status
                                 </th>
                                 <th
@@ -85,38 +85,38 @@
                                     Start
                                 </th>
                                 <th
-                                    class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Elapsed
                                 </th>
                                 <th
-                                    class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Server ID
                                 </th>
                                 <th
-                                    class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     IP Server
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
+                                <th class="px-2 py-3 border-b border-gray-200 bg-gray-50"></th>
                             </tr>
                             </thead>
                             <tbody class="bg-white">
                             @foreach ($tasks as $index => $task)
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                                         <div class="flex items-center">
                                             <div class="text-sm leading-5 text-gray-500"><a href="/{{$task->id }}/show">{{ $task->id }}</a></div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                                         <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->instance }}</a></div>
                                     </td>
-                                    <td class="px-2 py-10 whitespace-no-wrap border-b border-gray-200">
+                                    <td class="px-2 py-2 whitespace-no-wrap border-b border-gray-200">
                                         <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->job }}</a></div>
                                     </td>
-                                    <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <td class="px-2 py-4  border-b border-gray-200">
                                         <div class="text-sm leading-5 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->parameters }}</a></div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                                         @if($task->process_status=='new')
                                             <span
                                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-200 text-gray-900"><a href="/{{$task->id }}/show">{{ $task->process_status }}</a></span>
@@ -136,22 +136,22 @@
                                         @endif
                                     </td>
                                     <td
-                                        class="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                        class="px-2 py-4 border-b border-gray-200 text-sm leading-5 text-gray-500">
                                         <a href="/{{$task->id }}/show">{{ $task->created_at}}</a>
                                     </td>
                                     <td
-                                        class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                        class="px-2 py-4  border-b border-gray-200 text-sm leading-5 text-gray-500">
                                         <a href="/{{$task->id }}/show">{{ $task->created_at->floatDiffInSeconds($task->updated_at) }}</a>
                                     </td>
                                     <td
-                                        class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                        class="px-2 py-4  border-b border-gray-200 text-sm leading-5 text-gray-500">
                                         <a href="/{{$task->id }}/show">{{ $task->id_server}}</a>
                                     </td>
                                     <td
-                                        class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                        class="px-2 py-4  border-b border-gray-200 text-sm leading-5 text-gray-500">
                                         <a href="/{{$task->id }}/show">{{ $task->ip_server}}</a>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200">
                                         <div class="flex justify-center bg-grey-lighter mb-1 text-sm leading-3 text-gray-900">
                                             <button id='buttonTodoRes{{$index}}' data-toggle="modal" data-target="#updateModal" wire:click="editRes({{$task->id}})" class="mr-2 bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-2 items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
