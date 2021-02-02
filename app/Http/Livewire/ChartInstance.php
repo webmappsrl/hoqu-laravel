@@ -25,7 +25,6 @@ class ChartInstance extends Component
             $fti[]= $firstTenElement->instance;
         }
 
-
         $queryNot = Task::whereNotIn('instance',$fti)->count();
 
         $instance = $firstTenElements->map(function ($item) {
@@ -48,8 +47,6 @@ class ChartInstance extends Component
             $instanceCountPercentage[] = round(($i/$total) * 100,1) ."%  ".$instance[$index];
         }
 
-
-
-        return view('livewire.chart-instance')->with('hour',json_encode($instance,JSON_NUMERIC_CHECK))->with('job',json_encode($instanceCount,JSON_NUMERIC_CHECK))->with('percentage',json_encode($instanceCountPercentage,JSON_NUMERIC_CHECK));
+        return view('livewire.chart-instance')->with('hour',json_encode($instance,JSON_NUMERIC_CHECK))->with('job',json_encode($instanceCount,JSON_NUMERIC_CHECK));
     }
 }
