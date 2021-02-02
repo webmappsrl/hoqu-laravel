@@ -12,26 +12,21 @@ class ChartError7Days extends Component
 {
     public function render()
     {
-        $date = Carbon::today()->subDays(6);
+        $date = Carbon::today()->subDays(7);
 
-        $query = Task::select('process_status','created_at')
+        $query = Task::selectRaw('DAY(created_at) as day,COUNT(*) as error')
             ->where('process_status','error')
             ->where('created_at','>=',$date)
-            ->orderBy('created_at')
-            ->get()
-            ->groupBy(function($date) {
-                return Carbon::parse($date->created_at)->format('d');
-            });
-
+            ->groupBy('day')
+            ->get();
         $days = [];
         $errorDays = [];
 
 
-
-        foreach ($query as $index => $quer)
+        foreach ($query as  $quer)
         {
-            $days[]= $index;
-            $errorDays[]= count($quer);
+            $days[]= $quer->day;
+            $errorDays[]= $quer->error;
 
         }
 
