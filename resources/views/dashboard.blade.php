@@ -92,13 +92,13 @@
                            <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
                               @livewire('chart30days')
                            </div>
-                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
+                           <div class="shadow-sm rounded-md bg-white w-full mt-10 p-6 sm:w-1/2 xl:w-5/5">
                               @livewire('chart-instance')
                            </div>
-                           <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
+                           <div class="shadow-sm rounded-md bg-white w-full mt-10 p-6 sm:w-1/2 xl:w-5/5">
                               @livewire('chart-job')
                            </div>
-                            <div class="shadow-sm rounded-md bg-white w-full mt-10 p-6 sm:w-1/2 xl:w-5/5 xl:">
+                            <div class="shadow-sm rounded-md bg-white w-full mt-10 p-6 sm:w-1/2 xl:w-5/5">
                                 @livewire('chart-error7-days')
                             </div>
 

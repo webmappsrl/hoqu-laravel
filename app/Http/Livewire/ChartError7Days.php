@@ -35,7 +35,7 @@ class ChartError7Days extends Component
 
         }
 
-
+;
 
         return view('livewire.chart-error7-days')->with('hour',json_encode($days,JSON_NUMERIC_CHECK))->with('job',json_encode($errorDays,JSON_NUMERIC_CHECK));
     }

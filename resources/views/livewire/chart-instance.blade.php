@@ -1,6 +1,6 @@
 
                 <div class="panel-body">
-                    <canvas id="canvas2" height="280" width="600"></canvas>
+                    <canvas id="canvas2" width="800" height="650"></canvas>
                 </div>
 
 <script>
@@ -10,18 +10,19 @@
         var hour = <?php echo $hour; ?>;
     var job = <?php echo $job; ?>;
     var barChartData = {
-        labels: hour,
+        labels: <?php echo $percentage; ?>,
         datasets: [{
             label: 'Instance',
-            backgroundColor: "indingo",
+            backgroundColor: ["indingo","red","yellow","blue","purple","orange","cyan","brown","pink","olive"],
             data: job
         }]
     };
-        var ctx = document.getElementById("canvas2").getContext("2d");
+        var ctx = document.getElementById("canvas2");
         window.myBar = new Chart(ctx, {
-            type: 'bar',
+            type: 'pie',
             data: barChartData,
             options: {
+
                 elements: {
                     rectangle: {
                         borderWidth: 2,
@@ -37,5 +38,6 @@
             }
         });
     });
+
 </script>
 
