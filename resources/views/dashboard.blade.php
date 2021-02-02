@@ -140,7 +140,7 @@
                                    </div>
                                    <div>
                                        <div class="text-center px-6 py-4">
-                                           @livewire('chart-error7-days')
+{{--                                           @livewire('chart-error7-days')--}}
 
                                        </div>
                                    </div>
