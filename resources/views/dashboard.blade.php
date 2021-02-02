@@ -48,9 +48,20 @@
 
              </header>
              <main class="flex-1 overflow-x-hidden overflow-y-auto bg-indigo-100">
+
                 <div class="container mx-auto px-6 py-8">
-                   <div class="mt-4">
-                      <div class="flex flex-wrap">
+                   <div class="mt-4 ">
+                       <div class="flex flex-wrap mb-6">
+                           <div class="w-full px-6 sm:w-1/2 md:w-1/2 xl:w-2/4 mb-5">
+                               @livewire('server-active')
+                           </div>
+                           <div class="w-full px-6 sm:w-1/2 md:w-1/2 xl:w-2/4 sm:mt-0">
+                               @livewire('server-turned-off')
+                           </div>
+
+                       </div>
+
+                       <div class="flex flex-wrap">
                          <div class="w-full px-6 sm:w-1/2 xl:w-1/5 mb-5">
                             @livewire('count-new')
                          </div>
