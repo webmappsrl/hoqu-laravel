@@ -1,7 +1,7 @@
 
-                <div class="panel-body">
-                    <canvas id="canvas2" width="800" height="650"></canvas>
-                </div>
+{{--                <div class="panel-body">--}}
+{{--                    <canvas id="canvas2" width="800" height="650"></canvas>--}}
+{{--                </div>--}}
 
 {{--<script>--}}
 
