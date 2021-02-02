@@ -42,10 +42,10 @@ class ChartInstance extends Component
 
         $total = array_sum($instanceCount);
         $instanceCountPercentage = [];
-        foreach ($instanceCount as $index=>$i)
-        {
-            $instanceCountPercentage[] = (string) round(($i/$total) * 100,1) ."% ".$instance[$index];
-        }
-        return view('livewire.chart-instance')->with('hour',json_encode($instance,JSON_NUMERIC_CHECK))->with('job',json_encode($instanceCount,JSON_NUMERIC_CHECK))->with('percentage',json_encode($instanceCountPercentage,JSON_NUMERIC_CHECK));
+//        foreach ($instanceCount as $index=>$i)
+//        {
+//            $instanceCountPercentage[] = (string) round(($i/$total) * 100,1) ."% ".$instance[$index];
+//        }
+        return view('livewire.chart-instance')->with('hour',json_encode($instance,JSON_NUMERIC_CHECK))->with('job',json_encode($instanceCount,JSON_NUMERIC_CHECK));
     }
 }

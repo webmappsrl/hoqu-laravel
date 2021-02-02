@@ -92,25 +92,89 @@
                                     <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
                                         @livewire('chart30days')
                                     </div>
-                                    <div class="shadow-sm rounded-md bg-white w-full mt-10 p-6 sm:w-1/2 xl:w-5/5">
-                                        @livewire('chart-instance')
-                                    </div>
-                                    <div class="shadow-sm rounded-md bg-white w-full mt-10 p-6 sm:w-1/2 xl:w-5/5">
-                                        @livewire('chart-job')
-                                    </div>
-                                    <div class="shadow-sm rounded-md bg-white w-full mt-10 p-6 sm:w-1/2 xl:w-5/5">
-                                        @livewire('chart-error7-days')
-                                    </div>
+
 
                                 </div>
+
                             </div>
-                            <div class="mt-15">
+                            <div class="flex flex-wrap -mx-4 mt-10">
+                                <div class="w-full lg:w-1/2 px-4 ">
+                                    <div class="bg-white border-t border-b sm:rounded sm:border shadow">
+                                        <div class="border-b">
+                                            <div class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider ">
+                                                <h3 class="text-blue-dark py-4 font-normal text-lg">Instance</h3>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="text-center px-6 py-4">
+                                                {{--                                           @livewire('chart-instance')--}}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="w-full lg:w-1/2 px-4">
+                                    <div class="bg-white border-t border-b sm:rounded sm:border shadow">
+                                        <div class="border-b">
+                                            <div class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                <h3 class="text-blue-dark py-4 font-normal text-lg">Job</h3>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="text-center px-6 py-4">
+                                                {{--                                           @livewire('chart-job')--}}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            @livewire('table-dashboard')
+                            <div class="flex flex-wrap -mx-4 mt-10">
+                                <div class="w-full lg:w-1/2 px-4">
+                                    <div class="bg-white border-t border-b sm:rounded sm:border shadow">
+                                        <div class="border-b">
+                                            <div class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                <h3 class="text-blue-dark py-4 font-normal text-lg">Error last 7 days</h3>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="text-center px-6 py-4">
+                                                {{--                                           @livewire('chart-error7-days')--}}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{--                           <div class="w-full lg:w-1/2 px-4">--}}
+                                {{--                               <div class="bg-white border-t border-b sm:rounded sm:border shadow">--}}
+                                {{--                                   <div class="border-b">--}}
+                                {{--                                       <div class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">--}}
+                                {{--                                           <h3 class="text-blue-dark py-4 font-normal text-lg">Job</h3>--}}
+                                {{--                                       </div>--}}
+                                {{--                                   </div>--}}
+                                {{--                                   <div>--}}
+                                {{--                                       <div class="text-center px-6 py-4">--}}
+                                {{--                                           @livewire('chart-job')--}}
+
+                                {{--                                       </div>--}}
+                                {{--                                   </div>--}}
+                                {{--                               </div>--}}
+                                {{--                           </div>--}}
+                            </div>
+
+
+
                         </div>
+                        @livewire('table-dashboard')
+                    </div>
                 </main>
             </div>
         </div>
     </div>
+
+
+
 
 </x-app-layout>
