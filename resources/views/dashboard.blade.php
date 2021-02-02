@@ -107,7 +107,7 @@
                                    </div>
                                    <div>
                                        <div class="text-center px-6 py-4">
-                                           @livewire('chart-instance')
+{{--                                           @livewire('chart-instance')--}}
 
                                        </div>
                                    </div>
@@ -123,7 +123,7 @@
                                    </div>
                                    <div>
                                        <div class="text-center px-6 py-4">
-                                           @livewire('chart-job')
+{{--                                           @livewire('chart-job')--}}
 
                                        </div>
                                    </div>
