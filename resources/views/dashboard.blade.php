@@ -98,6 +98,10 @@
                            <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-5/5 xl:mt-0">
                               @livewire('chart-job')
                            </div>
+                            <div class="shadow-sm rounded-md bg-white w-full mt-10 p-6 sm:w-1/2 xl:w-5/5 xl:">
+                                @livewire('chart-error7-days')
+                            </div>
+
                         </div>
                    </div>
                    <div class="mt-15">
