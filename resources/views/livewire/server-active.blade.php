@@ -6,6 +6,6 @@
     </div>
     <div class="mx-5" wire:poll.10s>
         <h4 class="text-2xl font-semibold text-gray-700">{{$serverActive}}</h4>
-        <div class="text-gray-700 font-bold">Active</div>
+        <div class="text-gray-700 font-bold">Active/Idle</div>
     </div>
 </div>

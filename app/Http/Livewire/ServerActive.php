@@ -22,6 +22,10 @@ class ServerActive extends Component
             {
                 $sa++;
             }
+            if (now()->floatDiffInMinutes($server->updated_at) < 5 && $task_processing == 0)
+            {
+                $sa++;
+            }
         }
 
 

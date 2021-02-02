@@ -22,6 +22,10 @@ class ServerTurnedOff extends Component
             {
                 $st++;
             }
+            if (now()->floatDiffInMinutes($server->updated_at) >= 5 && $task_processing > 0)
+            {
+                $st++;
+            }
         }
         return view('livewire.server-turned-off',['serverTurnedOff'=>$st]);
     }

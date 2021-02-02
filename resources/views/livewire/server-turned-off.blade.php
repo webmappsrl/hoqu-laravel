@@ -7,6 +7,6 @@
     <div class="mx-5" wire:poll.10s>
         <h4 class="text-2xl font-semibold text-gray-700">{{$serverTurnedOff}}</h4>
         <div class="text-gray-700 font-bold
-">Turned Off</div>
+">Turned Off/Warning</div>
     </div>
 </div>
