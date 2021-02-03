@@ -10,7 +10,7 @@
         var hour = <?php echo $hour; ?>;
     var job = <?php echo $job; ?>;
     var barChartData = {
-        labels: hour,
+        labels: <?php echo $percentage; ?>,
         datasets: [{
             label: 'Job',
             backgroundColor: ["indingo","red","yellow","blue","purple","orange","cyan","brown","pink","olive"],

@@ -52,11 +52,11 @@ class ChartJob extends Component
 
         $total = array_sum($jobCount);
         $jobCountPercentage = [];
-//        foreach ($jobCount as $index=>$i)
-//        {
-//            $jobCountPercentage[] = (string) round(($i/$total) * 100,1) ."% ".$job[$index];
-//        }
+        foreach ($jobCount as $index=>$i)
+        {
+            $jobCountPercentage[] = (string) round(($i/$total) * 100,1) ."% ".$job[$index];
+        }
 
-        return view('livewire.chart-job')->with('hour',json_encode($job,JSON_NUMERIC_CHECK))->with('job',json_encode($jobCount,JSON_NUMERIC_CHECK));
+        return view('livewire.chart-job')->with('hour',json_encode($job,JSON_NUMERIC_CHECK))->with('job',json_encode($jobCount,JSON_NUMERIC_CHECK))->with('percentage',json_encode($jobCountPercentage,JSON_NUMERIC_CHECK));
     }
 }

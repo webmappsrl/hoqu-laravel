@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Tasks;
-use App\Http\Controllers\ChartJsController;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\DuplicateTaskController;
 
@@ -30,8 +29,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/{duplicateTask}/show_dupl
 Route::get('/mail',[TasksController::class, 'sendEmail'])->name('mail');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/duplicate', [TasksController::class, 'indexDuplicate'])->name('duplicate');
-
-Route::get('/nedo', [ChartJsController::class, 'index'])->name('error');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/info', function () {
     return view('info');
