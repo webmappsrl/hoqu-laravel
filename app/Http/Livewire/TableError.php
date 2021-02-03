@@ -21,6 +21,9 @@ namespace App\Http\Livewire;
         public $isOpenSkipAll = 0;
 
         public $selectedErrors = [];
+        public $selectAll = false;
+
+
 
 
 
@@ -186,6 +189,90 @@ namespace App\Http\Livewire;
 
             $this->openModal();
 
+        }
+
+        public function updatedSelectAll($value)
+        {
+            if ($value)
+            {
+                if(!empty($this->job) && !empty($this->instance) && !empty($this->num_page))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('job',$this->job)
+                        ->where('instance',$this->instance)
+                        ->limit($this->num_page)
+                        ->pluck('id');
+                }
+                elseif (!empty($this->job) && !empty($this->instance) && empty($this->num_page))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('job',$this->job)
+                        ->where('instance',$this->instance)
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && !empty($this->job) && empty($this->instance) && !empty($this->num_page))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('job',$this->job)
+                        ->orderBy('created_at', 'asc')
+                        ->limit($this->num_page)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && empty($this->job) && !empty($this->instance) && !empty($this->num_page))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('instance',$this->instance)
+                        ->orderBy('created_at', 'asc')
+                        ->limit($this->num_page)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && !empty($this->job) && !empty($this->instance) && empty($this->num_page))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('instance',$this->instance)
+                        ->where('job',$this->job)
+                        ->orderBy('created_at', 'asc')
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && !empty($this->job) && empty($this->instance) && empty($this->num_page))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('job',$this->job)
+                        ->orderBy('created_at', 'asc')
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && empty($this->job) && !empty($this->instance) && empty($this->num_page))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('instance',$this->instance)
+                        ->orderBy('created_at', 'asc')
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                else{
+                    $valueErrors = Task::select('id')->where('process_status','error')->orderBy('created_at', 'asc')->limit(50)->pluck('id');
+                }
+               $a =[];
+               foreach ($valueErrors as $valueError)
+               {
+                   $a[$valueError]=$valueError;
+               }
+
+                $this->selectedErrors =$a;
+            }
+            else{
+                $this->selectedErrors = [];
+            }
         }
 
 

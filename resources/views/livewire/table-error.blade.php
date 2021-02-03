@@ -70,7 +70,11 @@
                             <table id='hometable' class="min-w-full" wire:poll.5s>
                             <thead>
                             <tr>
-                                <th class="px-2 py-3 border-b border-gray-200 bg-gray-50"></th>
+                                <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    <label class="inline-flex items-center mt-3">
+                                        <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600"  wire:model="selectAll" >
+                                    </label>
+                                </td>
                                 <th
                                     class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Id
