@@ -14,7 +14,7 @@ class Task extends Model
         protected $fillable = ['id','id_server','instance','job','parameters','process_status','process_log','ip_server','error_log'];
 
         protected $casts = [
-	'created_at' => 'datetime',
+	'created_at' => 'datetime:Y-m-d',
 	'updated_at' => 'datetime'
     ];
 
@@ -23,4 +23,8 @@ class Task extends Model
         return $this->hasMany(duplicateTask::class);
     }
 
+    public function getCreatedDateAttribute()
+    {
+        return $this->created_at->format('Y-m-d');
+    }
 }

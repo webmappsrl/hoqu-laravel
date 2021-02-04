@@ -27,15 +27,11 @@ class ChartError7Days extends Component
         $errorDays = [];
 
 
-
         foreach ($query as $index => $quer)
         {
             $days[]= $index;
             $errorDays[]= count($quer);
-
         }
-
-;
 
         return view('livewire.chart-error7-days')->with('hour',json_encode($days,JSON_NUMERIC_CHECK))->with('job',json_encode($errorDays,JSON_NUMERIC_CHECK));
     }

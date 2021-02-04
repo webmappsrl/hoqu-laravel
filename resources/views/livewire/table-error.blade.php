@@ -35,6 +35,20 @@
                             <option id="p50" value='50'>50</option>
                             <option id="p100" value='100'>100</option>
                         </select >
+                        <select id="dateInit" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="dateInit" class="border shadow p-2 bg-white" wire:model='dateInit'
+                        >
+                            <option value=''>Choose a date Init</option>
+                            @foreach($dateInits as $dateInit)
+                                <option value="{{ $dateInit}}">{{ $dateInit }}</option>
+                            @endforeach
+                        </select >
+                        <select id="dateEnd" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="dateEnd" class="border shadow p-2 bg-white" wire:model='dateEnd'
+                        >
+                            <option value=''>Choose a date End</option>
+                            @foreach($dateEnds as $dateInit)
+                                <option value="{{ $dateInit}}">{{ $dateInit }}</option>
+                            @endforeach
+                        </select >
                     </div>
                     @if(count($selectedErrors) > 0 && count(array_keys($selectedErrors, false)) != count($selectedErrors))
                     <div class="mb-2 flex flex-wrap mx-2 mb-4">
