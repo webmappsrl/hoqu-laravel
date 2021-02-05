@@ -62,7 +62,7 @@ class jobsByInstanceApiTest extends TestCase
             {
                 $t1 = strtotime($response['todo'][$i]['created_at']);
                 $t2 = strtotime($response['todo'][$i+1]['created_at']);
-                $this->assertGreaterThan( $t2, $t1 );
+                $this->assertGreaterThanOrEqual( $t2, $t1 );
             }
 
         }
@@ -76,8 +76,7 @@ class jobsByInstanceApiTest extends TestCase
             {
                 $t1 = strtotime($response['done'][$i]['created_at']);
                 $t2 = strtotime($response['done'][$i+1]['created_at']);
-                $this->assertGreaterThan( $t2, $t1 );
-            }
+                $this->assertGreaterThanOrEqual( $t2, $t1 );            }
 
         }
 
@@ -90,8 +89,7 @@ class jobsByInstanceApiTest extends TestCase
             {
                 $t1 = strtotime($response['error'][$i]['created_at']);
                 $t2 = strtotime($response['error'][$i+1]['created_at']);
-                $this->assertGreaterThan( $t2, $t1 );
-            }
+                $this->assertGreaterThanOrEqual( $t2, $t1 );            }
 
         }
     }

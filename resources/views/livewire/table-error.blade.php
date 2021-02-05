@@ -35,6 +35,20 @@
                             <option id="p50" value='50'>50</option>
                             <option id="p100" value='100'>100</option>
                         </select >
+                        <select id="dateInit" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="dateInit" class="border shadow p-2 bg-white" wire:model='dateInit'
+                        >
+                            <option value=''>Choose a date Init</option>
+                            @foreach($dateInits as $dateInit)
+                                <option value="{{ $dateInit}}">{{ $dateInit }}</option>
+                            @endforeach
+                        </select >
+                        <select id="dateEnd" class="border border-gray-300 rounded-full text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none" name="dateEnd" class="border shadow p-2 bg-white" wire:model='dateEnd'
+                        >
+                            <option value=''>Choose a date End</option>
+                            @foreach($dateEnds as $dateInit)
+                                <option value="{{ $dateInit}}">{{ $dateInit }}</option>
+                            @endforeach
+                        </select >
                     </div>
                     @if(count($selectedErrors) > 0 && count(array_keys($selectedErrors, false)) != count($selectedErrors))
                     <div class="mb-2 flex flex-wrap mx-2 mb-4">
@@ -70,7 +84,11 @@
                             <table id='hometable' class="min-w-full" wire:poll.5s>
                             <thead>
                             <tr>
-                                <th class="px-2 py-3 border-b border-gray-200 bg-gray-50"></th>
+                                <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    <label class="inline-flex items-center mt-3">
+                                        <input type="checkbox" class="form-checkbox h-5 w-5 text-red-600"  wire:model="selectAll" >
+                                    </label>
+                                </td>
                                 <th
                                     class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     Id

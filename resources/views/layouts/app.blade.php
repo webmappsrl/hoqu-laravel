@@ -32,5 +32,16 @@
 
 
         @livewireScripts
+    <footer>
+        <!-- component -->
+        <section class="bg-white py-5 pb-3 w-full">
+            <div class="container mx-auto px-8">
+                <div class="flex items-center relative cursor-pointer whitespace-nowrap">{{config('app.name')}} {{config('app.version')}} by&nbsp;<img src="/image/logo-400dpi.png"  width="25" height="25">
+                </div>
+
+            </div>
+        </section>
+
+    </footer>
     </body>
 </html>

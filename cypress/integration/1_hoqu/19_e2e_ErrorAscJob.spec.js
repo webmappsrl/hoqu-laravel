@@ -128,6 +128,16 @@ describe('Filter in Error', () => {
             })
         })
 
+        cy.get('select#dateInit').select('2021-01-28')
+        cy.get('select#dateEnd').select('2021-01-29')
+        var time_prev=Math.round(new Date('2021-01-29').getTime() / 1000)
+        var time = 0;
+        cy.wait(1000)
+        cy.get('#hometable > tbody > tr > td:nth-child(7)').each(($e, index, $list) => {
+            time = Math.round(new Date($e.text()).getTime() / 1000)
+            assert.isBelow(time,time_prev, 'previous date is below actual')
+        })
+
         cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
         cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
 

@@ -205,7 +205,7 @@ class TasksController extends Controller
 
             $this->storeServer($requestSvr->ip(),$requestSvr['id_server']);
             $this->updateServer($requestSvr->ip(),$requestSvr['id_server']);
-
+//            sleep(2);
             if(!empty($task))
             {
                 $task->process_status = 'processing';
