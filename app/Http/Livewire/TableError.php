@@ -197,7 +197,7 @@ namespace App\Http\Livewire;
         {
             if ($value)
             {
-                if(!empty($this->job) && !empty($this->instance) && !empty($this->num_page))
+                if(!empty($this->job) && !empty($this->instance) && !empty($this->num_page) && empty($this->dateInit) && empty($this->dateEnd))
                 {
                     $valueErrors = Task::select('id')
                         ->where('process_status','error')
@@ -206,7 +206,27 @@ namespace App\Http\Livewire;
                         ->limit($this->num_page)
                         ->pluck('id');
                 }
-                elseif (!empty($this->job) && !empty($this->instance) && empty($this->num_page))
+                else if(!empty($this->job) && !empty($this->instance) && !empty($this->num_page) && !empty($this->dateInit) && empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('job',$this->job)
+                        ->where('instance',$this->instance)
+                        ->limit($this->num_page)
+                        ->pluck('id');
+                }
+                else if(!empty($this->job) && !empty($this->instance) && !empty($this->num_page) && !empty($this->dateInit) && !empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('job',$this->job)
+                        ->where('instance',$this->instance)
+                        ->where('created_at','>=',$this->dateInit)
+                        ->where('created_at','<=',$this->dateEnd)
+                        ->limit($this->num_page)
+                        ->pluck('id');
+                }
+                elseif (!empty($this->job) && !empty($this->instance) && empty($this->num_page) && empty($this->dateInit) && empty($this->dateEnd))
                 {
                     $valueErrors = Task::select('id')
                         ->where('process_status','error')
@@ -215,7 +235,27 @@ namespace App\Http\Livewire;
                         ->limit(50)
                         ->pluck('id');
                 }
-                elseif (empty($this->created_at) && !empty($this->job) && empty($this->instance) && !empty($this->num_page))
+                elseif (!empty($this->job) && !empty($this->instance) && empty($this->num_page) && !empty($this->dateInit) && empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('job',$this->job)
+                        ->where('instance',$this->instance)
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                elseif (!empty($this->job) && !empty($this->instance) && empty($this->num_page) && !empty($this->dateInit) && !empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('job',$this->job)
+                        ->where('instance',$this->instance)
+                        ->where('created_at','>=',$this->dateInit)
+                        ->where('created_at','<=',$this->dateEnd)
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && !empty($this->job) && empty($this->instance) && !empty($this->num_page) && empty($this->dateInit) && empty($this->dateEnd))
                 {
                     $valueErrors = Task::select('id')
                         ->where('process_status','error')
@@ -224,7 +264,27 @@ namespace App\Http\Livewire;
                         ->limit($this->num_page)
                         ->pluck('id');
                 }
-                elseif (empty($this->created_at) && empty($this->job) && !empty($this->instance) && !empty($this->num_page))
+                elseif (empty($this->created_at) && !empty($this->job) && empty($this->instance) && !empty($this->num_page) && !empty($this->dateInit) && empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('job',$this->job)
+                        ->orderBy('created_at', 'asc')
+                        ->limit($this->num_page)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && !empty($this->job) && empty($this->instance) && !empty($this->num_page) && !empty($this->dateInit) && !empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('job',$this->job)
+                        ->where('created_at','>=',$this->dateInit)
+                        ->where('created_at','<=',$this->dateEnd)
+                        ->orderBy('created_at', 'asc')
+                        ->limit($this->num_page)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && empty($this->job) && !empty($this->instance) && !empty($this->num_page) && empty($this->dateInit) && empty($this->dateEnd))
                 {
                     $valueErrors = Task::select('id')
                         ->where('process_status','error')
@@ -233,7 +293,27 @@ namespace App\Http\Livewire;
                         ->limit($this->num_page)
                         ->pluck('id');
                 }
-                elseif (empty($this->created_at) && !empty($this->job) && !empty($this->instance) && empty($this->num_page))
+                elseif (empty($this->created_at) && empty($this->job) && !empty($this->instance) && !empty($this->num_page) && !empty($this->dateInit) && empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('instance',$this->instance)
+                        ->orderBy('created_at', 'asc')
+                        ->limit($this->num_page)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && empty($this->job) && !empty($this->instance) && !empty($this->num_page) && !empty($this->dateInit) && !empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('instance',$this->instance)
+                        ->where('created_at','>=',$this->dateInit)
+                        ->where('created_at','<=',$this->dateEnd)
+                        ->orderBy('created_at', 'asc')
+                        ->limit($this->num_page)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && !empty($this->job) && !empty($this->instance) && empty($this->num_page) && empty($this->dateInit) && empty($this->dateEnd))
                 {
                     $valueErrors = Task::select('id')
                         ->where('process_status','error')
@@ -243,7 +323,29 @@ namespace App\Http\Livewire;
                         ->limit(50)
                         ->pluck('id');
                 }
-                elseif (empty($this->created_at) && !empty($this->job) && empty($this->instance) && empty($this->num_page))
+                elseif (empty($this->created_at) && !empty($this->job) && !empty($this->instance) && empty($this->num_page) && !empty($this->dateInit) && empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('instance',$this->instance)
+                        ->where('job',$this->job)
+                        ->orderBy('created_at', 'asc')
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && !empty($this->job) && !empty($this->instance) && empty($this->num_page) && !empty($this->dateInit) && !empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('instance',$this->instance)
+                        ->where('job',$this->job)
+                        ->where('created_at','>=',$this->dateInit)
+                        ->where('created_at','<=',$this->dateEnd)
+                        ->orderBy('created_at', 'asc')
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && !empty($this->job) && empty($this->instance) && empty($this->num_page) && empty($this->dateInit) && empty($this->dateEnd))
                 {
                     $valueErrors = Task::select('id')
                         ->where('process_status','error')
@@ -252,11 +354,61 @@ namespace App\Http\Livewire;
                         ->limit(50)
                         ->pluck('id');
                 }
-                elseif (empty($this->created_at) && empty($this->job) && !empty($this->instance) && empty($this->num_page))
+                elseif (empty($this->created_at) && !empty($this->job) && empty($this->instance) && empty($this->num_page) && !empty($this->dateInit) && empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('job',$this->job)
+                        ->orderBy('created_at', 'asc')
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && !empty($this->job) && empty($this->instance) && empty($this->num_page) && !empty($this->dateInit) && !empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('job',$this->job)
+                        ->where('created_at','>=',$this->dateInit)
+                        ->where('created_at','<=',$this->dateEnd)
+                        ->orderBy('created_at', 'asc')
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && empty($this->job) && !empty($this->instance) && empty($this->num_page) && empty($this->dateInit) && empty($this->dateEnd))
                 {
                     $valueErrors = Task::select('id')
                         ->where('process_status','error')
                         ->where('instance',$this->instance)
+                        ->orderBy('created_at', 'asc')
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && empty($this->job) && !empty($this->instance) && empty($this->num_page) && !empty($this->dateInit) && empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('instance',$this->instance)
+                        ->orderBy('created_at', 'asc')
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && empty($this->job) && !empty($this->instance) && empty($this->num_page) && !empty($this->dateInit) && !empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('instance',$this->instance)
+                        ->where('created_at','>=',$this->dateInit)
+                        ->where('created_at','<=',$this->dateEnd)
+                        ->orderBy('created_at', 'asc')
+                        ->limit(50)
+                        ->pluck('id');
+                }
+                elseif (empty($this->created_at) && empty($this->job) && empty($this->instance) && empty($this->num_page) && !empty($this->dateInit) && !empty($this->dateEnd))
+                {
+                    $valueErrors = Task::select('id')
+                        ->where('process_status','error')
+                        ->where('created_at','>=',$this->dateInit)
+                        ->where('created_at','<=',$this->dateEnd)
                         ->orderBy('created_at', 'asc')
                         ->limit(50)
                         ->pluck('id');

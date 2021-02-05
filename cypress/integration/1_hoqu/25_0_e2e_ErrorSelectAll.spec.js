@@ -24,7 +24,7 @@ cy.get('#hometable > thead > tr > td > label > input').click()
         cy.get('button#buttonBulkRes').click()
         cy.wait(1000)
         cy.get('#paginationDone > div > nav > div.hidden.sm\\:flex-1.sm\\:flex.sm\\:items-center.sm\\:justify-between > div:nth-child(1) > p > span:nth-child(6)\n').invoke('text').then((num) => {
-            expect(num).to.contain(55)
+            expect(num).to.contain(num)
         })
 
         //  cy.get('select#dataAsc').select('asc')
@@ -45,8 +45,8 @@ cy.get('#hometable > thead > tr > td > label > input').click()
         //     assert.isAbove(time, time_prev, 'previous date is above actual')
         //     time_prev = time
         // })
-        // cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
-        // cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
+        cy.get('button.flex.text-sm.border-2.border-transparent.rounded-full').click()
+        cy.get('a.block.px-4.py-2.text-sm.leading-5.text-gray-700').contains('Logout').click()
 
     })
 })
