@@ -89,8 +89,12 @@ to be able to view the test code just go hoqu-laravel/tests/
 
 ## Authors
 
- - Alessio Piccioli - CTO - [Webmapp](https://github.com/piccioli).
- - Gianmarco Gagliardi - Developer - [Webmapp](https://github.com/gianmarxWebmapp).
+- **Alessio Piccioli** - CTO - [Webmapp](https://github.com/piccioli).
+- **Gianmarco Gagliardi** - Developer - [Webmapp](https://github.com/gianmarxWebmapp).
+- **Davide Pizzato** - _App Developer_ - [Webmapp](https://github.com/dvdpzzt-webmapp)
+- **Marco Barbieri** - _Map Maker_ - [Webmapp](https://github.com/marchile)
+- **Pedram Katanchi** - _Web developer_ - [Webmapp](https://github.com/padramkat)
+- **Antonella Puglia** - _UX Designer_ - [Webmapp](https://github.com/antonellapuglia)
 
 ## License
 
